@@ -5,7 +5,6 @@
 
 import type {
     CameraAngleKey,
-    CameraDistanceKey,
     CameraMovementKey,
     EyeDirectionKey
 } from './parameterMap.types';
@@ -61,7 +60,7 @@ export interface PromptOptions {
     creationMode: 'lifestyle' | 'studio' | 'aesthetic' | 'bg-replace' | 'ecom-blank';
     aspectRatio: string;
     camera: string;
-    cameraDistance?: CameraDistanceKey;
+    cameraDistance?: "macro" | "close" | "medium" | "wide" | "environment";
     cameraAngle?: CameraAngleKey;
     cameraMovement?: CameraMovementKey;
 

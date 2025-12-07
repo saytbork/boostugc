@@ -151,11 +151,11 @@ export const parameterMap: ParameterMap = {
   },
 
   cameraDistance: {
-    macro: "extreme macro close up",
-    close: "close up shot",
-    medium: "medium distance shot",
-    wide: "wide shot showing more environment",
-    environment: "distant product shot inside large scenic environment"
+    macro: "extreme macro close up, extremely close framing showing micro-details",
+    close: "close up shot, camera placed very near the product for strong visual emphasis",
+    medium: "medium distance shot, natural viewing distance, balanced framing",
+    wide: "wide shot, camera farther away showing more environment",
+    environment: "distant product shot, product appears smaller inside a large scenic environment"
   },
 
   lighting: {
