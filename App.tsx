@@ -4687,6 +4687,34 @@ const App: React.FC = () => {
                                 </div>
                               </Accordion>
                             </div>
+                            <div id={getSectionId('Lighting')}>
+                              <Accordion title="Lighting">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                  <Tooltip content="Choose a lighting style that defines mood and contrast.">
+                                    <ChipSelectGroup
+                                      label="Lighting"
+                                      options={LIGHTING_OPTIONS}
+                                      selectedValue={options.lighting}
+                                      onChange={(value) => handleOptionChange('lighting', value, 'Lighting')}
+                                    />
+                                  </Tooltip>
+                                </div>
+                              </Accordion>
+                            </div>
+                            <div id={getSectionId('Interaction Notes')}>
+                              <Accordion title="Interaction Notes">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                  <Tooltip content="Define how the product is being interacted with.">
+                                    <ChipSelectGroup
+                                      label="Product Interaction"
+                                      options={PRODUCT_INTERACTION_OPTIONS}
+                                      selectedValue={options.productInteraction}
+                                      onChange={(value) => handleOptionChange('productInteraction', value, 'Interaction Notes')}
+                                    />
+                                  </Tooltip>
+                                </div>
+                              </Accordion>
+                            </div>
                             <div id={getSectionId('Product Details')}>
                               <Accordion title="Product Details">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
