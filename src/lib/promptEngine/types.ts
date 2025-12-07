@@ -101,6 +101,7 @@ export interface PromptOptions {
     isMultiProductPackaging?: boolean;
     bundleLabels?: string[];
     productMaterial?: string;
+    addHands?: boolean;
     clothingReference?: string;
     clothingPreset?: string;
     clothingQuickPreset?: string;

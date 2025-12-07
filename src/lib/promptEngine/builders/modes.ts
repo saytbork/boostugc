@@ -35,6 +35,7 @@ export class ModesBuilder implements PromptBuilder {
             eyeDirection: (options as any).eyeDirection,
             creationMode: options.creationMode,
             selfieType: (options as any).selfieType,
+            addHands: options.addHands,
         };
 
         if (mode === 'product') {

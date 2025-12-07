@@ -3578,6 +3578,8 @@ const App: React.FC = () => {
       heightNotes: heightNotes || undefined,
       isMultiProductPackaging: isMultiProductPackaging,
       bundleLabels: bundleLabels.length > 0 ? bundleLabels : undefined,
+      addHands: (options as any).addHands ?? includeSupplementHand ?? true,
+      productMaterial: options.productMaterial,
 
       // Special Modes
       isHeroLandingMode: isHeroLandingMode && !hasModelReference,
