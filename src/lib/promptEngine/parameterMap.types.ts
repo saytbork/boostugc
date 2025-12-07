@@ -7,6 +7,19 @@ export type EyeDirectionKey =
   | "Look Up"
   | "Eyes Closed";
 
+export type CameraAngleKey =
+  | "fullBody" | "closeUp" | "extremeCloseUp" | "extremeLongShot"
+  | "highAngleShot" | "lowAngleShot" | "birdsEyeView" | "dutchAngle"
+  | "sideProfile" | "overTheShoulder" | "offCenterShot"
+  | "shotFromBehind" | "cowboyShot" | "povShot";
+
+export type CameraMovementKey =
+  | "trackingShot" | "dollyShot" | "craneShot"
+  | "tiltShot" | "panShot" | "orbitShot";
+
+export type CameraDistanceKey =
+  | "macro" | "close" | "medium" | "wide" | "environment";
+
 export interface ParameterMap {
   eyeDirection: Record<EyeDirectionKey, string>;
   ageGroup: Record<string, string>;
@@ -19,7 +32,7 @@ export interface ParameterMap {
   setting: Record<string, string>;
   environmentOrder: Record<string, string>;
   cameraType: Record<string, string>;
-  cameraDistance: Record<string, string>;
+  cameraDistance: Record<CameraDistanceKey, string>;
   lighting: Record<string, string>;
   selfieType: Record<string, string>;
   compositionMode: Record<string, string>;

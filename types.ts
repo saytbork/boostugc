@@ -5,6 +5,8 @@ export interface MockupOptions {
   placementStyle: string;
   placementCamera: string;
   cameraDistance: string;
+  cameraAngle?: string;
+  cameraMovement?: string;
   lighting: string;
   setting: string;
   ageGroup: string;

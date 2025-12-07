@@ -11,8 +11,9 @@ import { ModesBuilder } from './builders/modes';
 import { ClothingBuilder } from "./builders/clothing";
 import { SpecialModesBuilder } from './builders/special';
 import { FinalizeBuilder } from './builders/finalize';
-import { parameterMap } from './parameterMap';
+import { parameterMap, cameraPresets } from './parameterMap';
 import type { PromptOptions, PromptBuilder } from './types';
+import type { CameraAngleKey, CameraDistanceKey, CameraMovementKey } from './parameterMap.types';
 
 function formatPersonDetails(d: any) {
     if (!d) return "";
@@ -228,6 +229,30 @@ export class PromptEngine {
         ];
     }
 
+    private applyCameraAngle(parts: string[], key?: CameraAngleKey) {
+        if (!key) return;
+        const preset = cameraPresets.cameraAngles[key];
+        if (preset?.prompt) {
+            parts.push(preset.prompt);
+        }
+    }
+
+    private applyCameraMovement(parts: string[], key?: CameraMovementKey) {
+        if (!key) return;
+        const preset = cameraPresets.cameraMovements[key];
+        if (preset?.prompt) {
+            parts.push(preset.prompt);
+        }
+    }
+
+    private applyCameraDistance(parts: string[], key?: CameraDistanceKey) {
+        if (!key) return;
+        const mapped = parameterMap.cameraDistance?.[key];
+        if (mapped) {
+            parts.push(mapped);
+        }
+    }
+
     /**
      * Build complete prompt from options
      */
@@ -243,10 +268,25 @@ export class PromptEngine {
         );
         const productSection = productBuilder ? productBuilder.build(options) : '';
         const finalizeSection = finalizeBuilder ? finalizeBuilder.build(options) : '';
+        const cameraExtras: string[] = [];
+        this.applyCameraAngle(cameraExtras, options.cameraAngle);
+        this.applyCameraMovement(cameraExtras, options.cameraMovement);
+        this.applyCameraDistance(cameraExtras, options.cameraDistance);
 
         if (options.contentStyle === 'product') {
             const placementPrompt = modesBuilder ? modesBuilder.build(options) : '';
             const combined = [placementPrompt, productSection, finalizeSection]
+                .filter(Boolean)
+                .join(' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+
+            return `${combined} Negative prompt: ${negativePrompt()}`.replace(/\s+/g, ' ').trim();
+        }
+
+        if (options.creationMode === 'lifestyle') {
+            const lifestylePrompt = modesBuilder ? modesBuilder.build(options) : '';
+            const combined = [lifestylePrompt, productSection, finalizeSection]
                 .filter(Boolean)
                 .join(' ')
                 .replace(/\s+/g, ' ')
@@ -259,6 +299,7 @@ export class PromptEngine {
             : "no person";
         const handSection = handAppearanceRules(options);
         const handSectionText = handSection ? `\n${handSection}` : '';
+        const cameraSection = [cameraRules(options), cameraExtras.join(", ")].filter(Boolean).join(", ");
 
         const finalPrompt = `
 Ultra realistic photo, cinematic lighting.
@@ -267,7 +308,7 @@ Scene details:
 ${formatScene(options)}
 
 Camera rules:
-${cameraRules(options)}
+${cameraSection}
 
 Person details:
 ${personSection}${handSectionText}

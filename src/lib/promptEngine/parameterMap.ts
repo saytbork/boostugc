@@ -1,6 +1,34 @@
 // src/lib/promptEngine/parameterMap.ts
 import { ParameterMap } from "./parameterMap.types";
 
+export const cameraPresets = {
+  cameraAngles: {
+    fullBody: { label: "Full Body Shot", description: "Shows full outfit and action.", prompt: "full body shot" },
+    closeUp: { label: "Close Up", description: "Intimate and detailed.", prompt: "close up" },
+    extremeCloseUp: { label: "Extreme Close Up", description: "Micro detail.", prompt: "extreme close up" },
+    extremeLongShot: { label: "Extreme Long Shot", description: "Full body with environment.", prompt: "extreme long shot" },
+    highAngleShot: { label: "High Angle Shot", description: "Vulnerable or small.", prompt: "high angle shot" },
+    lowAngleShot: { label: "Low Angle Shot", description: "Powerful and imposing.", prompt: "low angle shot" },
+    birdsEyeView: { label: "Bird's Eye View", description: "Top-down view.", prompt: "bird's eye view" },
+    dutchAngle: { label: "Dutch Angle", description: "Dynamic and tense.", prompt: "dutch angle shot" },
+    sideProfile: { label: "Side Profile Shot", description: "Silhouette focus.", prompt: "side profile shot" },
+    overTheShoulder: { label: "Over the Shoulder", description: "Behind another person.", prompt: "over the shoulder shot" },
+    offCenterShot: { label: "Off Center Shot", description: "Artistic framing.", prompt: "off center shot" },
+    shotFromBehind: { label: "Shot From Behind", description: "Back view.", prompt: "shot from behind" },
+    cowboyShot: { label: "Cowboy Shot", description: "Hero framing.", prompt: "cowboy shot" },
+    povShot: { label: "POV Shot", description: "Through the eyes of the subject.", prompt: "point of view shot" }
+  },
+
+  cameraMovements: {
+    trackingShot: { label: "Tracking Shot", description: "Camera follows subject.", prompt: "tracking shot" },
+    dollyShot: { label: "Dolly Shot", description: "Camera moves in or out.", prompt: "dolly in" },
+    craneShot: { label: "Crane Shot", description: "Vertical cinematic motion.", prompt: "crane shot" },
+    tiltShot: { label: "Tilt Shot", description: "Vertical rotation.", prompt: "tilt up" },
+    panShot: { label: "Pan Shot", description: "Horizontal rotation.", prompt: "pan right" },
+    orbitShot: { label: "Orbit Shot", description: "Camera circles subject.", prompt: "orbit shot" }
+  }
+} as const;
+
 export const parameterMap: ParameterMap = {
   eyeDirection: {
     "Look at Camera": "their eyes look directly into the camera with confident engaging focus",
@@ -123,11 +151,11 @@ export const parameterMap: ParameterMap = {
   },
 
   cameraDistance: {
-    macro: "extreme macro close up, extremely close framing showing micro-details",
-    close: "close up shot, camera placed very near the product for strong visual emphasis",
-    medium: "medium distance shot, natural viewing distance, balanced framing",
-    wide: "wide shot, camera farther away showing more environment",
-    environment: "distant product shot, product appears smaller inside a large scenic environment"
+    macro: "extreme macro close up",
+    close: "close up shot",
+    medium: "medium distance shot",
+    wide: "wide shot showing more environment",
+    environment: "distant product shot inside large scenic environment"
   },
 
   lighting: {

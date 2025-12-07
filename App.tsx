@@ -340,6 +340,12 @@ const cloneOptions = (source: MockupOptions): MockupOptions => {
   if (!cloned.cameraDistance) {
     cloned.cameraDistance = CAMERA_DISTANCE_OPTIONS[2]?.value ?? 'medium';
   }
+  if (cloned.cameraAngle === undefined) {
+    cloned.cameraAngle = '';
+  }
+  if (cloned.cameraMovement === undefined) {
+    cloned.cameraMovement = '';
+  }
   return cloned;
 };
 
@@ -536,6 +542,8 @@ const createDefaultOptions = (): MockupOptions => ({
   placementStyle: PLACEMENT_STYLE_OPTIONS[0].value,
   placementCamera: PLACEMENT_CAMERA_OPTIONS[0].value,
   cameraDistance: CAMERA_DISTANCE_OPTIONS[2]?.value ?? 'medium',
+  cameraAngle: '',
+  cameraMovement: '',
   lighting: LIGHTING_OPTIONS[0].value,
   setting: SETTING_OPTIONS[0].value,
   ageGroup: DEFAULT_AGE_GROUP,
@@ -3538,6 +3546,8 @@ const App: React.FC = () => {
       aspectRatio: options.aspectRatio,
       camera: options.camera,
       cameraDistance: options.cameraDistance,
+      cameraAngle: options.cameraAngle as any,
+      cameraMovement: options.cameraMovement as any,
       
       // Scene
       setting: options.setting,

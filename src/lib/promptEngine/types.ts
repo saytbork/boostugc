@@ -3,7 +3,12 @@
  * Comprehensive types for modular prompt generation
  */
 
-import type { EyeDirectionKey } from './parameterMap.types';
+import type {
+    CameraAngleKey,
+    CameraDistanceKey,
+    CameraMovementKey,
+    EyeDirectionKey
+} from './parameterMap.types';
 
 export interface ProductAsset {
     id: string;
@@ -56,7 +61,9 @@ export interface PromptOptions {
     creationMode: 'lifestyle' | 'studio' | 'aesthetic' | 'bg-replace' | 'ecom-blank';
     aspectRatio: string;
     camera: string;
-    cameraDistance?: "macro" | "close" | "medium" | "wide" | "environment";
+    cameraDistance?: CameraDistanceKey;
+    cameraAngle?: CameraAngleKey;
+    cameraMovement?: CameraMovementKey;
 
     // Scene
     setting: string;

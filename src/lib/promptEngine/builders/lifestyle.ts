@@ -5,10 +5,10 @@ import { buildComposition } from "./composition";
 import { buildEnvironment } from "./environment";
 import { parameterMap, cameraPresets } from "../parameterMap";
 
-export function buildProductPlacementPrompt({ productMeta, params, userPrompt }) {
+export function buildLifestylePrompt({ productMeta, params, userPrompt }) {
 
   return `
-    High quality product photography of ${productMeta?.name}.
+    Lifestyle product photography of ${productMeta?.name}.
     Scene: ${buildScene(params)}, ${buildEnvironment(params)}.
     Lighting: ${buildLighting(params)}.
     Camera: ${buildCamera(params)}.
@@ -17,6 +17,6 @@ export function buildProductPlacementPrompt({ productMeta, params, userPrompt })
     Angle: ${cameraPresets.cameraAngles[params.cameraAngle]?.prompt ?? ""}.
     Movement: ${cameraPresets.cameraMovements[params.cameraMovement]?.prompt ?? ""}.
     Additional instructions: ${userPrompt}.
-    Ultra realistic, correct scale, subtle shadows, no distortions.
+    Hyper realistic, sharp details, correct scale, clean framing.
   `
 }

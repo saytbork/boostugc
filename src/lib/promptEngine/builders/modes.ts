@@ -4,28 +4,30 @@
 
 import type { PromptOptions, PromptBuilder } from '../types';
 import { buildProductPlacementPrompt } from './productPlacement';
+import { buildLifestylePrompt } from './lifestyle';
 
 export class ModesBuilder implements PromptBuilder {
     build(options: PromptOptions): string {
-        const { creationMode, contentStyle } = options;
+        const mode = options.contentStyle === 'product' ? 'product' : options.creationMode;
+        const primaryAsset = options.productAssets?.[0];
+        const productMeta = {
+            name: (primaryAsset as any)?.name || primaryAsset?.label || primaryAsset?.id || 'product',
+        };
+        const params = {
+            setting: options.setting,
+            environmentOrder: options.environmentOrder,
+            lighting: options.lighting,
+            camera: options.camera,
+            compositionMode: options.compositionMode,
+            productPlane: options.productPlane,
+            placementStyle: (options as any).placementStyle,
+            placementCamera: (options as any).placementCamera,
+            cameraDistance: options.cameraDistance || 'medium',
+            cameraAngle: (options as any).cameraAngle,
+            cameraMovement: (options as any).cameraMovement,
+        };
 
-        if (contentStyle === 'product') {
-            const primaryAsset = options.productAssets?.[0];
-            const productMeta = {
-                name: (primaryAsset as any)?.name || primaryAsset?.label || primaryAsset?.id || 'product',
-            };
-            const params = {
-                setting: options.setting,
-                environmentOrder: options.environmentOrder,
-                lighting: options.lighting,
-                camera: options.camera,
-                compositionMode: options.compositionMode,
-                productPlane: options.productPlane,
-                placementStyle: (options as any).placementStyle,
-                placementCamera: (options as any).placementCamera,
-                cameraDistance: options.cameraDistance || 'medium',
-            };
-
+        if (mode === 'product') {
             return buildProductPlacementPrompt({
                 productMeta,
                 params: { ...params },
@@ -33,7 +35,15 @@ export class ModesBuilder implements PromptBuilder {
             }).trim().replace(/\s+/g, ' ');
         }
 
-        switch (creationMode) {
+        if (mode === 'lifestyle') {
+            return buildLifestylePrompt({
+                productMeta,
+                params: { ...params },
+                userPrompt: '',
+            }).trim().replace(/\s+/g, ' ');
+        }
+
+        switch (mode) {
             case 'lifestyle':
                 return this.buildLifestyle();
 
