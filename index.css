@@ -31,34 +31,66 @@ body {
 .delay-300 { animation-delay: 0.3s; }
 .delay-400 { animation-delay: 0.4s; }
 
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  border: 2px solid rgba(0, 0, 0, 0); /* Creates padding effect */
+  background-clip: padding-box;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Glass Card Refinement */
 .glass-card {
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(18px);
-  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.8);
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .chip {
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(55, 65, 81, 0.6);
-  color: #f8fafc;
-  padding: 0.35rem 0.95rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08); /* More subtle border */
+  background: rgba(31, 41, 55, 0.4); /* Darker, more transparent */
+  color: #9ca3af; /* Gray-400 */
+  padding: 0.5rem 1rem; /* More breathing room */
   font-size: 0.85rem;
   font-weight: 500;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   white-space: nowrap;
+  letter-spacing: 0.01em;
 }
 .chip:hover:not(:disabled) {
-  background: rgba(79, 70, 229, 0.5);
-  border-color: rgba(129, 140, 248, 1);
+  background: rgba(79, 70, 229, 0.15); /* Subtle indigo tint */
+  border-color: rgba(99, 102, 241, 0.4);
+  color: #e2e8f0;
+  transform: translateY(-1px);
 }
 .chip-active {
-  background: rgba(99, 102, 241, 0.95);
-  border-color: rgba(129, 140, 248, 1);
-  box-shadow: 0 8px 20px -10px rgba(79, 70, 229, 0.9);
+  background: rgba(79, 70, 229, 0.2) !important;
+  border-color: rgba(99, 102, 241, 1) !important;
+  color: #fff !important;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.25);
 }
 .chip:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
+  filter: grayscale(100%);
 }
+
