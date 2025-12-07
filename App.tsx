@@ -4632,6 +4632,44 @@ const App: React.FC = () => {
                                 </div>
                               </Accordion>
                             </div>
+                            <div id={getSectionId('Photography')}>
+                              <Accordion title="Photography">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                  <Tooltip content="Select the lens type used for the shot.">
+                                    <ChipSelectGroup
+                                      label="Camera Type"
+                                      options={CAMERA_OPTIONS}
+                                      selectedValue={options.camera}
+                                      onChange={(value) => handleOptionChange('camera', value, 'Photography')}
+                                    />
+                                  </Tooltip>
+                                  <Tooltip content="Control how close or far the subject appears.">
+                                    <ChipSelectGroup
+                                      label="Camera Shot"
+                                      options={CAMERA_ANGLE_OPTIONS}
+                                      selectedValue={options.cameraShot}
+                                      onChange={(value) => handleOptionChange('cameraShot', value, 'Photography')}
+                                    />
+                                  </Tooltip>
+                                  <Tooltip content="Set the vertical or tilted angle of the perspective.">
+                                    <ChipSelectGroup
+                                      label="Camera Angle"
+                                      options={CAMERA_ANGLE_OPTIONS}
+                                      selectedValue={options.cameraAngle}
+                                      onChange={(value) => handleOptionChange('cameraAngle', value, 'Photography')}
+                                    />
+                                  </Tooltip>
+                                  <Tooltip content="Adjust physical distance between camera and subject.">
+                                    <ChipSelectGroup
+                                      label="Camera Distance"
+                                      options={CAMERA_DISTANCE_OPTIONS}
+                                      selectedValue={options.cameraDistance}
+                                      onChange={(value) => handleOptionChange('cameraDistance', value, 'Photography')}
+                                    />
+                                  </Tooltip>
+                                </div>
+                              </Accordion>
+                            </div>
                             <div id={getSectionId('Product Details')}>
                               <Accordion title="Product Details">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -4646,14 +4684,7 @@ const App: React.FC = () => {
                                       customPlaceholder="Describe the depth placement"
                                     />
                                   </Tooltip>
-                                  <Tooltip content="Adjust physical distance between camera and subject.">
-                                    <ChipSelectGroup
-                                      label="Camera Distance"
-                                      options={CAMERA_DISTANCE_OPTIONS}
-                                      selectedValue={options.cameraDistance}
-                                      onChange={(value) => handleOptionChange('cameraDistance', value, 'Product Details')}
-                                    />
-                                  </Tooltip>
+
                                   <div className="sm:col-span-2 rounded-2xl border border-white/10 bg-black/20 p-4">
                                     <div className="flex items-center justify-between gap-2">
                                       <div>
