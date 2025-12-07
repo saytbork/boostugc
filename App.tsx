@@ -381,6 +381,23 @@ const syncCharacterFields = (options: MockupOptions): MockupOptions => {
   return next;
 };
 
+// Helper function to convert File to base64
+async function fileToBase64(file: File): Promise<{ base64: string; mimeType: string }> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result as string;
+      const base64 = result.split(',')[1]; // Remove data:image/png;base64, prefix
+      resolve({
+        base64,
+        mimeType: file.type
+      });
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
 const getSectionId = (title: string) =>
   title
     .toLowerCase()
