@@ -4602,299 +4602,301 @@ const App: React.FC = () => {
                         </div>
                       </Accordion>
                       {isProductPlacement && (
-                        <div id={getSectionId('Product Details')}>
-                          <Accordion title="Product Details">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                              <Tooltip content="Define the product’s primary material.">
-                                <ChipSelectGroup
-                                  label="Product Material"
-                                  options={PRODUCT_MATERIAL_OPTIONS}
-                                  selectedValue={options.productMaterial}
-                                  onChange={(value) => handleOptionChange('productMaterial', value, 'Product Details')}
-                                  allowCustom
-                                  customLabel="Custom material"
-                                  customPlaceholder="Describe the finish"
-                                />
-                              </Tooltip>
-                              <Tooltip content="Choose how the product is positioned in frame.">
-                                <ChipSelectGroup
-                                  label="Product Plane"
-                                  options={PRODUCT_PLANE_OPTIONS}
-                                  selectedValue={options.productPlane}
-                                  onChange={(value) => handleOptionChange('productPlane', value, 'Product Details')}
-                                  allowCustom
-                                  customLabel="Custom composition"
-                                  customPlaceholder="Describe the depth placement"
-                                />
-                              </Tooltip>
-                              <Tooltip content="Adjust physical distance between camera and subject.">
-                                <ChipSelectGroup
-                                  label="Camera Distance"
-                                  options={CAMERA_DISTANCE_OPTIONS}
-                                  selectedValue={options.cameraDistance}
-                                  onChange={(value) => handleOptionChange('cameraDistance', value, 'Product Details')}
-                                />
-                              </Tooltip>
-                              <div className="sm:col-span-2 rounded-2xl border border-white/10 bg-black/20 p-4">
-                                <div className="flex items-center justify-between gap-2">
-                                  <div>
-                                    <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Add Hands</p>
-                                    <p className="text-[11px] text-gray-400">Enable or disable realistic hands interacting with the product.</p>
-                                  </div>
-                                  <label className="relative inline-flex cursor-pointer items-center gap-2">
-                                    <input
-                                      type="checkbox"
-                                      className="sr-only"
-                                      checked={addHandsEnabled}
-                                      onChange={event => {
-                                        const checked = event.target.checked;
-                                        setIncludeSupplementHand(checked);
-                                        applyOptionsUpdate(prev => ({ ...(prev as any), addHands: checked }));
-                                      }}
-                                      aria-label="Add hands to product mode"
+                        <Accordion title="Product Mode">
+                          <div className="space-y-6">
+                            <div id={getSectionId('Product Details')}>
+                              <Accordion title="Product Details">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                  <Tooltip content="Define the product’s primary material.">
+                                    <ChipSelectGroup
+                                      label="Product Material"
+                                      options={PRODUCT_MATERIAL_OPTIONS}
+                                      selectedValue={options.productMaterial}
+                                      onChange={(value) => handleOptionChange('productMaterial', value, 'Product Details')}
+                                      allowCustom
+                                      customLabel="Custom material"
+                                      customPlaceholder="Describe the finish"
                                     />
-                                    <div
-                                      className={`relative h-5 w-10 rounded-full transition ${addHandsEnabled ? 'bg-indigo-500' : 'bg-gray-700'}`}
-                                    >
-                                      <span
-                                        className={`absolute left-1 top-1 block h-3 w-3 rounded-full bg-white shadow transition ${addHandsEnabled ? 'translate-x-4' : ''}`}
+                                  </Tooltip>
+                                  <Tooltip content="Choose how the product is positioned in frame.">
+                                    <ChipSelectGroup
+                                      label="Product Plane"
+                                      options={PRODUCT_PLANE_OPTIONS}
+                                      selectedValue={options.productPlane}
+                                      onChange={(value) => handleOptionChange('productPlane', value, 'Product Details')}
+                                      allowCustom
+                                      customLabel="Custom composition"
+                                      customPlaceholder="Describe the depth placement"
+                                    />
+                                  </Tooltip>
+                                  <Tooltip content="Adjust physical distance between camera and subject.">
+                                    <ChipSelectGroup
+                                      label="Camera Distance"
+                                      options={CAMERA_DISTANCE_OPTIONS}
+                                      selectedValue={options.cameraDistance}
+                                      onChange={(value) => handleOptionChange('cameraDistance', value, 'Product Details')}
+                                    />
+                                  </Tooltip>
+                                  <div className="sm:col-span-2 rounded-2xl border border-white/10 bg-black/20 p-4">
+                                    <div className="flex items-center justify-between gap-2">
+                                      <div>
+                                        <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Add Hands</p>
+                                        <p className="text-[11px] text-gray-400">Enable or disable realistic hands interacting with the product.</p>
+                                      </div>
+                                      <label className="relative inline-flex cursor-pointer items-center gap-2">
+                                        <input
+                                          type="checkbox"
+                                          className="sr-only"
+                                          checked={addHandsEnabled}
+                                          onChange={event => {
+                                            const checked = event.target.checked;
+                                            setIncludeSupplementHand(checked);
+                                            applyOptionsUpdate(prev => ({ ...(prev as any), addHands: checked }));
+                                          }}
+                                          aria-label="Add hands to product mode"
+                                        />
+                                        <div
+                                          className={`relative h-5 w-10 rounded-full transition ${addHandsEnabled ? 'bg-indigo-500' : 'bg-gray-700'}`}
+                                        >
+                                          <span
+                                            className={`absolute left-1 top-1 block h-3 w-3 rounded-full bg-white shadow transition ${addHandsEnabled ? 'translate-x-4' : ''}`}
+                                          />
+                                        </div>
+                                        <span className={`text-xs font-semibold ${addHandsEnabled ? 'text-indigo-200' : 'text-gray-500'}`}>
+                                          {addHandsEnabled ? 'On' : 'Off'}
+                                        </span>
+                                      </label>
+                                    </div>
+                                    {!addHandsEnabled && (
+                                      <div className="mt-2">
+                                        <Tooltip content="Hands and fingers will not appear in product images.">
+                                          <Badge variant="warning">Hands disabled</Badge>
+                                        </Tooltip>
+                                      </div>
+                                    )}
+                                  </div>
+                                  <div className="sm:col-span-2 rounded-2xl border border-white/10 bg-black/20 px-3 py-3 text-xs text-gray-300">
+                                    <div className="flex items-center justify-between gap-2">
+                                      <div>
+                                        <p className="uppercase tracking-[0.3em] text-indigo-200">Packaging kit</p>
+                                        <p className="text-gray-400 mt-1">Keep the entire box and inserts visible in every render.</p>
+                                      </div>
+                                      <label className="relative inline-flex cursor-pointer items-center gap-2">
+                                        <input
+                                          type="checkbox"
+                                          className="sr-only"
+                                          checked={isMultiProductPackaging}
+                                          onChange={event => setIsMultiProductPackaging(event.target.checked)}
+                                          aria-label="Packaging contains multiple products"
+                                        />
+                                        <div
+                                          className={`relative h-5 w-10 rounded-full transition ${isMultiProductPackaging ? 'bg-indigo-500' : 'bg-gray-700'}`}
+                                        >
+                                          <span
+                                            className={`absolute left-1 top-1 block h-3 w-3 rounded-full bg-white shadow transition ${isMultiProductPackaging ? 'translate-x-4' : ''}`}
+                                          />
+                                        </div>
+                                        <span className={`text-xs font-semibold ${isMultiProductPackaging ? 'text-indigo-200' : 'text-gray-500'}`}>
+                                          {isMultiProductPackaging ? 'Active' : 'Off'}
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div className="rounded-2xl border border-white/10 bg-black/20 p-4 space-y-2">
+                                    <div className="flex flex-wrap items-center justify-between gap-2">
+                                      <div>
+                                        <p className="text-xs uppercase tracking-[0.35em] text-indigo-200">Supplement photo modes</p>
+                                        <p className="text-[11px] text-gray-400">Preset palettes inspired by top supplement launches.</p>
+                                      </div>
+                                      <button
+                                        type="button"
+                                        onClick={() => handleSupplementPresetSelect('none')}
+                                        className="rounded-full border border-white/15 px-3 py-1 text-xs text-gray-300 hover:border-indigo-400 hover:text-white"
+                                      >
+                                        Clear
+                                      </button>
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                      {normalizedSupplementPresets.map(preset => (
+                                        <button
+                                          key={preset.value}
+                                          type="button"
+                                          onClick={() => handleSupplementPresetSelect(preset.value)}
+                                          className={`rounded-full border px-3 py-1 text-xs transition ${activeSupplementPreset === preset.value
+                                            ? 'border-indigo-400 bg-indigo-500/10 text-white'
+                                            : 'border-white/15 text-gray-300 hover:border-indigo-400 hover:text-white'
+                                            }`}
+                                          title={preset.description}
+                                        >
+                                          <div className="flex items-center gap-1 relative group">
+                                            <span>{preset.label}</span>
+                                            {preset.tooltip && (
+                                              <span className="text-xs text-gray-400 cursor-pointer group-hover:text-white">
+                                                ⓘ
+                                                <div className="absolute left-0 top-4 z-50 hidden group-hover:block bg-black/90 text-white text-xs p-2 rounded shadow-lg w-44">
+                                                  {preset.tooltip}
+                                                </div>
+                                              </span>
+                                            )}
+                                          </div>
+                                        </button>
+                                      ))}
+                                    </div>
+                                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                      <div className="flex flex-col gap-1">
+                                        <label className="text-xs uppercase tracking-widest text-gray-500">Background color</label>
+                                        <input
+                                          type="text"
+                                          value={supplementBackgroundColor}
+                                          onChange={event => setSupplementBackgroundColor(event.target.value)}
+                                          placeholder="e.g., #FFB347 or pastel peach"
+                                          className="rounded-lg border border-white/10 bg-gray-900 px-3 py-2 text-sm text-white focus:border-indigo-400 focus:outline-none"
+                                        />
+                                      </div>
+                                      <div className="flex flex-col gap-1">
+                                        <label className="text-xs uppercase tracking-widest text-gray-500">Accent color / props</label>
+                                        <input
+                                          type="text"
+                                          value={supplementAccentColor}
+                                          onChange={event => setSupplementAccentColor(event.target.value)}
+                                          placeholder="e.g., teal acrylic cube"
+                                          className="rounded-lg border border-white/10 bg-gray-900 px-3 py-2 text-sm text-white focus:border-indigo-400 focus:outline-none"
+                                        />
+                                      </div>
+                                    </div>
+                                    {isHeroLandingMode && (
+                                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                        <div className="flex flex-col gap-1">
+                                          <label className="text-xs uppercase tracking-widest text-gray-500">Product alignment</label>
+                                          <div className="flex flex-wrap gap-2">
+                                            {HERO_ALIGNMENT_OPTIONS.map(option => (
+                                              <button
+                                                key={option.value}
+                                                type="button"
+                                                onClick={() => setHeroProductAlignment(option.value)}
+                                                className={`rounded-full border px-3 py-1 text-xs transition ${heroProductAlignment === option.value ? 'border-indigo-400 bg-indigo-500/10 text-white' : 'border-white/15 text-gray-300 hover:border-indigo-400 hover:text-white'}`}
+                                              >
+                                                {option.label}
+                                              </button>
+                                            ))}
+                                          </div>
+                                        </div>
+                                        <div className="flex flex-col gap-1">
+                                          <label className="text-xs uppercase tracking-widest text-gray-500">Product scale</label>
+                                          <input
+                                            type="number"
+                                            min="0.5"
+                                            max="2"
+                                            step="0.05"
+                                            value={heroProductScale}
+                                            onChange={event => {
+                                              const value = Number.parseFloat(event.target.value);
+                                              if (Number.isNaN(value)) return;
+                                              setHeroProductScale(Math.max(0.3, Math.min(3, value)));
+                                            }}
+                                            className="rounded-lg border border-white/10 bg-gray-900 px-3 py-2 text-sm text-white focus:border-indigo-400 focus:outline-none"
+                                          />
+                                          <p className="text-[11px] text-gray-500">1 = original sizing. Increase for bolder hero presence.</p>
+                                        </div>
+                                        <div className="flex flex-col gap-1 sm:col-span-2">
+                                          <label className="text-xs uppercase tracking-widest text-gray-500">Shadow style</label>
+                                          <div className="flex flex-wrap gap-2">
+                                            {HERO_SHADOW_OPTIONS.map(option => (
+                                              <button
+                                                key={option.value}
+                                                type="button"
+                                                onClick={() => setHeroShadowStyle(option.value)}
+                                                className={`rounded-full border px-3 py-1 text-xs transition ${heroShadowStyle === option.value ? 'border-indigo-400 bg-indigo-500/10 text-white' : 'border-white/15 text-gray-300 hover:border-indigo-400 hover:text-white'}`}
+                                              >
+                                                {option.label}
+                                              </button>
+                                            ))}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    )}
+                                    {renderFormulationStoryPanel('product')}
+                                    <div className="flex flex-col gap-2">
+                                      <label className="text-xs uppercase tracking-widest text-gray-500">Flavor / ingredient props</label>
+                                      <textarea
+                                        value={supplementFlavorNotes}
+                                        onChange={event => setSupplementFlavorNotes(event.target.value)}
+                                        placeholder="e.g., pineapple, lavender sprigs, gummy vitamins"
+                                        className="rounded-lg border border-white/10 bg-gray-900 px-3 py-2 text-sm text-white focus:border-indigo-400 focus:outline-none"
+                                        rows={2}
                                       />
                                     </div>
-                                    <span className={`text-xs font-semibold ${addHandsEnabled ? 'text-indigo-200' : 'text-gray-500'}`}>
-                                      {addHandsEnabled ? 'On' : 'Off'}
-                                    </span>
-                                  </label>
-                                </div>
-                                {!addHandsEnabled && (
-                                  <div className="mt-2">
-                                    <Tooltip content="Hands and fingers will not appear in product images.">
-                                      <Badge variant="warning">Hands disabled</Badge>
-                                    </Tooltip>
-                                  </div>
-                                )}
-                              </div>
-                              <div className="sm:col-span-2 rounded-2xl border border-white/10 bg-black/20 px-3 py-3 text-xs text-gray-300">
-                                <div className="flex items-center justify-between gap-2">
-                                  <div>
-                                    <p className="uppercase tracking-[0.3em] text-indigo-200">Packaging kit</p>
-                                    <p className="text-gray-400 mt-1">Keep the entire box and inserts visible in every render.</p>
-                                  </div>
-                                  <label className="relative inline-flex cursor-pointer items-center gap-2">
-                                    <input
-                                      type="checkbox"
-                                      className="sr-only"
-                                      checked={isMultiProductPackaging}
-                                      onChange={event => setIsMultiProductPackaging(event.target.checked)}
-                                      aria-label="Packaging contains multiple products"
-                                    />
-                                    <div
-                                      className={`relative h-5 w-10 rounded-full transition ${isMultiProductPackaging ? 'bg-indigo-500' : 'bg-gray-700'}`}
-                                    >
-                                      <span
-                                        className={`absolute left-1 top-1 block h-3 w-3 rounded-full bg-white shadow transition ${isMultiProductPackaging ? 'translate-x-4' : ''}`}
+                                    <div className="flex flex-col gap-2">
+                                      <label className="text-xs uppercase tracking-widest text-gray-500">Custom hero cue</label>
+                                      <textarea
+                                        value={supplementCustomPrompt}
+                                        onChange={event => setSupplementCustomPrompt(event.target.value)}
+                                        placeholder="e.g., have a manicured hand toss gummies mid-air beside the bottle"
+                                        className="rounded-lg border border-white/10 bg-gray-900 px-3 py-2 text-sm text-white focus:border-indigo-400 focus:outline-none"
+                                        rows={2}
                                       />
+                                      <p className="text-[11px] text-gray-500">Add any specific staging or stylistic callouts for this product.</p>
                                     </div>
-                                    <span className={`text-xs font-semibold ${isMultiProductPackaging ? 'text-indigo-200' : 'text-gray-500'}`}>
-                                      {isMultiProductPackaging ? 'Active' : 'Off'}
-                                    </span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="rounded-2xl border border-white/10 bg-black/20 p-4 space-y-2">
-                                <div className="flex flex-wrap items-center justify-between gap-2">
-                                  <div>
-                                    <p className="text-xs uppercase tracking-[0.35em] text-indigo-200">Supplement photo modes</p>
-                                    <p className="text-[11px] text-gray-400">Preset palettes inspired by top supplement launches.</p>
                                   </div>
+                                </div>
+                              </Accordion>
+                            </div>
+                            <div id={getSectionId('Camera Framing Presets')}>
+                              <Accordion title="Camera Framing Presets">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                   <button
                                     type="button"
-                                    onClick={() => handleSupplementPresetSelect('none')}
-                                    className="rounded-full border border-white/15 px-3 py-1 text-xs text-gray-300 hover:border-indigo-400 hover:text-white"
+                                    onClick={() => applyFramingPreset({ cameraAngle: 'top-down', cameraDistance: '50cm', composition: 'full-object' })}
+                                    className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                   >
-                                    Clear
+                                    <p className="text-sm font-semibold text-gray-100">Top-Down Shot</p>
+                                    <p className="text-xs text-gray-400 mt-1">Overhead view with balanced framing of the product.</p>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => applyFramingPreset({ cameraAngle: 'straight-on', cameraDistance: '15cm', composition: 'macro-detail', crop: 'half-object' })}
+                                    className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                  >
+                                    <p className="text-sm font-semibold text-gray-100">Macro Detail</p>
+                                    <p className="text-xs text-gray-400 mt-1">Extreme close-up capturing fine textures and materials.</p>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => applyFramingPreset({ cameraAngle: 'high-angle-45', cameraDistance: '2m', composition: 'full-object' })}
+                                    className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                  >
+                                    <p className="text-sm font-semibold text-gray-100">High-Angle View</p>
+                                    <p className="text-xs text-gray-400 mt-1">45° elevated perspective to show context and surface.</p>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => applyFramingPreset({ cameraAngle: 'low-angle', cameraDistance: 'close', tilt: '35deg-toward-viewer' })}
+                                    className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                  >
+                                    <p className="text-sm font-semibold text-gray-100">Low-Angle View</p>
+                                    <p className="text-xs text-gray-400 mt-1">Heroic low perspective with a gentle forward tilt.</p>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => applyFramingPreset({ productRotation: '45deg' })}
+                                    className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                  >
+                                    <p className="text-sm font-semibold text-gray-100">45° Rotation</p>
+                                    <p className="text-xs text-gray-400 mt-1">Rotate the product slightly for a dynamic hero look.</p>
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => applyFramingPreset({ backgroundTone: 'studio-black', lighting: 'soft-studio', shadows: 'contact-bounce' })}
+                                    className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                  >
+                                    <p className="text-sm font-semibold text-gray-100">Studio Black Background</p>
+                                    <p className="text-xs text-gray-400 mt-1">Deep black sweep with soft studio light and contact shadow.</p>
                                   </button>
                                 </div>
-                                <div className="flex flex-wrap gap-2">
-                                  {normalizedSupplementPresets.map(preset => (
-                                    <button
-                                      key={preset.value}
-                                      type="button"
-                                      onClick={() => handleSupplementPresetSelect(preset.value)}
-                                      className={`rounded-full border px-3 py-1 text-xs transition ${activeSupplementPreset === preset.value
-                                        ? 'border-indigo-400 bg-indigo-500/10 text-white'
-                                        : 'border-white/15 text-gray-300 hover:border-indigo-400 hover:text-white'
-                                        }`}
-                                      title={preset.description}
-                                    >
-                                      <div className="flex items-center gap-1 relative group">
-                                        <span>{preset.label}</span>
-                                        {preset.tooltip && (
-                                          <span className="text-xs text-gray-400 cursor-pointer group-hover:text-white">
-                                            ⓘ
-                                            <div className="absolute left-0 top-4 z-50 hidden group-hover:block bg-black/90 text-white text-xs p-2 rounded shadow-lg w-44">
-                                              {preset.tooltip}
-                                            </div>
-                                          </span>
-                                        )}
-                                      </div>
-                                    </button>
-                                  ))}
-                                </div>
-                                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                                  <div className="flex flex-col gap-1">
-                                    <label className="text-xs uppercase tracking-widest text-gray-500">Background color</label>
-                                    <input
-                                      type="text"
-                                      value={supplementBackgroundColor}
-                                      onChange={event => setSupplementBackgroundColor(event.target.value)}
-                                      placeholder="e.g., #FFB347 or pastel peach"
-                                      className="rounded-lg border border-white/10 bg-gray-900 px-3 py-2 text-sm text-white focus:border-indigo-400 focus:outline-none"
-                                    />
-                                  </div>
-                                  <div className="flex flex-col gap-1">
-                                    <label className="text-xs uppercase tracking-widest text-gray-500">Accent color / props</label>
-                                    <input
-                                      type="text"
-                                      value={supplementAccentColor}
-                                      onChange={event => setSupplementAccentColor(event.target.value)}
-                                      placeholder="e.g., teal acrylic cube"
-                                      className="rounded-lg border border-white/10 bg-gray-900 px-3 py-2 text-sm text-white focus:border-indigo-400 focus:outline-none"
-                                    />
-                                  </div>
-                                </div>
-                                {isHeroLandingMode && (
-                                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                                    <div className="flex flex-col gap-1">
-                                      <label className="text-xs uppercase tracking-widest text-gray-500">Product alignment</label>
-                                      <div className="flex flex-wrap gap-2">
-                                        {HERO_ALIGNMENT_OPTIONS.map(option => (
-                                          <button
-                                            key={option.value}
-                                            type="button"
-                                            onClick={() => setHeroProductAlignment(option.value)}
-                                            className={`rounded-full border px-3 py-1 text-xs transition ${heroProductAlignment === option.value ? 'border-indigo-400 bg-indigo-500/10 text-white' : 'border-white/15 text-gray-300 hover:border-indigo-400 hover:text-white'}`}
-                                          >
-                                            {option.label}
-                                          </button>
-                                        ))}
-                                      </div>
-                                    </div>
-                                    <div className="flex flex-col gap-1">
-                                      <label className="text-xs uppercase tracking-widest text-gray-500">Product scale</label>
-                                      <input
-                                        type="number"
-                                        min="0.5"
-                                        max="2"
-                                        step="0.05"
-                                        value={heroProductScale}
-                                        onChange={event => {
-                                          const value = Number.parseFloat(event.target.value);
-                                          if (Number.isNaN(value)) return;
-                                          setHeroProductScale(Math.max(0.3, Math.min(3, value)));
-                                        }}
-                                        className="rounded-lg border border-white/10 bg-gray-900 px-3 py-2 text-sm text-white focus:border-indigo-400 focus:outline-none"
-                                      />
-                                      <p className="text-[11px] text-gray-500">1 = original sizing. Increase for bolder hero presence.</p>
-                                    </div>
-                                    <div className="flex flex-col gap-1 sm:col-span-2">
-                                      <label className="text-xs uppercase tracking-widest text-gray-500">Shadow style</label>
-                                      <div className="flex flex-wrap gap-2">
-                                        {HERO_SHADOW_OPTIONS.map(option => (
-                                          <button
-                                            key={option.value}
-                                            type="button"
-                                            onClick={() => setHeroShadowStyle(option.value)}
-                                            className={`rounded-full border px-3 py-1 text-xs transition ${heroShadowStyle === option.value ? 'border-indigo-400 bg-indigo-500/10 text-white' : 'border-white/15 text-gray-300 hover:border-indigo-400 hover:text-white'}`}
-                                          >
-                                            {option.label}
-                                          </button>
-                                        ))}
-                                      </div>
-                                    </div>
-                                  </div>
-                                )}
-                                {renderFormulationStoryPanel('product')}
-                                <div className="flex flex-col gap-2">
-                                  <label className="text-xs uppercase tracking-widest text-gray-500">Flavor / ingredient props</label>
-                                  <textarea
-                                    value={supplementFlavorNotes}
-                                    onChange={event => setSupplementFlavorNotes(event.target.value)}
-                                    placeholder="e.g., pineapple, lavender sprigs, gummy vitamins"
-                                    className="rounded-lg border border-white/10 bg-gray-900 px-3 py-2 text-sm text-white focus:border-indigo-400 focus:outline-none"
-                                    rows={2}
-                                  />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                  <label className="text-xs uppercase tracking-widest text-gray-500">Custom hero cue</label>
-                                  <textarea
-                                    value={supplementCustomPrompt}
-                                    onChange={event => setSupplementCustomPrompt(event.target.value)}
-                                    placeholder="e.g., have a manicured hand toss gummies mid-air beside the bottle"
-                                    className="rounded-lg border border-white/10 bg-gray-900 px-3 py-2 text-sm text-white focus:border-indigo-400 focus:outline-none"
-                                    rows={2}
-                                  />
-                                  <p className="text-[11px] text-gray-500">Add any specific staging or stylistic callouts for this product.</p>
-                                </div>
-                              </div>
+                              </Accordion>
                             </div>
-                          </Accordion>
-                        </div>
-                      )}
-                      {isProductPlacement && (
-                        <div id={getSectionId('Camera Framing Presets')}>
-                          <Accordion title="Camera Framing Presets">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                              <button
-                                type="button"
-                                onClick={() => applyFramingPreset({ cameraAngle: 'top-down', cameraDistance: '50cm', composition: 'full-object' })}
-                                className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                              >
-                                <p className="text-sm font-semibold text-gray-100">Top-Down Shot</p>
-                                <p className="text-xs text-gray-400 mt-1">Overhead view with balanced framing of the product.</p>
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => applyFramingPreset({ cameraAngle: 'straight-on', cameraDistance: '15cm', composition: 'macro-detail', crop: 'half-object' })}
-                                className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                              >
-                                <p className="text-sm font-semibold text-gray-100">Macro Detail</p>
-                                <p className="text-xs text-gray-400 mt-1">Extreme close-up capturing fine textures and materials.</p>
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => applyFramingPreset({ cameraAngle: 'high-angle-45', cameraDistance: '2m', composition: 'full-object' })}
-                                className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                              >
-                                <p className="text-sm font-semibold text-gray-100">High-Angle View</p>
-                                <p className="text-xs text-gray-400 mt-1">45° elevated perspective to show context and surface.</p>
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => applyFramingPreset({ cameraAngle: 'low-angle', cameraDistance: 'close', tilt: '35deg-toward-viewer' })}
-                                className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                              >
-                                <p className="text-sm font-semibold text-gray-100">Low-Angle View</p>
-                                <p className="text-xs text-gray-400 mt-1">Heroic low perspective with a gentle forward tilt.</p>
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => applyFramingPreset({ productRotation: '45deg' })}
-                                className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                              >
-                                <p className="text-sm font-semibold text-gray-100">45° Rotation</p>
-                                <p className="text-xs text-gray-400 mt-1">Rotate the product slightly for a dynamic hero look.</p>
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => applyFramingPreset({ backgroundTone: 'studio-black', lighting: 'soft-studio', shadows: 'contact-bounce' })}
-                                className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                              >
-                                <p className="text-sm font-semibold text-gray-100">Studio Black Background</p>
-                                <p className="text-xs text-gray-400 mt-1">Deep black sweep with soft studio light and contact shadow.</p>
-                              </button>
-                            </div>
-                          </Accordion>
-                        </div>
+                          </div>
+                        </Accordion>
                       )}
                       <Accordion title="Photography">
                         <div id={getSectionId('Photography')} className={`grid grid-cols-1 sm:grid-cols-2 gap-4 ${cameraControlsDisabled ? 'opacity-70' : ''}`}>

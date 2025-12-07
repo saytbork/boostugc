@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.cache/
+.vercel/
+.vscode/
+.DS_Store
+*.log
+*.sh
+server/
+scripts/
+playwright/
+playwright-core/
+public/blog/**
+!public/blog/article-1/**
+!public/blog/article-2/**
+
