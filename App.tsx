@@ -1830,7 +1830,7 @@ const App: React.FC = () => {
       )}
       {!isProductPlacement && (
         <div id={getSectionId('Appearance Level')}>
-          <Accordion title="Appearance Level">
+          <Accordion title="Appearance Level" defaultOpen={false}>
             <div className="space-y-4">
               <Tooltip content="Overall grooming and appearance level.">
                 <ChipSelectGroup label="Appearance Level" options={PERSON_APPEARANCE_OPTIONS} selectedValue={options.personAppearance} onChange={(value) => handleOptionChange('personAppearance', value, 'Appearance Level')} disabled={personControlsDisabled} />
@@ -1841,7 +1841,7 @@ const App: React.FC = () => {
       )}
       {!isProductPlacement && (
         <div id={getSectionId('Mood')}>
-          <Accordion title="Mood">
+          <Accordion title="Mood" defaultOpen={false}>
             <div className="space-y-4">
               <Tooltip content="Define the emotional atmosphere of the scene.">
                 <ChipSelectGroup label="Mood" options={PERSON_MOOD_OPTIONS} selectedValue={options.personMood} onChange={(value) => handleOptionChange('personMood', value, 'Mood')} disabled={personControlsDisabled} />
@@ -1852,7 +1852,7 @@ const App: React.FC = () => {
       )}
       {!isProductPlacement && (
         <div id={getSectionId('Pose')}>
-          <Accordion title="Pose">
+          <Accordion title="Pose" defaultOpen={false}>
             <div className="space-y-4">
               <Tooltip content="Choose the body posture or gesture.">
                 <ChipSelectGroup label="Pose" options={PERSON_POSE_OPTIONS} selectedValue={options.personPose} onChange={(value) => handleOptionChange('personPose', value, 'Pose')} disabled={personControlsDisabled} />
@@ -1863,7 +1863,7 @@ const App: React.FC = () => {
       )}
       {!isProductPlacement && (
         <div id={getSectionId('Interaction')}>
-          <Accordion title="Interaction">
+          <Accordion title="Interaction" defaultOpen={false}>
             <div className="space-y-4">
               <Tooltip content="Define how the subject engages with the product.">
                 <ChipSelectGroup label="Interaction" options={PRODUCT_INTERACTION_OPTIONS} selectedValue={options.productInteraction} onChange={(value) => handleOptionChange('productInteraction', value, 'Interaction')} disabled={personControlsDisabled} />
@@ -1874,7 +1874,7 @@ const App: React.FC = () => {
       )}
       {!isProductPlacement && (
         <div id={getSectionId('Wardrobe')}>
-          <Accordion title="Wardrobe">
+          <Accordion title="Wardrobe" defaultOpen={false}>
             <div className="space-y-4">
               <Tooltip content="Select a clothing style for the subject.">
                 <ChipSelectGroup label="Wardrobe" options={WARDROBE_STYLE_OPTIONS} selectedValue={options.wardrobeStyle} onChange={(value) => handleOptionChange('wardrobeStyle', value, 'Wardrobe')} disabled={personControlsDisabled} />
@@ -1885,7 +1885,7 @@ const App: React.FC = () => {
       )}
       {!isProductPlacement && (
         <div id={getSectionId('UGC Real Mode')}>
-          <Accordion title="UGC Real Mode">
+          <Accordion title="UGC Real Mode" defaultOpen={false}>
             <UGCRealModePanel
               disabled={personControlsDisabled}
               enabled={ugcRealSettings.isEnabled}
@@ -4546,7 +4546,7 @@ const App: React.FC = () => {
                     </div>
 
                     <div className="space-y-6">
-                      <Accordion title="Scene and Environment">
+                      <Accordion title="Scene and Environment" defaultOpen={false}>
                         <div id={getSectionId('Scene & Environment')} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <Tooltip content="Choose the overall environment where the scene takes place.">
                             <ChipSelectGroup
@@ -4652,7 +4652,7 @@ const App: React.FC = () => {
                               </Accordion>
                             </div>
                             <div id={getSectionId('Photography')}>
-                              <Accordion title="Photography">
+                              <Accordion title="Photography" defaultOpen={false}>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                   <Tooltip content="Select the lens type used for the shot.">
                                     <ChipSelectGroup
@@ -4690,7 +4690,7 @@ const App: React.FC = () => {
                               </Accordion>
                             </div>
                             <div id={getSectionId('Environment')}>
-                              <Accordion title="Environment">
+                              <Accordion title="Environment" defaultOpen={false}>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                   <Tooltip content="Choose where the scene takes place.">
                                     <ChipSelectGroup
@@ -4707,7 +4707,7 @@ const App: React.FC = () => {
                               </Accordion>
                             </div>
                             <div id={getSectionId('Lighting')}>
-                              <Accordion title="Lighting">
+                              <Accordion title="Lighting" defaultOpen={false}>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                   <Tooltip content="Choose a lighting style that defines mood and contrast.">
                                     <ChipSelectGroup
@@ -4721,7 +4721,7 @@ const App: React.FC = () => {
                               </Accordion>
                             </div>
                             <div id={getSectionId('Interaction Notes')}>
-                              <Accordion title="Interaction Notes">
+                              <Accordion title="Interaction Notes" defaultOpen={false}>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                   <Tooltip content="Define how the product is being interacted with.">
                                     <ChipSelectGroup
@@ -4735,7 +4735,7 @@ const App: React.FC = () => {
                               </Accordion>
                             </div>
                             <div id={getSectionId('Product Details')}>
-                              <Accordion title="Product Details">
+                              <Accordion title="Product Details" defaultOpen={false}>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                   <Tooltip content="Choose how the product is positioned in frame.">
                                     <ChipSelectGroup
@@ -4954,7 +4954,7 @@ const App: React.FC = () => {
                               </Accordion>
                             </div>
                             <div id={getSectionId('Camera Framing Presets')}>
-                              <Accordion title="Camera Framing Presets">
+                              <Accordion title="Camera Framing Presets" defaultOpen={false}>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                   <button
                                     type="button"
@@ -5010,7 +5010,7 @@ const App: React.FC = () => {
                           </div>
                         </Accordion>
                       )}
-                      <Accordion title="Photography">
+                      <Accordion title="Photography" defaultOpen={false}>
                         <div id={getSectionId('Photography')} className={`grid grid-cols-1 sm:grid-cols-2 gap-4 ${cameraControlsDisabled ? 'opacity-70' : ''}`}>
                           <Tooltip content="Choose a lighting style that defines mood and contrast.">
                             <ChipSelectGroup label="Lighting" options={LIGHTING_OPTIONS} selectedValue={options.lighting} onChange={(value) => handleOptionChange('lighting', value, 'Photography')} />
