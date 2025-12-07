@@ -1,8 +1,8 @@
 [
   {
-    "origin": ["*"],
+    "origin": ["https://boostugc.app", "https://boostugc.vercel.app"],
     "method": ["GET", "POST", "PUT", "HEAD", "DELETE", "OPTIONS"],
     "maxAgeSeconds": 3600,
-    "responseHeader": ["Content-Type", "x-goog-meta-*", "x-goog-resumable"]
+    "responseHeader": ["Content-Type", "Authorization"]
   }
 ]

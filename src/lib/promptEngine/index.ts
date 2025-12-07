@@ -176,6 +176,41 @@ function negativePrompt() {
     ].join(", ");
 }
 
+function handAppearanceRules(options: PromptOptions): string {
+    if (!options.personIncluded) {
+        return "";
+    }
+
+    const pose =
+        options.personDetails?.personPose ||
+        (options as any).personPose ||
+        "";
+    const normalizedPose = pose.toString().toLowerCase();
+    const hideHands =
+        normalizedPose.includes("no hand") ||
+        normalizedPose.includes("without hands") ||
+        normalizedPose.includes("sin manos") ||
+        normalizedPose.includes("hands-free") ||
+        normalizedPose.includes("hands free") ||
+        normalizedPose.includes("hands out of frame") ||
+        normalizedPose.includes("hands off frame") ||
+        normalizedPose.includes("hands hidden") ||
+        normalizedPose.includes("hide hands") ||
+        normalizedPose.includes("hands not visible");
+
+    if (hideHands) {
+        return "do not show hands, focus only on the product with natural placement.";
+    }
+
+    return [
+        "render hands with anatomically correct positioning and natural finger alignment",
+        "avoid extra fingers, avoid distorted hands, avoid disembodied limbs",
+        "clean and realistic grip on the product, correct finger count",
+        "no floating fingers, no deformed fingertips",
+        "ensure hand is fully connected and natural in the frame"
+    ].join(", ") + ".";
+}
+
 export class PromptEngine {
     private builders: PromptBuilder[];
 
@@ -201,6 +236,11 @@ export class PromptEngine {
             (builder): builder is ProductBuilder => builder instanceof ProductBuilder
         );
         const productSection = productBuilder ? productBuilder.build(options) : '';
+        const personSection = options.personIncluded
+            ? formatPersonDetails((options as any).personDetails)
+            : "no person";
+        const handSection = handAppearanceRules(options);
+        const handSectionText = handSection ? `\n${handSection}` : '';
 
         const finalPrompt = `
 Ultra realistic photo, cinematic lighting.
@@ -212,7 +252,7 @@ Camera rules:
 ${cameraRules(options)}
 
 Person details:
-${options.personIncluded ? formatPersonDetails((options as any).personDetails) : "no person"}
+${personSection}${handSectionText}
 
 Product details:
 ${productSection}
