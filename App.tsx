@@ -4670,6 +4670,23 @@ const App: React.FC = () => {
                                 </div>
                               </Accordion>
                             </div>
+                            <div id={getSectionId('Environment')}>
+                              <Accordion title="Environment">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                  <Tooltip content="Choose where the scene takes place.">
+                                    <ChipSelectGroup
+                                      label="Setting"
+                                      options={SETTING_OPTIONS}
+                                      selectedValue={options.setting}
+                                      onChange={(value) => handleOptionChange('setting', value, 'Environment')}
+                                      allowCustom
+                                      customLabel="Custom setting"
+                                      customPlaceholder="Describe the location"
+                                    />
+                                  </Tooltip>
+                                </div>
+                              </Accordion>
+                            </div>
                             <div id={getSectionId('Product Details')}>
                               <Accordion title="Product Details">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
