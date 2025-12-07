@@ -20,6 +20,17 @@ export type CameraMovementKey =
 export type CameraDistanceKey =
   | "macro" | "close" | "medium" | "wide" | "environment";
 
+export type CameraShotKey =
+  | "fullBody"
+  | "closeUp"
+  | "extremeCloseUp"
+  | "extremeLongShot"
+  | "highAngleShot"
+  | "birdsEyeView"
+  | "dutchAngle"
+  | "sideProfile"
+  | "lowAngleShot";
+
 export interface ParameterMap {
   eyeDirection: Record<EyeDirectionKey, string>;
   ageGroup: Record<string, string>;
@@ -33,6 +44,8 @@ export interface ParameterMap {
   environmentOrder: Record<string, string>;
   cameraType: Record<string, string>;
   cameraDistance: Record<CameraDistanceKey, string>;
+  productMaterial: Record<string, string>;
+  cameraAngles?: Record<CameraShotKey, string>;
   lighting: Record<string, string>;
   selfieType: Record<string, string>;
   compositionMode: Record<string, string>;

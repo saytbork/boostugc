@@ -30,6 +30,18 @@ export const cameraPresets = {
 } as const;
 
 export const parameterMap: ParameterMap = {
+  cameraAngles: {
+    fullBody: "full body shot of the subject, showing outfit, posture and action",
+    closeUp: "tight close up of the subject's face",
+    extremeCloseUp: "extreme close up of a specific facial feature",
+    extremeLongShot: "extreme long shot showing the subject within the full environment",
+    highAngleShot: "high angle shot looking down at the subject",
+    birdsEyeView: "bird's eye view from top down",
+    dutchAngle: "dutch angle tilted frame",
+    sideProfile: "side profile view of the subject",
+    lowAngleShot: "low angle shot looking upward"
+  },
+
   eyeDirection: {
     "Look at Camera": "their eyes look directly into the camera with confident engaging focus",
     "Look Slightly Away": "their gaze is slightly off camera, creating a natural candid feel",
@@ -129,6 +141,14 @@ export const parameterMap: ParameterMap = {
     "Home Studio Chaos": "a home creator studio with creative clutter"
   },
 
+  productMaterial: {
+    "matte plastic": "matte plastic material finish",
+    "glossy plastic": "glossy plastic material with subtle reflections",
+    "transparent glass, may contain liquid": "transparent glass material that may contain liquid inside",
+    "reflective metal": "reflective metal material",
+    "textured paper or cardboard": "textured paper or cardboard material finish"
+  },
+
   environmentOrder: {
     Clean: "clean organized environment with minimal distractions",
     Natural: "natural lived in environment with subtle details",
@@ -151,11 +171,11 @@ export const parameterMap: ParameterMap = {
   },
 
   cameraDistance: {
-    macro: "extreme macro close up, extremely close framing showing micro-details",
-    close: "close up shot, camera placed very near the product for strong visual emphasis",
-    medium: "medium distance shot, natural viewing distance, balanced framing",
-    wide: "wide shot, camera farther away showing more environment",
-    environment: "distant product shot, product appears smaller inside a large scenic environment"
+    macro: "extreme macro close up",
+    close: "close up shot",
+    medium: "medium distance shot",
+    wide: "wide shot showing more environment",
+    environment: "distant product shot inside large scenic environment"
   },
 
   lighting: {

@@ -5,7 +5,9 @@
 
 import type {
     CameraAngleKey,
+    CameraDistanceKey,
     CameraMovementKey,
+    CameraShotKey,
     EyeDirectionKey
 } from './parameterMap.types';
 
@@ -60,8 +62,9 @@ export interface PromptOptions {
     creationMode: 'lifestyle' | 'studio' | 'aesthetic' | 'bg-replace' | 'ecom-blank';
     aspectRatio: string;
     camera: string;
-    cameraDistance?: "macro" | "close" | "medium" | "wide" | "environment";
+    cameraDistance?: CameraDistanceKey;
     cameraAngle?: CameraAngleKey;
+    cameraShot?: CameraShotKey;
     cameraMovement?: CameraMovementKey;
 
     // Scene
@@ -97,6 +100,7 @@ export interface PromptOptions {
     heightNotes?: string;
     isMultiProductPackaging?: boolean;
     bundleLabels?: string[];
+    productMaterial?: string;
     clothingReference?: string;
     clothingPreset?: string;
     clothingQuickPreset?: string;

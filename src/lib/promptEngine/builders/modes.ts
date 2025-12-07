@@ -23,8 +23,18 @@ export class ModesBuilder implements PromptBuilder {
             placementStyle: (options as any).placementStyle,
             placementCamera: (options as any).placementCamera,
             cameraDistance: options.cameraDistance || 'medium',
-            cameraAngle: (options as any).cameraAngle,
+            cameraAngle: (options as any).cameraAngle || (options as any).cameraShot,
+            cameraShot: (options as any).cameraShot || (options as any).cameraAngle,
             cameraMovement: (options as any).cameraMovement,
+            personPose: (options as any).personPose,
+            personExpression: (options as any).personExpression,
+            wardrobeStyle: (options as any).wardrobeStyle,
+            personMood: (options as any).personMood,
+            personProps: (options as any).personProps,
+            microLocation: (options as any).microLocation,
+            eyeDirection: (options as any).eyeDirection,
+            creationMode: options.creationMode,
+            selfieType: (options as any).selfieType,
         };
 
         if (mode === 'product') {

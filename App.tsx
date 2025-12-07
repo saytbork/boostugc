@@ -9,6 +9,7 @@ import {
   PLACEMENT_STYLE_OPTIONS,
   PLACEMENT_CAMERA_OPTIONS,
   CAMERA_DISTANCE_OPTIONS,
+  CAMERA_ANGLE_OPTIONS,
   LIGHTING_OPTIONS, SETTING_OPTIONS, AGE_GROUP_OPTIONS, CAMERA_OPTIONS,
   PERSPECTIVE_OPTIONS, SELFIE_TYPE_OPTIONS, ETHNICITY_OPTIONS,
   GENDER_OPTIONS, ASPECT_RATIO_OPTIONS, ENVIRONMENT_ORDER_OPTIONS, PERSON_APPEARANCE_OPTIONS,
@@ -343,6 +344,9 @@ const cloneOptions = (source: MockupOptions): MockupOptions => {
   if (cloned.cameraAngle === undefined) {
     cloned.cameraAngle = '';
   }
+  if (cloned.cameraShot === undefined) {
+    cloned.cameraShot = '';
+  }
   if (cloned.cameraMovement === undefined) {
     cloned.cameraMovement = '';
   }
@@ -542,7 +546,8 @@ const createDefaultOptions = (): MockupOptions => ({
   placementStyle: PLACEMENT_STYLE_OPTIONS[0].value,
   placementCamera: PLACEMENT_CAMERA_OPTIONS[0].value,
   cameraDistance: CAMERA_DISTANCE_OPTIONS[2]?.value ?? 'medium',
-  cameraAngle: '',
+  cameraAngle: CAMERA_ANGLE_OPTIONS[0]?.value ?? '',
+  cameraShot: CAMERA_ANGLE_OPTIONS[0]?.value ?? '',
   cameraMovement: '',
   lighting: LIGHTING_OPTIONS[0].value,
   setting: SETTING_OPTIONS[0].value,
@@ -3124,6 +3129,8 @@ const App: React.FC = () => {
         newOptions.placementStyle = PLACEMENT_STYLE_OPTIONS[0].value;
         newOptions.placementCamera = PLACEMENT_CAMERA_OPTIONS[0].value;
         newOptions.cameraDistance = CAMERA_DISTANCE_OPTIONS[2]?.value ?? 'medium';
+        newOptions.cameraAngle = CAMERA_ANGLE_OPTIONS[0]?.value ?? '';
+        newOptions.cameraShot = CAMERA_ANGLE_OPTIONS[0]?.value ?? '';
         updatedSelectedCategories.add('placementStyle');
         updatedSelectedCategories.add('placementCamera');
         updatedSelectedCategories.add('cameraDistance');
@@ -3142,6 +3149,9 @@ const App: React.FC = () => {
         if (newOptions.ageGroup === 'no person') {
           newOptions.ageGroup = DEFAULT_AGE_GROUP;
           updatedSelectedCategories.add('ageGroup');
+        }
+        if (!newOptions.cameraShot) {
+          newOptions.cameraShot = newOptions.cameraAngle || (CAMERA_ANGLE_OPTIONS[0]?.value ?? '');
         }
       }
     }
@@ -3228,7 +3238,7 @@ const App: React.FC = () => {
     const accordionCategoryMap: Record<string, OptionCategory[]> = {
       'Scene & Environment': ['setting', 'environmentOrder'],
       'Product Details': ['productMaterial', 'productPlane', 'placementStyle', 'placementCamera', 'cameraDistance'],
-      'Photography': ['lighting', 'camera', 'perspective', 'aspectRatio', 'realism'],
+      'Photography': ['lighting', 'camera', 'cameraDistance', 'cameraAngle', 'cameraShot', 'perspective', 'aspectRatio', 'realism'],
       'Person Details': [
         'ageGroup',
         'personAppearance',
@@ -3547,6 +3557,7 @@ const App: React.FC = () => {
       camera: options.camera,
       cameraDistance: options.cameraDistance,
       cameraAngle: options.cameraAngle as any,
+      cameraShot: options.cameraShot as any,
       cameraMovement: options.cameraMovement as any,
       
       // Scene
@@ -4789,6 +4800,9 @@ const App: React.FC = () => {
                           <div className="space-y-4">
                             <ChipSelectGroup label="Lighting" options={LIGHTING_OPTIONS} selectedValue={options.lighting} onChange={(value) => handleOptionChange('lighting', value, 'Photography')} />
                             <ChipSelectGroup label="Camera Type" options={CAMERA_OPTIONS} selectedValue={options.camera} onChange={(value) => handleOptionChange('camera', value, 'Photography')} />
+                            <ChipSelectGroup label="Camera Distance" options={CAMERA_DISTANCE_OPTIONS} selectedValue={options.cameraDistance} onChange={(value) => handleOptionChange('cameraDistance', value, 'Photography')} />
+                            <ChipSelectGroup label="Camera Angle" options={CAMERA_ANGLE_OPTIONS} selectedValue={options.cameraAngle} onChange={(value) => handleOptionChange('cameraAngle', value, 'Photography')} />
+                            <ChipSelectGroup label="Camera Shot" options={CAMERA_ANGLE_OPTIONS} selectedValue={options.cameraShot} onChange={(value) => handleOptionChange('cameraShot', value, 'Photography')} />
                             <ChipSelectGroup label="Aspect Ratio" options={ASPECT_RATIO_OPTIONS} selectedValue={options.aspectRatio} onChange={(value) => handleOptionChange('aspectRatio', value, 'Photography')} />
                             {!isSimpleMode && (
                               <>

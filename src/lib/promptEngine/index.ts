@@ -14,6 +14,7 @@ import { FinalizeBuilder } from './builders/finalize';
 import { parameterMap, cameraPresets } from './parameterMap';
 import type { PromptOptions, PromptBuilder } from './types';
 import type { CameraAngleKey, CameraDistanceKey, CameraMovementKey } from './parameterMap.types';
+import { buildMasterPrompt } from './masterPrompt';
 
 function formatPersonDetails(d: any) {
     if (!d) return "";
@@ -231,9 +232,11 @@ export class PromptEngine {
 
     private applyCameraAngle(parts: string[], key?: CameraAngleKey) {
         if (!key) return;
-        const preset = cameraPresets.cameraAngles[key];
-        if (preset?.prompt) {
-            parts.push(preset.prompt);
+        const preset =
+            parameterMap.cameraAngles?.[key] ||
+            cameraPresets.cameraAngles[key]?.prompt;
+        if (preset) {
+            parts.push(preset);
         }
     }
 
@@ -257,8 +260,14 @@ export class PromptEngine {
      * Build complete prompt from options
      */
     build(options: PromptOptions): string {
+        const baseBuilder = this.builders.find(
+            (builder): builder is BaseBuilder => builder instanceof BaseBuilder
+        );
         const productBuilder = this.builders.find(
             (builder): builder is ProductBuilder => builder instanceof ProductBuilder
+        );
+        const identityBuilder = this.builders.find(
+            (builder): builder is IdentityBuilder => builder instanceof IdentityBuilder
         );
         const modesBuilder = this.builders.find(
             (builder): builder is ModesBuilder => builder instanceof ModesBuilder
@@ -266,62 +275,30 @@ export class PromptEngine {
         const finalizeBuilder = this.builders.find(
             (builder): builder is FinalizeBuilder => builder instanceof FinalizeBuilder
         );
+
+        const baseSection = baseBuilder ? baseBuilder.build(options) : '';
+        const identitySection =
+            options.personIncluded && options.contentStyle !== 'product'
+                ? (identityBuilder ? identityBuilder.build(options) : '')
+                : '';
+        const modeSection = modesBuilder ? modesBuilder.build(options) : '';
         const productSection = productBuilder ? productBuilder.build(options) : '';
         const finalizeSection = finalizeBuilder ? finalizeBuilder.build(options) : '';
-        const cameraExtras: string[] = [];
-        this.applyCameraAngle(cameraExtras, options.cameraAngle);
-        this.applyCameraMovement(cameraExtras, options.cameraMovement);
-        this.applyCameraDistance(cameraExtras, options.cameraDistance);
 
-        if (options.contentStyle === 'product') {
-            const placementPrompt = modesBuilder ? modesBuilder.build(options) : '';
-            const combined = [placementPrompt, productSection, finalizeSection]
-                .filter(Boolean)
-                .join(' ')
-                .replace(/\s+/g, ' ')
-                .trim();
-
-            return `${combined} Negative prompt: ${negativePrompt()}`.replace(/\s+/g, ' ').trim();
-        }
-
-        if (options.creationMode === 'lifestyle') {
-            const lifestylePrompt = modesBuilder ? modesBuilder.build(options) : '';
-            const combined = [lifestylePrompt, productSection, finalizeSection]
-                .filter(Boolean)
-                .join(' ')
-                .replace(/\s+/g, ' ')
-                .trim();
-
-            return `${combined} Negative prompt: ${negativePrompt()}`.replace(/\s+/g, ' ').trim();
-        }
-        const personSection = options.personIncluded
-            ? formatPersonDetails((options as any).personDetails)
-            : "no person";
-        const handSection = handAppearanceRules(options);
-        const handSectionText = handSection ? `\n${handSection}` : '';
-        const cameraSection = [cameraRules(options), cameraExtras.join(", ")].filter(Boolean).join(", ");
-
-        const finalPrompt = `
-Ultra realistic photo, cinematic lighting.
-
-Scene details:
-${formatScene(options)}
-
-Camera rules:
-${cameraSection}
-
-Person details:
-${personSection}${handSectionText}
-
-Product details:
-${productSection}
-
-Negative prompt:
-${negativePrompt()}
-`.trim();
+        const finalPrompt = buildMasterPrompt(
+            {
+                base: baseSection,
+                identity: identitySection,
+                mode: modeSection,
+                product: productSection,
+                finalize: finalizeSection,
+                includeIdentity: options.personIncluded && options.contentStyle !== 'product',
+            },
+            negativePrompt()
+        );
 
         console.log('🚀 PromptEngine v2:', {
-            segments: 4,
+            segments: 5,
             length: finalPrompt.length,
             mode: options.creationMode,
         });

@@ -53,6 +53,18 @@ export const CAMERA_DISTANCE_OPTIONS: Option[] = [
   { label: 'Wide', value: 'wide' },
   { label: 'Environment', value: 'environment' },
 ];
+
+export const CAMERA_ANGLE_OPTIONS: Option[] = [
+  { label: 'Full Body Shot', value: 'fullBody' },
+  { label: 'Close Up', value: 'closeUp' },
+  { label: 'Extreme Close Up', value: 'extremeCloseUp' },
+  { label: 'Extreme Long Shot', value: 'extremeLongShot' },
+  { label: 'High Angle Shot', value: 'highAngleShot' },
+  { label: "Bird's Eye View", value: 'birdsEyeView' },
+  { label: 'Dutch Angle', value: 'dutchAngle' },
+  { label: 'Side Profile Shot', value: 'sideProfile' },
+  { label: 'Low Angle Shot', value: 'lowAngleShot' },
+];
 // Simplified 8-option version focused on practical UGC lighting styles.
 export const LIGHTING_OPTIONS: Option[] = [
   { label: 'Natural Light', value: 'soft, natural window light' },
