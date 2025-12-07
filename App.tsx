@@ -48,6 +48,7 @@ import ImageEditor from './components/ImageEditor';
 import ModelReferencePanel from './components/ModelReferencePanel';
 import OnboardingOverlay from './components/OnboardingOverlay';
 import Accordion from './components/UI/Accordion';
+import Badge from './components/UI/Badge';
 import Tooltip from './components/UI/Tooltip';
 
 // Contexts
@@ -1228,15 +1229,16 @@ const App: React.FC = () => {
   const personControlsDisabled = isPersonOptionsDisabled;
   const personInScene = !isPersonOptionsDisabled;
   const cameraControlsDisabled = options.selfieType && options.selfieType !== 'none';
-const personPropNoneValue = PERSON_PROP_OPTIONS[0].value;
-const microLocationDefault = MICRO_LOCATION_NONE_VALUE;
-const EYE_DIRECTION_OPTIONS: Option[] = [
-  { label: 'Look at Camera', value: 'Look at Camera' },
-  { label: 'Look Slightly Away', value: 'Look Slightly Away' },
-  { label: 'Look Down', value: 'Look Down' },
-  { label: 'Look Up', value: 'Look Up' },
-  { label: 'Eyes Closed', value: 'Eyes Closed' },
-];
+  const addHandsEnabled = (options as any).addHands ?? includeSupplementHand ?? true;
+  const personPropNoneValue = PERSON_PROP_OPTIONS[0].value;
+  const microLocationDefault = MICRO_LOCATION_NONE_VALUE;
+  const EYE_DIRECTION_OPTIONS: Option[] = [
+    { label: 'Look at Camera', value: 'Look at Camera' },
+    { label: 'Look Slightly Away', value: 'Look Slightly Away' },
+    { label: 'Look Down', value: 'Look Down' },
+    { label: 'Look Up', value: 'Look Up' },
+    { label: 'Eyes Closed', value: 'Eyes Closed' },
+  ];
   const isHeroLandingMode = activeSupplementPreset === HERO_LANDING_PRESET_VALUE;
   const currentPlan = PLAN_CONFIG[planTier];
   const shouldRequireLogin = !isLoggedIn;
@@ -4640,6 +4642,44 @@ const EYE_DIRECTION_OPTIONS: Option[] = [
                                   onChange={(value) => handleOptionChange('cameraDistance', value, 'Product Details')}
                                 />
                               </Tooltip>
+                              <div className="sm:col-span-2 rounded-2xl border border-white/10 bg-black/20 p-4">
+                                <div className="flex items-center justify-between gap-2">
+                                  <div>
+                                    <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Add Hands</p>
+                                    <p className="text-[11px] text-gray-400">Enable or disable realistic hands interacting with the product.</p>
+                                  </div>
+                                  <label className="relative inline-flex cursor-pointer items-center gap-2">
+                                    <input
+                                      type="checkbox"
+                                      className="sr-only"
+                                      checked={addHandsEnabled}
+                                      onChange={event => {
+                                        const checked = event.target.checked;
+                                        setIncludeSupplementHand(checked);
+                                        applyOptionsUpdate(prev => ({ ...(prev as any), addHands: checked }));
+                                      }}
+                                      aria-label="Add hands to product mode"
+                                    />
+                                    <div
+                                      className={`relative h-5 w-10 rounded-full transition ${addHandsEnabled ? 'bg-indigo-500' : 'bg-gray-700'}`}
+                                    >
+                                      <span
+                                        className={`absolute left-1 top-1 block h-3 w-3 rounded-full bg-white shadow transition ${addHandsEnabled ? 'translate-x-4' : ''}`}
+                                      />
+                                    </div>
+                                    <span className={`text-xs font-semibold ${addHandsEnabled ? 'text-indigo-200' : 'text-gray-500'}`}>
+                                      {addHandsEnabled ? 'On' : 'Off'}
+                                    </span>
+                                  </label>
+                                </div>
+                                {!addHandsEnabled && (
+                                  <div className="mt-2">
+                                    <Tooltip content="Hands and fingers will not appear in product images.">
+                                      <Badge variant="warning">Hands disabled</Badge>
+                                    </Tooltip>
+                                  </div>
+                                )}
+                              </div>
                               <div className="sm:col-span-2 rounded-2xl border border-white/10 bg-black/20 px-3 py-3 text-xs text-gray-300">
                                 <div className="flex items-center justify-between gap-2">
                                   <div>
