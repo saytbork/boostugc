@@ -831,19 +831,6 @@ const getEnvApiKey = (): string | undefined => {
   return fromProcess ? fromProcess.trim() : undefined;
 };
 
-const fileToBase64 = (file: File): Promise<{ base64: string, mimeType: string }> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const result = reader.result as string;
-      const [mimeType, base64] = result.split(';base64,');
-      resolve({ base64, mimeType: mimeType.replace('data:', '') });
-    };
-    reader.onerror = (error) => reject(error);
-  });
-};
-
 const loadImageFromUrl = (url: string): Promise<HTMLImageElement> =>
   new Promise((resolve, reject) => {
     const img = new Image();
@@ -925,6 +912,12 @@ const App: React.FC = () => {
       });
     },
     []
+  );
+  const applyFramingPreset = useCallback(
+    (updates: Record<string, string>) => {
+      applyOptionsUpdate(prev => ({ ...(prev as any), ...updates }));
+    },
+    [applyOptionsUpdate]
   );
   const [storyboardScenes, setStoryboardScenes] = useState<StoryboardScene[]>(() => [initialSceneRef.current!]);
   const [activeSceneId, setActiveSceneId] = useState<string>(initialSceneRef.current!.id);
@@ -4843,6 +4836,62 @@ const App: React.FC = () => {
                                   <p className="text-[11px] text-gray-500">Add any specific staging or stylistic callouts for this product.</p>
                                 </div>
                               </div>
+                            </div>
+                          </Accordion>
+                        </div>
+                      )}
+                      {isProductPlacement && (
+                        <div id={getSectionId('Camera Framing Presets')}>
+                          <Accordion title="Camera Framing Presets">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              <button
+                                type="button"
+                                onClick={() => applyFramingPreset({ cameraAngle: 'top-down', cameraDistance: '50cm', composition: 'full-object' })}
+                                className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                              >
+                                <p className="text-sm font-semibold text-gray-100">Top-Down Shot</p>
+                                <p className="text-xs text-gray-400 mt-1">Overhead view with balanced framing of the product.</p>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => applyFramingPreset({ cameraAngle: 'straight-on', cameraDistance: '15cm', composition: 'macro-detail', crop: 'half-object' })}
+                                className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                              >
+                                <p className="text-sm font-semibold text-gray-100">Macro Detail</p>
+                                <p className="text-xs text-gray-400 mt-1">Extreme close-up capturing fine textures and materials.</p>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => applyFramingPreset({ cameraAngle: 'high-angle-45', cameraDistance: '2m', composition: 'full-object' })}
+                                className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                              >
+                                <p className="text-sm font-semibold text-gray-100">High-Angle View</p>
+                                <p className="text-xs text-gray-400 mt-1">45° elevated perspective to show context and surface.</p>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => applyFramingPreset({ cameraAngle: 'low-angle', cameraDistance: 'close', tilt: '35deg-toward-viewer' })}
+                                className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                              >
+                                <p className="text-sm font-semibold text-gray-100">Low-Angle View</p>
+                                <p className="text-xs text-gray-400 mt-1">Heroic low perspective with a gentle forward tilt.</p>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => applyFramingPreset({ productRotation: '45deg' })}
+                                className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                              >
+                                <p className="text-sm font-semibold text-gray-100">45° Rotation</p>
+                                <p className="text-xs text-gray-400 mt-1">Rotate the product slightly for a dynamic hero look.</p>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => applyFramingPreset({ backgroundTone: 'studio-black', lighting: 'soft-studio', shadows: 'contact-bounce' })}
+                                className="rounded-xl border border-white/10 bg-black/20 p-4 text-left transition hover:border-indigo-400 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                              >
+                                <p className="text-sm font-semibold text-gray-100">Studio Black Background</p>
+                                <p className="text-xs text-gray-400 mt-1">Deep black sweep with soft studio light and contact shadow.</p>
+                              </button>
                             </div>
                           </Accordion>
                         </div>
