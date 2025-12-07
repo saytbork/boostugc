@@ -19,12 +19,12 @@ const Accordion: React.FC<AccordionProps> = ({ title, children, defaultOpen = fa
 
   return (
     <div
-      className="rounded-lg border border-white/5 bg-[#0F111B] shadow-md shadow-black/30"
+      className="rounded-xl border border-white/3 bg-[#0F111B] shadow-lg shadow-black/20"
     >
       <button
         type="button"
         onClick={() => setOpen(prev => !prev)}
-        className="w-full flex items-center justify-between px-4 py-4 text-left text-sm font-semibold text-gray-100 hover:text-white transition-colors"
+        className="w-full flex items-center justify-between px-5 py-4 text-left text-base font-semibold text-gray-100 hover:text-white transition-colors"
       >
         <span>{title}</span>
         <svg
@@ -37,7 +37,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children, defaultOpen = fa
         </svg>
       </button>
       <div
-        className="transition-all duration-200 ease-out overflow-hidden px-4"
+        className="transition-all duration-200 ease-out overflow-hidden px-5"
         style={{ maxHeight: open ? height : 0, opacity: open ? 1 : 0 }}
       >
         <div ref={contentRef} className="pb-5 pt-1 text-sm text-gray-200">

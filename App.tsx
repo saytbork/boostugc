@@ -50,6 +50,7 @@ import OnboardingOverlay from './components/OnboardingOverlay';
 import Accordion from './src/components/UI/Accordion';
 import Badge from './src/components/UI/Badge';
 import Tooltip from './src/components/UI/Tooltip';
+import Tabs from './src/components/UI/Tabs';
 
 // Contexts
 import { useAuth } from './src/contexts/AuthContext';
