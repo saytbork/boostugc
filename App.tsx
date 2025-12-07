@@ -8,6 +8,7 @@ import {
   CREATION_MODE_OPTIONS,
   PLACEMENT_STYLE_OPTIONS,
   PLACEMENT_CAMERA_OPTIONS,
+  CAMERA_DISTANCE_OPTIONS,
   LIGHTING_OPTIONS, SETTING_OPTIONS, AGE_GROUP_OPTIONS, CAMERA_OPTIONS,
   PERSPECTIVE_OPTIONS, SELFIE_TYPE_OPTIONS, ETHNICITY_OPTIONS,
   GENDER_OPTIONS, ASPECT_RATIO_OPTIONS, ENVIRONMENT_ORDER_OPTIONS, PERSON_APPEARANCE_OPTIONS,
@@ -336,6 +337,9 @@ const cloneOptions = (source: MockupOptions): MockupOptions => {
   if (!cloned.skinRealism) {
     cloned.skinRealism = SKIN_REALISM_OPTIONS[0].value;
   }
+  if (!cloned.cameraDistance) {
+    cloned.cameraDistance = CAMERA_DISTANCE_OPTIONS[2]?.value ?? 'medium';
+  }
   return cloned;
 };
 
@@ -531,6 +535,7 @@ const createDefaultOptions = (): MockupOptions => ({
   contentStyle: '',
   placementStyle: PLACEMENT_STYLE_OPTIONS[0].value,
   placementCamera: PLACEMENT_CAMERA_OPTIONS[0].value,
+  cameraDistance: CAMERA_DISTANCE_OPTIONS[2]?.value ?? 'medium',
   lighting: LIGHTING_OPTIONS[0].value,
   setting: SETTING_OPTIONS[0].value,
   ageGroup: DEFAULT_AGE_GROUP,
@@ -1293,6 +1298,7 @@ const App: React.FC = () => {
         'productPlane',
         'placementStyle',
         'placementCamera',
+        'cameraDistance',
         'lighting',
         'camera',
         'perspective',
@@ -3109,8 +3115,10 @@ const App: React.FC = () => {
         updatedSelectedCategories.add('ageGroup');
         newOptions.placementStyle = PLACEMENT_STYLE_OPTIONS[0].value;
         newOptions.placementCamera = PLACEMENT_CAMERA_OPTIONS[0].value;
+        newOptions.cameraDistance = CAMERA_DISTANCE_OPTIONS[2]?.value ?? 'medium';
         updatedSelectedCategories.add('placementStyle');
         updatedSelectedCategories.add('placementCamera');
+        updatedSelectedCategories.add('cameraDistance');
         newOptions.personPose = PERSON_POSE_OPTIONS[0].value;
         newOptions.wardrobeStyle = WARDROBE_STYLE_OPTIONS[0].value;
         newOptions.personMood = PERSON_MOOD_OPTIONS[0].value;
@@ -3211,7 +3219,7 @@ const App: React.FC = () => {
 
     const accordionCategoryMap: Record<string, OptionCategory[]> = {
       'Scene & Environment': ['setting', 'environmentOrder'],
-      'Product Details': ['productMaterial', 'productPlane', 'placementStyle', 'placementCamera'],
+      'Product Details': ['productMaterial', 'productPlane', 'placementStyle', 'placementCamera', 'cameraDistance'],
       'Photography': ['lighting', 'camera', 'perspective', 'aspectRatio', 'realism'],
       'Person Details': [
         'ageGroup',
@@ -3529,13 +3537,16 @@ const App: React.FC = () => {
       creationMode: options.creationMode,
       aspectRatio: options.aspectRatio,
       camera: options.camera,
-
+      cameraDistance: options.cameraDistance,
+      
       // Scene
       setting: options.setting,
       lighting: options.lighting,
       perspective: options.perspective,
       environmentOrder: options.environmentOrder,
       productPlane: options.productPlane,
+      placementStyle: options.placementStyle,
+      placementCamera: options.placementCamera,
 
       // Person
       personDetails: {
@@ -4589,6 +4600,12 @@ const App: React.FC = () => {
                                 allowCustom
                                 customLabel="Custom composition"
                                 customPlaceholder="Describe the depth placement"
+                              />
+                              <ChipSelectGroup
+                                label="Camera Distance"
+                                options={CAMERA_DISTANCE_OPTIONS}
+                                selectedValue={options.cameraDistance}
+                                onChange={(value) => handleOptionChange('cameraDistance', value, 'Product Details')}
                               />
                               <div className="rounded-2xl border border-white/10 bg-black/20 px-3 py-3 text-xs text-gray-300">
                                 <div className="flex items-center justify-between gap-2">

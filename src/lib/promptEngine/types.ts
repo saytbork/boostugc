@@ -56,6 +56,7 @@ export interface PromptOptions {
     creationMode: 'lifestyle' | 'studio' | 'aesthetic' | 'bg-replace' | 'ecom-blank';
     aspectRatio: string;
     camera: string;
+    cameraDistance?: "macro" | "close" | "medium" | "wide" | "environment";
 
     // Scene
     setting: string;
@@ -63,6 +64,8 @@ export interface PromptOptions {
     perspective: string;
     environmentOrder: string;
     productPlane: string;
+    placementStyle?: string;
+    placementCamera?: string;
 
     // Person
     personDetails?: PersonDetails;

@@ -235,7 +235,25 @@ export class PromptEngine {
         const productBuilder = this.builders.find(
             (builder): builder is ProductBuilder => builder instanceof ProductBuilder
         );
+        const modesBuilder = this.builders.find(
+            (builder): builder is ModesBuilder => builder instanceof ModesBuilder
+        );
+        const finalizeBuilder = this.builders.find(
+            (builder): builder is FinalizeBuilder => builder instanceof FinalizeBuilder
+        );
         const productSection = productBuilder ? productBuilder.build(options) : '';
+        const finalizeSection = finalizeBuilder ? finalizeBuilder.build(options) : '';
+
+        if (options.contentStyle === 'product') {
+            const placementPrompt = modesBuilder ? modesBuilder.build(options) : '';
+            const combined = [placementPrompt, productSection, finalizeSection]
+                .filter(Boolean)
+                .join(' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+
+            return `${combined} Negative prompt: ${negativePrompt()}`.replace(/\s+/g, ' ').trim();
+        }
         const personSection = options.personIncluded
             ? formatPersonDetails((options as any).personDetails)
             : "no person";

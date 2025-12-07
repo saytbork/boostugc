@@ -19,6 +19,7 @@ export interface ParameterMap {
   setting: Record<string, string>;
   environmentOrder: Record<string, string>;
   cameraType: Record<string, string>;
+  cameraDistance: Record<string, string>;
   lighting: Record<string, string>;
   selfieType: Record<string, string>;
   compositionMode: Record<string, string>;

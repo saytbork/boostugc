@@ -122,6 +122,14 @@ export const parameterMap: ParameterMap = {
     "Sony FX3": "Sony FX3 cinematic modern look"
   },
 
+  cameraDistance: {
+    macro: "extreme macro close up, extremely close framing showing micro-details",
+    close: "close up shot, camera placed very near the product for strong visual emphasis",
+    medium: "medium distance shot, natural viewing distance, balanced framing",
+    wide: "wide shot, camera farther away showing more environment",
+    environment: "distant product shot, product appears smaller inside a large scenic environment"
+  },
+
   lighting: {
     "Natural Light": "soft natural window lighting",
     "Sunny Day": "bright sunny lighting with crisp highlights",

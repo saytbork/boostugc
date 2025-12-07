@@ -3,10 +3,35 @@
  */
 
 import type { PromptOptions, PromptBuilder } from '../types';
+import { buildProductPlacementPrompt } from './productPlacement';
 
 export class ModesBuilder implements PromptBuilder {
     build(options: PromptOptions): string {
-        const { creationMode } = options;
+        const { creationMode, contentStyle } = options;
+
+        if (contentStyle === 'product') {
+            const primaryAsset = options.productAssets?.[0];
+            const productMeta = {
+                name: (primaryAsset as any)?.name || primaryAsset?.label || primaryAsset?.id || 'product',
+            };
+            const params = {
+                setting: options.setting,
+                environmentOrder: options.environmentOrder,
+                lighting: options.lighting,
+                camera: options.camera,
+                compositionMode: options.compositionMode,
+                productPlane: options.productPlane,
+                placementStyle: (options as any).placementStyle,
+                placementCamera: (options as any).placementCamera,
+                cameraDistance: options.cameraDistance || 'medium',
+            };
+
+            return buildProductPlacementPrompt({
+                productMeta,
+                params: { ...params },
+                userPrompt: '',
+            }).trim().replace(/\s+/g, ' ');
+        }
 
         switch (creationMode) {
             case 'lifestyle':

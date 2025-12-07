@@ -45,6 +45,14 @@ export const PLACEMENT_CAMERA_OPTIONS: Option[] = [
   { label: 'Overhead Rig', value: 'captured from an overhead rig for flatlay precision' },
   { label: 'Studio Strobe Setup', value: 'lit with studio strobes and softboxes for glossy highlights' },
 ];
+
+export const CAMERA_DISTANCE_OPTIONS: Option[] = [
+  { label: 'Macro', value: 'macro' },
+  { label: 'Close', value: 'close' },
+  { label: 'Medium', value: 'medium' },
+  { label: 'Wide', value: 'wide' },
+  { label: 'Environment', value: 'environment' },
+];
 // Simplified 8-option version focused on practical UGC lighting styles.
 export const LIGHTING_OPTIONS: Option[] = [
   { label: 'Natural Light', value: 'soft, natural window light' },

@@ -4,6 +4,7 @@ export interface MockupOptions {
   contentStyle: string;
   placementStyle: string;
   placementCamera: string;
+  cameraDistance: string;
   lighting: string;
   setting: string;
   ageGroup: string;
