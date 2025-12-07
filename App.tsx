@@ -3543,7 +3543,7 @@ const App: React.FC = () => {
       cameraAngle: options.cameraAngle as any,
       cameraShot: options.cameraShot as any,
       cameraMovement: options.cameraMovement as any,
-      
+
       // Scene
       setting: options.setting,
       lighting: options.lighting,
@@ -4604,20 +4604,37 @@ const App: React.FC = () => {
                       {isProductPlacement && (
                         <Accordion title="Product Mode">
                           <div className="space-y-6">
-                            <div id={getSectionId('Product Details')}>
-                              <Accordion title="Product Details">
+                            <div id={getSectionId('Product Basics')}>
+                              <Accordion title="Product Basics">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                  <Tooltip content="Define the product’s primary material.">
+                                  <Tooltip content="Choose the overall styling and presentation approach for your product.">
+                                    <ChipSelectGroup
+                                      label="Placement Style"
+                                      options={PLACEMENT_STYLE_OPTIONS}
+                                      selectedValue={options.placementStyle}
+                                      onChange={(value) => handleOptionChange('placementStyle', value, 'Product Basics')}
+                                      allowCustom
+                                      customLabel="Custom style"
+                                      customPlaceholder="Describe the placement approach"
+                                    />
+                                  </Tooltip>
+                                  <Tooltip content="Define the product's primary material.">
                                     <ChipSelectGroup
                                       label="Product Material"
                                       options={PRODUCT_MATERIAL_OPTIONS}
                                       selectedValue={options.productMaterial}
-                                      onChange={(value) => handleOptionChange('productMaterial', value, 'Product Details')}
+                                      onChange={(value) => handleOptionChange('productMaterial', value, 'Product Basics')}
                                       allowCustom
                                       customLabel="Custom material"
                                       customPlaceholder="Describe the finish"
                                     />
                                   </Tooltip>
+                                </div>
+                              </Accordion>
+                            </div>
+                            <div id={getSectionId('Product Details')}>
+                              <Accordion title="Product Details">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                   <Tooltip content="Choose how the product is positioned in frame.">
                                     <ChipSelectGroup
                                       label="Product Plane"
