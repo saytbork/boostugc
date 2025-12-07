@@ -1,7 +1,7 @@
 import React from 'react';
 import { normalizeOptions } from '../src/system/normalizeOptions';
 import { Option } from '../types';
-import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/UI/Tooltip';
 
 interface ChipSelectGroupProps {
   label: string;

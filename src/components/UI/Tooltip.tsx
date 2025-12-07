@@ -23,7 +23,10 @@ export const TooltipProvider: React.FC<React.PropsWithChildren<{ delayDuration?:
   return <TooltipDelayContext.Provider value={{ delayDuration }}>{children}</TooltipDelayContext.Provider>;
 };
 
-export const Tooltip: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+type TooltipRootProps = React.PropsWithChildren<unknown>;
+
+// Context-based tooltip for existing ChipSelectGroup usage
+export const Tooltip: React.FC<TooltipRootProps> = ({ children }) => {
   const { delayDuration } = useContext(TooltipDelayContext);
   const [isOpen, setIsOpen] = useState(false);
   const [triggerRect, setTriggerRect] = useState<DOMRect | null>(null);
@@ -139,6 +142,9 @@ export const TooltipContent: React.FC<TooltipContentProps> = ({ children, classN
     lineHeight: 1.4,
     boxShadow: '0 8px 24px rgba(15, 23, 42, 0.5)',
     maxWidth: 240,
+    opacity: 1,
+    transformOrigin: 'center',
+    transition: 'opacity 120ms ease, transform 120ms ease',
   };
 
   const horizontalCenter = left + width / 2;
@@ -173,3 +179,32 @@ export const TooltipContent: React.FC<TooltipContentProps> = ({ children, classN
     </div>
   );
 };
+
+type SimpleTooltipProps = {
+  content: React.ReactNode;
+  children: React.ReactNode;
+  className?: string;
+};
+
+// Simple hover tooltip used for the sidebar UI
+const SimpleTooltip: React.FC<SimpleTooltipProps> = ({ content, children, className = '' }) => {
+  const [visible, setVisible] = useState(false);
+  return (
+    <div
+      className={`relative inline-flex w-full ${className}`}
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
+      onFocus={() => setVisible(true)}
+      onBlur={() => setVisible(false)}
+    >
+      {children}
+      {visible && (
+        <div className="pointer-events-none absolute left-1/2 top-0 z-50 -translate-x-1/2 -translate-y-full transform rounded-lg bg-slate-900/95 px-3 py-2 text-xs text-slate-100 shadow-lg shadow-black/40 ring-1 ring-white/10 transition-all duration-150 ease-out">
+          {content}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default SimpleTooltip;

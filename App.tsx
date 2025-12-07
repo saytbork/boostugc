@@ -47,7 +47,8 @@ import ChipSelectGroup from './components/ChipSelectGroup';
 import ImageEditor from './components/ImageEditor';
 import ModelReferencePanel from './components/ModelReferencePanel';
 import OnboardingOverlay from './components/OnboardingOverlay';
-import Accordion from './components/Accordion';
+import Accordion from './components/UI/Accordion';
+import Tooltip from './components/UI/Tooltip';
 
 // Contexts
 import { useAuth } from './src/contexts/AuthContext';
@@ -1226,8 +1227,16 @@ const App: React.FC = () => {
     isProductPlacement || options.ageGroup === 'no person' || hasModelReference || samePersonControlsDisabled;
   const personControlsDisabled = isPersonOptionsDisabled;
   const personInScene = !isPersonOptionsDisabled;
-  const personPropNoneValue = PERSON_PROP_OPTIONS[0].value;
-  const microLocationDefault = MICRO_LOCATION_NONE_VALUE;
+  const cameraControlsDisabled = options.selfieType && options.selfieType !== 'none';
+const personPropNoneValue = PERSON_PROP_OPTIONS[0].value;
+const microLocationDefault = MICRO_LOCATION_NONE_VALUE;
+const EYE_DIRECTION_OPTIONS: Option[] = [
+  { label: 'Look at Camera', value: 'Look at Camera' },
+  { label: 'Look Slightly Away', value: 'Look Slightly Away' },
+  { label: 'Look Down', value: 'Look Down' },
+  { label: 'Look Up', value: 'Look Up' },
+  { label: 'Eyes Closed', value: 'Eyes Closed' },
+];
   const isHeroLandingMode = activeSupplementPreset === HERO_LANDING_PRESET_VALUE;
   const currentPlan = PLAN_CONFIG[planTier];
   const shouldRequireLogin = !isLoggedIn;
@@ -1732,27 +1741,53 @@ const App: React.FC = () => {
       {isProductPlacement ? null : (
         <div id={getSectionId('Person Details')}>
           <Accordion title="Person Details">
-            <div className="space-y-4">
-              <ChipSelectGroup label="Age Group" options={AGE_GROUP_OPTIONS} selectedValue={options.ageGroup} onChange={(value) => handleOptionChange('ageGroup', value, 'Person Details')} disabled={personControlsDisabled} />
-              {isProductPlacement && <p className="text-xs text-gray-500">Person options are disabled for product placement shots.</p>}
-              <div className={`rounded-2xl border border-white/10 bg-gray-900/40 p-4 space-y-3 ${personControlsDisabled ? 'opacity-50' : ''}`}>
-                <ChipSelectGroup label="Creator Preset" options={normalizedCreatorPresetOptions} selectedValue={activeTalentPreset} onChange={(value) => handlePresetSelect(value)} disabled={personControlsDisabled} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Tooltip content="Select the approximate age appearance.">
+                <ChipSelectGroup label="Age Group" options={AGE_GROUP_OPTIONS} selectedValue={options.ageGroup} onChange={(value) => handleOptionChange('ageGroup', value, 'Person Details')} disabled={personControlsDisabled} />
+              </Tooltip>
+              <Tooltip content="Choose the gender presentation of the talent.">
+                <ChipSelectGroup label="Gender" options={GENDER_OPTIONS} selectedValue={options.gender} onChange={(value) => handleOptionChange('gender', value, 'Person Details')} disabled={personControlsDisabled} />
+              </Tooltip>
+              <Tooltip content="Guide the cultural and physical traits.">
+                <ChipSelectGroup label="Ethnicity" options={ETHNICITY_OPTIONS} selectedValue={options.ethnicity} onChange={(value) => handleOptionChange('ethnicity', value, 'Person Details')} disabled={personControlsDisabled} />
+              </Tooltip>
+              <Tooltip content="Set the emotional tone of the face.">
+                <ChipSelectGroup label="Expression" options={PERSON_EXPRESSION_OPTIONS} selectedValue={options.personExpression} onChange={(value) => handleOptionChange('personExpression', value, 'Person Details')} disabled={personControlsDisabled} />
+              </Tooltip>
+              <Tooltip content="Enable rules for mirror selfies and POV shots.">
+                <ChipSelectGroup label="Selfie Type" options={SELFIE_TYPE_OPTIONS} selectedValue={options.selfieType} onChange={(value) => handleOptionChange('selfieType', value, 'Person Details')} disabled={personControlsDisabled} />
+              </Tooltip>
+              <Tooltip content="Control where the subject should look.">
+                <ChipSelectGroup label="Eye Direction" options={EYE_DIRECTION_OPTIONS} selectedValue={options.eyeDirection ?? ''} onChange={(value) => handleOptionChange('eyeDirection', value, 'Person Details')} disabled={personControlsDisabled} />
+              </Tooltip>
+
+              <div className={`sm:col-span-2 rounded-lg border border-white/10 bg-gray-900/40 p-3 space-y-3 ${personControlsDisabled ? 'opacity-50' : ''}`}>
+                <Tooltip content="Load a predefined creator look." className="w-full">
+                  <ChipSelectGroup label="Creator Preset" options={normalizedCreatorPresetOptions} selectedValue={activeTalentPreset} onChange={(value) => handlePresetSelect(value)} disabled={personControlsDisabled} />
+                </Tooltip>
                 {activePresetMeta?.description && <p className="text-xs text-gray-400">{activePresetMeta.description}</p>}
                 <div className="flex flex-wrap gap-2 text-xs">
-                  <button type="button" onClick={handleSaveTalentProfile} disabled={personControlsDisabled} className="inline-flex items-center rounded-full border border-white/20 px-3 py-1 font-semibold text-white/80 hover:border-indigo-400 hover:text-white transition disabled:opacity-60">
-                    Save as My Talent
-                  </button>
-                  <button type="button" onClick={handleApplySavedTalent} disabled={personControlsDisabled || !hasSavedTalent} className="inline-flex items-center rounded-full border border-white/20 px-3 py-1 font-semibold text-white/80 hover:border-indigo-400 hover:text-white transition disabled:opacity-60">
-                    Apply saved talent
-                  </button>
+                  <Tooltip content="Save the current selections as your own talent.">
+                    <button type="button" onClick={handleSaveTalentProfile} disabled={personControlsDisabled} className="inline-flex items-center rounded-full border border-white/20 px-3 py-1 font-semibold text-white/80 hover:border-indigo-400 hover:text-white transition disabled:opacity-60">
+                      Save as My Talent
+                    </button>
+                  </Tooltip>
+                  <Tooltip content="Apply your saved talent across images.">
+                    <button type="button" onClick={handleApplySavedTalent} disabled={personControlsDisabled || !hasSavedTalent} className="inline-flex items-center rounded-full border border-white/20 px-3 py-1 font-semibold text-white/80 hover:border-indigo-400 hover:text-white transition disabled:opacity-60">
+                      Apply saved talent
+                    </button>
+                  </Tooltip>
                 </div>
                 {talentToast === 'saved' && <p className="text-xs text-emerald-300">Talent saved for future scenes.</p>}
                 {talentToast === 'applied' && <p className="text-xs text-emerald-300">Saved talent applied.</p>}
-                <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-3 space-y-2">
-                  <div className="flex items-center justify-between gap-4">
+              </div>
+
+              <Tooltip content="Keep the same model across multiple images." className="sm:col-span-2">
+                <div className="rounded-lg border border-white/10 bg-gray-900/50 p-3 space-y-2">
+                  <div className="flex items-center justify-between gap-3">
                     <div>
                       <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Link talent across scenes</p>
-                      <p className="text-xs text-gray-400">Keep this same creator for morning / afternoon / night shots.</p>
+                      <p className="text-xs text-gray-400">Keep this same creator across storyboard scenes.</p>
                     </div>
                     <label className="relative inline-flex cursor-pointer items-center gap-2">
                       <input type="checkbox" className="sr-only" checked={isTalentLinkedAcrossScenes} onChange={handleTalentLinkToggle} disabled={personControlsDisabled} />
@@ -1776,113 +1811,62 @@ const App: React.FC = () => {
                     </p>
                   )}
                 </div>
-              </div>
-              <ChipSelectGroup label="Appearance Level" options={PERSON_APPEARANCE_OPTIONS} selectedValue={options.personAppearance} onChange={(value) => handleOptionChange('personAppearance', value, 'Person Details')} disabled={personControlsDisabled} />
-              <ChipSelectGroup label="Mood" options={PERSON_MOOD_OPTIONS} selectedValue={options.personMood} onChange={(value) => handleOptionChange('personMood', value, 'Person Details')} disabled={personControlsDisabled} />
-              <ChipSelectGroup label="Pose" options={PERSON_POSE_OPTIONS} selectedValue={options.personPose} onChange={(value) => handleOptionChange('personPose', value, 'Person Details')} disabled={personControlsDisabled} />
-              <ChipSelectGroup label="Interaction" options={PRODUCT_INTERACTION_OPTIONS} selectedValue={options.productInteraction} onChange={(value) => handleOptionChange('productInteraction', value, 'Person Details')} disabled={personControlsDisabled} />
-              <ChipSelectGroup label="Wardrobe" options={WARDROBE_STYLE_OPTIONS} selectedValue={options.wardrobeStyle} onChange={(value) => handleOptionChange('wardrobeStyle', value, 'Person Details')} disabled={personControlsDisabled} />
-              <ChipSelectGroup label="Props" options={PERSON_PROP_OPTIONS} selectedValue={options.personProps} onChange={(value) => handleOptionChange('personProps', value, 'Person Details')} disabled={personControlsDisabled} allowCustom customLabel="Custom prop" customPlaceholder="Describe a prop the person is holding" />
-              <ChipSelectGroup label="Micro Location" options={MICRO_LOCATION_OPTIONS} selectedValue={options.microLocation} onChange={(value) => handleOptionChange('microLocation', value, 'Person Details')} disabled={personControlsDisabled} allowCustom customLabel="Custom micro-location" customPlaceholder="Describe a precise spot in the environment" />
-              <ChipSelectGroup label="Person Expression" options={PERSON_EXPRESSION_OPTIONS} selectedValue={options.personExpression} onChange={(value) => handleOptionChange('personExpression', value, 'Person Details')} disabled={personControlsDisabled} />
-              <ChipSelectGroup label="Gender" options={GENDER_OPTIONS} selectedValue={options.gender} onChange={(value) => handleOptionChange('gender', value, 'Person Details')} disabled={personControlsDisabled} />
-              <ChipSelectGroup label="Ethnicity" options={ETHNICITY_OPTIONS} selectedValue={options.ethnicity} onChange={(value) => handleOptionChange('ethnicity', value, 'Person Details')} disabled={personControlsDisabled} />
-              <ChipSelectGroup label="Hair Style" options={HAIR_STYLE_OPTIONS} selectedValue={options.hairStyle} onChange={(value) => handleOptionChange('hairStyle', value, 'Person Details')} disabled={personControlsDisabled} />
-              <ChipSelectGroup label="Hair Color" options={HAIR_COLOR_OPTIONS} selectedValue={options.hairColor} onChange={(value) => handleOptionChange('hairColor', value, 'Person Details')} disabled={personControlsDisabled} />
-              <ChipSelectGroup label="Skin Tone" options={SKIN_TONE_OPTIONS} selectedValue={options.skinTone} onChange={(value) => handleOptionChange('skinTone', value, 'Person Details')} disabled={personControlsDisabled} />
-              <ChipSelectGroup label="Skin Realism" options={SKIN_REALISM_OPTIONS} selectedValue={options.skinRealism} onChange={(value) => handleOptionChange('skinRealism', value, 'Person Details')} disabled={personControlsDisabled} />
-              <ChipSelectGroup label="Eye Color" options={EYE_COLOR_OPTIONS} selectedValue={options.eyeColor} onChange={(value) => handleOptionChange('eyeColor', value, 'Person Details')} disabled={personControlsDisabled} />
-              <ChipSelectGroup label="Selfie Type" options={SELFIE_TYPE_OPTIONS} selectedValue={options.selfieType} onChange={(value) => handleOptionChange('selfieType', value, 'Person Details')} disabled={personControlsDisabled} />
-              {!personControlsDisabled && (
-                <p className="text-[11px] text-gray-500">
-                  Tip: selfie styles mimic how the creator is actually holding the phone (mirror, arm-length, low-angle). Choose the angle you want viewers to feel.
-                </p>
-              )}
-              {!personControlsDisabled && !ugcRealSettings.isEnabled && (
-                <div className="rounded-2xl border border-white/15 bg-black/30 p-4 space-y-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Hero person presets</p>
-                      <p className="text-[11px] text-gray-400">
-                        Quickly stage face-frame, offer-to-lens, or grounded lounge poses inspired by modern supplement shoots.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    {normalizedHeroPersonPresets.map(preset => {
-                      const isActive = selectedHeroPreset === preset.value;
-                      return (
-                        <button
-                          key={preset.value}
-                          type="button"
-                          onClick={() => handleHeroPosePresetSelect(preset.value)}
-                          className={`w-full rounded-xl border px-3 py-2 text-left transition ${isActive
-                            ? 'border-indigo-400 bg-indigo-500/10 text-white'
-                            : 'border-white/15 text-gray-200 hover-border-indigo-400 hover:text-white'
-                            }`}
-                        >
-                          <div className="flex items-center gap-1 relative group text-sm font-semibold">
-                            <span>{preset.label}</span>
-                            {preset.tooltip && (
-                              <span className="text-xs text-gray-400 cursor-pointer group-hover:text-white">
-                                ⓘ
-                                <div className="absolute left-0 top-4 z-50 hidden group-hover:block bg-black/90 text-white text-xs p-2 rounded shadow-lg w-44">
-                                  {preset.tooltip}
-                                </div>
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-[11px] text-gray-400 mt-1">{preset.description}</p>
-                        </button>
-                      );
-                    })}
-                  </div>
-                  {selectedHeroPreset === 'custom' && (
-                    <textarea
-                      className="mt-3 w-full rounded-lg border border-white/15 bg-gray-900/40 px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:border-indigo-400 focus:outline-none"
-                      placeholder="Describe your own hero pose or product interaction..."
-                      value={customHeroDescription}
-                      onChange={(event) => setCustomHeroDescription(event.target.value)}
-                      rows={3}
-                    />
-                  )}
-                  {selectedHeroPreset !== 'custom' && (
-                    <p className="text-[11px] text-indigo-200">
-                      Pose + camera notes are baked into the prompt. You can still tweak any field above.
-                    </p>
-                  )}
-                </div>
-              )}
-              {!personControlsDisabled && renderFormulationStoryPanel('ugc')}
-              {!personControlsDisabled && (
-                <div className="rounded-2xl border border-dashed border-white/20 bg-white/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.3em] text-indigo-200 mb-3">Prop bundles</p>
-                  <div className="flex flex-wrap gap-2">
-                    {PROP_BUNDLES.map(bundle => (
-                      <button key={bundle.label} type="button" onClick={() => handlePropBundleSelect(bundle.settings)} className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/80 hover:border-indigo-400 hover:text-white transition">
-                        {bundle.label}
-                      </button>
-                    ))}
-                  </div>
-                  <p className="text-[11px] text-gray-400 mt-2">Tap any bundle to pre-fill props, micro-location, and mood.</p>
-                </div>
-              )}
-              <div className="rounded-2xl border border-white/10 bg-gray-900/50 p-4">
-                <p className="text-xs uppercase tracking-[0.3em] text-indigo-200 mb-2">Talent preview</p>
-                <div className="flex flex-wrap gap-2 text-xs text-gray-300">
-                  <span className="rounded-full bg-white/5 px-3 py-1">{options.gender}</span>
-                  <span className="rounded-full bg-white/5 px-3 py-1">{options.ageGroup}</span>
-                  <span className="rounded-full bg-white/5 px-3 py-1">{options.personMood}</span>
-                  <span className="rounded-full bg-white/5 px-3 py-1">{options.personPose}</span>
-                  <span className="rounded-full bg-white/5 px-3 py-1">{options.wardrobeStyle}</span>
-                  <span className="rounded-full bg-white/5 px-3 py-1">{options.skinTone}</span>
-                  <span className="rounded-full bg-white/5 px-3 py-1">{options.hairColor}</span>
-                  <span className="rounded-full bg-white/5 px-3 py-1">{options.eyeColor}</span>
-                </div>
-                <p className="text-[11px] text-gray-400 mt-2">
-                  {options.personExpression} · {options.hairStyle} · {options.personProps}
-                </p>
-              </div>
+              </Tooltip>
+            </div>
+          </Accordion>
+        </div>
+      )}
+      {!isProductPlacement && (
+        <div id={getSectionId('Appearance Level')}>
+          <Accordion title="Appearance Level">
+            <div className="space-y-4">
+              <Tooltip content="Overall grooming and appearance level.">
+                <ChipSelectGroup label="Appearance Level" options={PERSON_APPEARANCE_OPTIONS} selectedValue={options.personAppearance} onChange={(value) => handleOptionChange('personAppearance', value, 'Appearance Level')} disabled={personControlsDisabled} />
+              </Tooltip>
+            </div>
+          </Accordion>
+        </div>
+      )}
+      {!isProductPlacement && (
+        <div id={getSectionId('Mood')}>
+          <Accordion title="Mood">
+            <div className="space-y-4">
+              <Tooltip content="Define the emotional atmosphere of the scene.">
+                <ChipSelectGroup label="Mood" options={PERSON_MOOD_OPTIONS} selectedValue={options.personMood} onChange={(value) => handleOptionChange('personMood', value, 'Mood')} disabled={personControlsDisabled} />
+              </Tooltip>
+            </div>
+          </Accordion>
+        </div>
+      )}
+      {!isProductPlacement && (
+        <div id={getSectionId('Pose')}>
+          <Accordion title="Pose">
+            <div className="space-y-4">
+              <Tooltip content="Choose the body posture or gesture.">
+                <ChipSelectGroup label="Pose" options={PERSON_POSE_OPTIONS} selectedValue={options.personPose} onChange={(value) => handleOptionChange('personPose', value, 'Pose')} disabled={personControlsDisabled} />
+              </Tooltip>
+            </div>
+          </Accordion>
+        </div>
+      )}
+      {!isProductPlacement && (
+        <div id={getSectionId('Interaction')}>
+          <Accordion title="Interaction">
+            <div className="space-y-4">
+              <Tooltip content="Define how the subject engages with the product.">
+                <ChipSelectGroup label="Interaction" options={PRODUCT_INTERACTION_OPTIONS} selectedValue={options.productInteraction} onChange={(value) => handleOptionChange('productInteraction', value, 'Interaction')} disabled={personControlsDisabled} />
+              </Tooltip>
+            </div>
+          </Accordion>
+        </div>
+      )}
+      {!isProductPlacement && (
+        <div id={getSectionId('Wardrobe')}>
+          <Accordion title="Wardrobe">
+            <div className="space-y-4">
+              <Tooltip content="Select a clothing style for the subject.">
+                <ChipSelectGroup label="Wardrobe" options={WARDROBE_STYLE_OPTIONS} selectedValue={options.wardrobeStyle} onChange={(value) => handleOptionChange('wardrobeStyle', value, 'Wardrobe')} disabled={personControlsDisabled} />
+              </Tooltip>
             </div>
           </Accordion>
         </div>
@@ -3236,9 +3220,14 @@ const App: React.FC = () => {
     }
 
     const accordionCategoryMap: Record<string, OptionCategory[]> = {
-      'Scene & Environment': ['setting', 'environmentOrder'],
+      'Scene & Environment': ['setting', 'environmentOrder', 'microLocation'],
       'Product Details': ['productMaterial', 'productPlane', 'placementStyle', 'placementCamera', 'cameraDistance'],
       'Photography': ['lighting', 'camera', 'cameraDistance', 'cameraAngle', 'cameraShot', 'perspective', 'aspectRatio', 'realism'],
+      'Appearance Level': ['personAppearance'],
+      'Mood': ['personMood'],
+      'Pose': ['personPose'],
+      'Interaction': ['productInteraction'],
+      'Wardrobe': ['wardrobeStyle'],
       'Person Details': [
         'ageGroup',
         'personAppearance',
@@ -4543,9 +4532,9 @@ const App: React.FC = () => {
                     </div>
 
                     <div className="space-y-6">
-                      <div id={getSectionId('Scene & Environment')}>
-                        <Accordion title="Scene & Environment">
-                          <div className="space-y-4">
+                      <Accordion title="Scene and Environment">
+                        <div id={getSectionId('Scene & Environment')} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <Tooltip content="Choose the overall environment where the scene takes place.">
                             <ChipSelectGroup
                               label="Location / Setting"
                               options={SETTING_OPTIONS}
@@ -4555,6 +4544,19 @@ const App: React.FC = () => {
                               customLabel="Custom setting"
                               customPlaceholder="Describe the location"
                             />
+                          </Tooltip>
+                          <Tooltip content="Add a more precise location inside the main setting.">
+                            <ChipSelectGroup
+                              label="Micro Location"
+                              options={MICRO_LOCATION_OPTIONS}
+                              selectedValue={options.microLocation}
+                              onChange={(value) => handleOptionChange('microLocation', value, 'Scene & Environment')}
+                              allowCustom
+                              customLabel="Custom micro-location"
+                              customPlaceholder="Describe a precise spot"
+                            />
+                          </Tooltip>
+                          <Tooltip content="Choose the overall environment where the scene takes place.">
                             <ChipSelectGroup
                               label="Environment Order"
                               options={ENVIRONMENT_ORDER_OPTIONS}
@@ -4564,71 +4566,81 @@ const App: React.FC = () => {
                               customLabel="Custom environment"
                               customPlaceholder="Describe the vibe"
                             />
+                          </Tooltip>
+                          <Tooltip content="Define how the subject is framed.">
                             <ChipSelectGroup
                               label="Composition Mode"
                               options={COMPOSITION_MODE_OPTIONS}
                               selectedValue={options.compositionMode}
                               onChange={(value) => handleOptionChange('compositionMode', value, 'Scene & Environment')}
                             />
+                          </Tooltip>
+                          <Tooltip content="Choose the artistic or realism style.">
                             <ChipSelectGroup
                               label="Creation Mode"
                               options={CREATION_MODE_OPTIONS}
                               selectedValue={options.creationMode}
-                              onChange={(value) => handleOptionChange('creationMode', value, 'Scene & Product')}
+                              onChange={(value) => handleOptionChange('creationMode', value, 'Scene & Environment')}
                             />
-                            {options.compositionMode === 'ecom-blank' && (
-                              <>
-                                <ChipSelectGroup
-                                  label="Side Placement"
-                                  options={SIDE_PLACEMENT_OPTIONS}
-                                  selectedValue={options.sidePlacement}
-                                  onChange={(value) => handleOptionChange('sidePlacement', value, 'Scene & Environment')}
+                          </Tooltip>
+                          {options.compositionMode === 'ecom-blank' && (
+                            <div className="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-xl border border-white/5 bg-white/5 p-4">
+                              <ChipSelectGroup
+                                label="Side Placement"
+                                options={SIDE_PLACEMENT_OPTIONS}
+                                selectedValue={options.sidePlacement}
+                                onChange={(value) => handleOptionChange('sidePlacement', value, 'Scene & Environment')}
+                              />
+                              <div className="flex flex-col gap-2">
+                                <label className="text-sm font-medium text-gray-200">Background Color</label>
+                                <input
+                                  type="color"
+                                  value={options.bgColor}
+                                  onChange={event =>
+                                    applyOptionsUpdate(prev => ({ ...prev, bgColor: event.target.value }))
+                                  }
+                                  className="h-10 w-16 rounded cursor-pointer border border-white/15 bg-gray-900"
                                 />
-                                <div className="flex flex-col gap-2 mt-4">
-                                  <label className="text-sm font-medium">Background Color</label>
-                                  <input
-                                    type="color"
-                                    value={options.bgColor}
-                                    onChange={event =>
-                                      applyOptionsUpdate(prev => ({ ...prev, bgColor: event.target.value }))
-                                    }
-                                    className="h-10 w-16 rounded cursor-pointer border border-gray-600"
-                                  />
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        </Accordion>
-                      </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </Accordion>
                       {isProductPlacement && (
                         <div id={getSectionId('Product Details')}>
                           <Accordion title="Product Details">
-                            <div className="space-y-4">
-                              <ChipSelectGroup
-                                label="Product Material"
-                                options={PRODUCT_MATERIAL_OPTIONS}
-                                selectedValue={options.productMaterial}
-                                onChange={(value) => handleOptionChange('productMaterial', value, 'Product Details')}
-                                allowCustom
-                                customLabel="Custom material"
-                                customPlaceholder="Describe the finish"
-                              />
-                              <ChipSelectGroup
-                                label="Product Plane"
-                                options={PRODUCT_PLANE_OPTIONS}
-                                selectedValue={options.productPlane}
-                                onChange={(value) => handleOptionChange('productPlane', value, 'Product Details')}
-                                allowCustom
-                                customLabel="Custom composition"
-                                customPlaceholder="Describe the depth placement"
-                              />
-                              <ChipSelectGroup
-                                label="Camera Distance"
-                                options={CAMERA_DISTANCE_OPTIONS}
-                                selectedValue={options.cameraDistance}
-                                onChange={(value) => handleOptionChange('cameraDistance', value, 'Product Details')}
-                              />
-                              <div className="rounded-2xl border border-white/10 bg-black/20 px-3 py-3 text-xs text-gray-300">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              <Tooltip content="Define the product’s primary material.">
+                                <ChipSelectGroup
+                                  label="Product Material"
+                                  options={PRODUCT_MATERIAL_OPTIONS}
+                                  selectedValue={options.productMaterial}
+                                  onChange={(value) => handleOptionChange('productMaterial', value, 'Product Details')}
+                                  allowCustom
+                                  customLabel="Custom material"
+                                  customPlaceholder="Describe the finish"
+                                />
+                              </Tooltip>
+                              <Tooltip content="Choose how the product is positioned in frame.">
+                                <ChipSelectGroup
+                                  label="Product Plane"
+                                  options={PRODUCT_PLANE_OPTIONS}
+                                  selectedValue={options.productPlane}
+                                  onChange={(value) => handleOptionChange('productPlane', value, 'Product Details')}
+                                  allowCustom
+                                  customLabel="Custom composition"
+                                  customPlaceholder="Describe the depth placement"
+                                />
+                              </Tooltip>
+                              <Tooltip content="Adjust physical distance between camera and subject.">
+                                <ChipSelectGroup
+                                  label="Camera Distance"
+                                  options={CAMERA_DISTANCE_OPTIONS}
+                                  selectedValue={options.cameraDistance}
+                                  onChange={(value) => handleOptionChange('cameraDistance', value, 'Product Details')}
+                                />
+                              </Tooltip>
+                              <div className="sm:col-span-2 rounded-2xl border border-white/10 bg-black/20 px-3 py-3 text-xs text-gray-300">
                                 <div className="flex items-center justify-between gap-2">
                                   <div>
                                     <p className="uppercase tracking-[0.3em] text-indigo-200">Packaging kit</p>
@@ -4795,24 +4807,38 @@ const App: React.FC = () => {
                           </Accordion>
                         </div>
                       )}
-                      <div id={getSectionId('Photography')}>
-                        <Accordion title="Photography">
-                          <div className="space-y-4">
+                      <Accordion title="Photography">
+                        <div id={getSectionId('Photography')} className={`grid grid-cols-1 sm:grid-cols-2 gap-4 ${cameraControlsDisabled ? 'opacity-70' : ''}`}>
+                          <Tooltip content="Choose a lighting style that defines mood and contrast.">
                             <ChipSelectGroup label="Lighting" options={LIGHTING_OPTIONS} selectedValue={options.lighting} onChange={(value) => handleOptionChange('lighting', value, 'Photography')} />
-                            <ChipSelectGroup label="Camera Type" options={CAMERA_OPTIONS} selectedValue={options.camera} onChange={(value) => handleOptionChange('camera', value, 'Photography')} />
-                            <ChipSelectGroup label="Camera Distance" options={CAMERA_DISTANCE_OPTIONS} selectedValue={options.cameraDistance} onChange={(value) => handleOptionChange('cameraDistance', value, 'Photography')} />
-                            <ChipSelectGroup label="Camera Angle" options={CAMERA_ANGLE_OPTIONS} selectedValue={options.cameraAngle} onChange={(value) => handleOptionChange('cameraAngle', value, 'Photography')} />
-                            <ChipSelectGroup label="Camera Shot" options={CAMERA_ANGLE_OPTIONS} selectedValue={options.cameraShot} onChange={(value) => handleOptionChange('cameraShot', value, 'Photography')} />
+                          </Tooltip>
+                          <Tooltip content="Select the lens type used for the shot.">
+                            <ChipSelectGroup label="Camera Type" options={CAMERA_OPTIONS} selectedValue={options.camera} onChange={(value) => handleOptionChange('camera', value, 'Photography')} disabled={cameraControlsDisabled} />
+                          </Tooltip>
+                          <Tooltip content="Control how close or far the subject appears.">
+                            <ChipSelectGroup label="Camera Shot" options={CAMERA_ANGLE_OPTIONS} selectedValue={options.cameraShot} onChange={(value) => handleOptionChange('cameraShot', value, 'Photography')} disabled={cameraControlsDisabled} />
+                          </Tooltip>
+                          <Tooltip content="Set the vertical or tilted angle of the perspective.">
+                            <ChipSelectGroup label="Camera Angle" options={CAMERA_ANGLE_OPTIONS} selectedValue={options.cameraAngle} onChange={(value) => handleOptionChange('cameraAngle', value, 'Photography')} disabled={cameraControlsDisabled} />
+                          </Tooltip>
+                          <Tooltip content="Adjust physical distance between camera and subject.">
+                            <ChipSelectGroup label="Camera Distance" options={CAMERA_DISTANCE_OPTIONS} selectedValue={options.cameraDistance} onChange={(value) => handleOptionChange('cameraDistance', value, 'Photography')} disabled={cameraControlsDisabled} />
+                          </Tooltip>
+                          <Tooltip content="Define how the subject is framed.">
                             <ChipSelectGroup label="Aspect Ratio" options={ASPECT_RATIO_OPTIONS} selectedValue={options.aspectRatio} onChange={(value) => handleOptionChange('aspectRatio', value, 'Photography')} />
-                            {!isSimpleMode && (
-                              <>
+                          </Tooltip>
+                          {!isSimpleMode && (
+                            <>
+                              <Tooltip content="Define how the subject is framed.">
                                 <ChipSelectGroup label="Perspective" options={PERSPECTIVE_OPTIONS} selectedValue={options.perspective} onChange={(value) => handleOptionChange('perspective', value, 'Photography')} />
+                              </Tooltip>
+                              <Tooltip content="Choose the artistic or realism style.">
                                 <ChipSelectGroup label="Realism / Imperfections" options={REALISM_OPTIONS} selectedValue={options.realism} onChange={(value) => handleOptionChange('realism', value, 'Photography')} />
-                              </>
-                            )}
-                          </div>
-                        </Accordion>
-                      </div>
+                              </Tooltip>
+                            </>
+                          )}
+                        </div>
+                      </Accordion>
                       {renderPersonDetailsSection()}
                       {renderBundlesSection()}
                     </div>

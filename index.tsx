@@ -16,7 +16,7 @@ import TermsPage from './TermsPage';
 import Login from './src/pages/Login';
 import Dashboard from './src/pages/Dashboard';
 import BlogArticlePage from './BlogArticlePage';
-import { TooltipProvider } from '@/components/ui/tooltip';
+import { TooltipProvider } from '@/components/UI/Tooltip';
 
 const MarketingLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className="bg-gray-950 text-white min-h-screen flex flex-col">
