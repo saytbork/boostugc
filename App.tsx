@@ -47,9 +47,9 @@ import ChipSelectGroup from './components/ChipSelectGroup';
 import ImageEditor from './components/ImageEditor';
 import ModelReferencePanel from './components/ModelReferencePanel';
 import OnboardingOverlay from './components/OnboardingOverlay';
-import Accordion from './components/UI/Accordion';
-import Badge from './components/UI/Badge';
-import Tooltip from './components/UI/Tooltip';
+import Accordion from './src/components/UI/Accordion';
+import Badge from './src/components/UI/Badge';
+import Tooltip from './src/components/UI/Tooltip';
 
 // Contexts
 import { useAuth } from './src/contexts/AuthContext';
