@@ -84,6 +84,11 @@ export async function listPublicGallery(): Promise<GalleryImage[]> {
             '/api/galleryHandler?action=list'
         );
 
+        const contentType = response.headers['content-type'];
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('Non JSON response from gallery API');
+        }
+
         console.log(`✅ Loaded ${response.data.images.length} gallery images`);
         return response.data.images;
     } catch (error) {

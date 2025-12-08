@@ -39,9 +39,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).end();
   }
 
-  const action = parseAction(req);
-
   try {
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const host = req.headers.host || 'localhost';
+    const { searchParams } = new URL(req.url || '', `${protocol}://${host}`);
+    const action = searchParams.get('action')?.toLowerCase() || '';
+
     switch (action) {
       case "add": {
         if (req.method !== "POST") {
@@ -91,6 +94,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           .limit(200)
           .get();
 
+        if (!snapshot || snapshot.empty) {
+          return res.status(200).json({ images: [] });
+        }
+
         const images: ListEntry[] = snapshot.docs.map((doc: admin.firestore.QueryDocumentSnapshot<admin.firestore.DocumentData>) => {
           const data = doc.data();
 
@@ -115,7 +122,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(400).json({ error: "Invalid action. Use 'add' or 'list'" });
     }
   } catch (error: any) {
-    console.error("❌ Gallery handler error:", error);
+    console.error("❌ Gallery API error", error);
 
     // Provide more specific error messages
     let errorMessage = "Internal server error";
