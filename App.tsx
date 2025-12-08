@@ -4165,7 +4165,9 @@ const App: React.FC = () => {
                   className="bg-gray-800/50 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col gap-6"
                 >
                   <div className="border-b border-gray-600 pb-3">
-                    <h2 className="text-2xl font-bold text-gray-200">Step 1: Choose Your Mode</h2>
+                    <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Step 1</p>
+                    <h2 className="text-xl font-bold text-gray-200">Choose Your Mode</h2>
+
                   </div>
 
                   {/* Tabs are ALWAYS clickable - not inside fieldset */}
@@ -4179,7 +4181,7 @@ const App: React.FC = () => {
                   >
                     <div className="border-b border-gray-600 pb-3">
                       <h2 className="text-2xl font-bold text-gray-200">
-                        {hasUploadedProduct ? 'Customize Your Mockup' : 'Upload a product image to customize'}
+                        Step 3: {hasUploadedProduct ? 'Customize Your Mockup' : 'Upload a product image first'}
                       </h2>
                     </div>
 
@@ -4225,10 +4227,11 @@ const App: React.FC = () => {
                 </fieldset>
               </div>
 
-              <div className="flex flex-col gap-8 pr-4 lg:sticky lg:top-5 lg:self-start lg:max-h-[calc(100vh-120px)] overflow-y-auto custom-scrollbar">
-                <div ref={uploadRef} className="rounded-2xl border border-white/10 bg-gray-900/40 p-4 space-y-3">
-                  <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Step 2</p>
-                  <h2 className="text-xl font-bold text-gray-200">Product Photos</h2>
+              <div className="flex flex-col gap-6">
+                <div ref={uploadRef} className="bg-gray-800/50 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col gap-4">
+                  <div className="border-b border-gray-600 pb-3">
+                    <h2 className="text-2xl font-bold text-gray-200">Step 2: Product Photos</h2>
+                  </div>
                   <div
                     className="border border-dashed border-[var(--border-subtle)] rounded-xl bg-[var(--bg-card)] p-6 flex flex-col items-center justify-center cursor-pointer hover:border-indigo-400 transition"
                     onClick={() => {
@@ -4262,8 +4265,10 @@ const App: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-white/10 bg-gray-900/60 p-4 space-y-3">
-                  <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Product Library</p>
+                <div className="bg-gray-800/50 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col gap-4">
+                  <div className="border-b border-gray-600 pb-3">
+                    <h2 className="text-2xl font-bold text-gray-200">Product Library</h2>
+                  </div>
                   {productAssets.length === 0 ? (
                     <p className="text-sm text-gray-400">Upload product photos to build your library.</p>
                   ) : (
