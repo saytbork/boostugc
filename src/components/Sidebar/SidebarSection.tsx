@@ -1,66 +1,42 @@
-import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
+import React from "react";
+import { ChevronDown } from "lucide-react";
+import clsx from "clsx";
 
 interface SidebarSectionProps {
     title: string;
-    icon?: React.ReactNode;
-    isOpen: boolean;
+    open: boolean;
     onToggle: () => void;
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }
 
-const SidebarSection: React.FC<SidebarSectionProps> = ({
+export const SidebarSection: React.FC<SidebarSectionProps> = ({
     title,
-    icon,
-    isOpen,
+    open,
     onToggle,
     children,
 }) => {
-    const contentRef = useRef<HTMLDivElement | null>(null);
-    const [height, setHeight] = useState<number | 'auto'>('auto');
-
-    // Use useLayoutEffect to measure before paint, preventing flicker
-    useLayoutEffect(() => {
-        if (contentRef.current) {
-            if (isOpen) {
-                setHeight(contentRef.current.scrollHeight);
-            } else {
-                setHeight(0);
-            }
-        }
-    }, [isOpen, children]);
-
     return (
-        <div className="sidebar-section">
+        <div className="mb-5 border-b border-white/5 pb-3">
             <button
-                type="button"
                 onClick={onToggle}
-                className="sidebar-section-header"
-                aria-expanded={isOpen}
+                className="w-full flex items-center justify-between py-2 text-left"
             >
-                <div className="sidebar-section-title">
-                    {icon && <span className="sidebar-section-icon">{icon}</span>}
-                    <span>{title}</span>
-                </div>
-                <svg
-                    className={`sidebar-section-chevron ${isOpen ? 'sidebar-section-chevron-open' : ''}`}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+                <span className="font-semibold text-[15px]">{title}</span>
+                <ChevronDown
+                    className={clsx(
+                        "w-4 h-4 transition-transform duration-200",
+                        open ? "rotate-180" : ""
+                    )}
+                />
             </button>
+
             <div
-                className="sidebar-section-content"
-                style={{
-                    maxHeight: typeof height === 'number' ? height : undefined,
-                    opacity: isOpen ? 1 : 0,
-                }}
+                className={clsx(
+                    "transition-all duration-300 overflow-hidden",
+                    open ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+                )}
             >
-                <div ref={contentRef} className="sidebar-section-inner">
-                    {children}
-                </div>
+                <div className="mt-3 flex flex-col gap-4">{children}</div>
             </div>
         </div>
     );

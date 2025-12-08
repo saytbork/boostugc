@@ -1,13 +1,13 @@
-import React from 'react';
-import CapsuleButton from './CapsuleButton';
-import { MockupOptions, OptionCategory } from '../../../types';
+import React from "react";
+import { CapsuleButton } from "./CapsuleButton";
+import { MockupOptions, OptionCategory } from "../../../types";
 import {
     SETTING_OPTIONS,
     ENVIRONMENT_ORDER_OPTIONS,
     LIGHTING_OPTIONS,
     MICRO_LOCATION_OPTIONS,
     PERSON_PROP_OPTIONS,
-} from '../../../constants';
+} from "../../../constants";
 
 interface SidebarGroupSceneProps {
     options: MockupOptions;
@@ -15,90 +15,95 @@ interface SidebarGroupSceneProps {
     disabled?: boolean;
 }
 
-const SECTION_TITLE = 'Scene & Environment';
+const SECTION_TITLE = "Scene & Environment";
 
-const SidebarGroupScene: React.FC<SidebarGroupSceneProps> = ({
+export const SidebarGroupScene: React.FC<SidebarGroupSceneProps> = ({
     options,
     handleOptionChange,
     disabled = false,
 }) => {
     return (
-        <div className="sidebar-group">
+        <div className="flex flex-col gap-5">
             {/* Setting */}
-            <div className="sidebar-field">
-                <label className="sidebar-field-label">Setting</label>
-                <div className="sidebar-capsule-grid">
-                    {SETTING_OPTIONS.map(opt => (
+            <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
+                    Setting
+                </label>
+                <div className="flex flex-wrap gap-2">
+                    {SETTING_OPTIONS.map((opt) => (
                         <CapsuleButton
                             key={opt.value}
                             label={opt.label}
                             selected={options.setting === opt.value}
-                            onClick={() => handleOptionChange('setting', opt.value, SECTION_TITLE)}
-                            disabled={disabled}
+                            onClick={() => handleOptionChange("setting", opt.value, SECTION_TITLE)}
                         />
                     ))}
                 </div>
             </div>
 
             {/* Environment */}
-            <div className="sidebar-field">
-                <label className="sidebar-field-label">Environment</label>
-                <div className="sidebar-capsule-grid">
-                    {ENVIRONMENT_ORDER_OPTIONS.map(opt => (
+            <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
+                    Environment
+                </label>
+                <div className="flex flex-wrap gap-2">
+                    {ENVIRONMENT_ORDER_OPTIONS.map((opt) => (
                         <CapsuleButton
                             key={opt.value}
                             label={opt.label}
                             selected={options.environmentOrder === opt.value}
-                            onClick={() => handleOptionChange('environmentOrder', opt.value, SECTION_TITLE)}
-                            disabled={disabled}
+                            onClick={() => handleOptionChange("environmentOrder", opt.value, SECTION_TITLE)}
                         />
                     ))}
                 </div>
             </div>
 
             {/* Lighting */}
-            <div className="sidebar-field">
-                <label className="sidebar-field-label">Lighting</label>
-                <div className="sidebar-capsule-grid">
-                    {LIGHTING_OPTIONS.map(opt => (
+            <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
+                    Lighting
+                </label>
+                <div className="flex flex-wrap gap-2">
+                    {LIGHTING_OPTIONS.map((opt) => (
                         <CapsuleButton
                             key={opt.value}
                             label={opt.label}
                             selected={options.lighting === opt.value}
-                            onClick={() => handleOptionChange('lighting', opt.value, SECTION_TITLE)}
-                            disabled={disabled}
+                            onClick={() => handleOptionChange("lighting", opt.value, SECTION_TITLE)}
                         />
                     ))}
                 </div>
             </div>
 
             {/* Micro Location */}
-            <div className="sidebar-field">
-                <label className="sidebar-field-label">Micro Location</label>
-                <div className="sidebar-capsule-grid">
-                    {MICRO_LOCATION_OPTIONS.map(opt => (
+            <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
+                    Micro Location
+                </label>
+                <div className="flex flex-wrap gap-2">
+                    {MICRO_LOCATION_OPTIONS.map((opt) => (
                         <CapsuleButton
                             key={opt.value}
                             label={opt.label}
                             selected={options.microLocation === opt.value}
-                            onClick={() => handleOptionChange('microLocation', opt.value, SECTION_TITLE)}
-                            disabled={disabled}
+                            onClick={() => handleOptionChange("microLocation", opt.value, SECTION_TITLE)}
                         />
                     ))}
                 </div>
             </div>
 
             {/* Props */}
-            <div className="sidebar-field">
-                <label className="sidebar-field-label">Props</label>
-                <div className="sidebar-capsule-grid">
-                    {PERSON_PROP_OPTIONS.map(opt => (
+            <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
+                    Props
+                </label>
+                <div className="flex flex-wrap gap-2">
+                    {PERSON_PROP_OPTIONS.map((opt) => (
                         <CapsuleButton
                             key={opt.value}
                             label={opt.label}
                             selected={options.personProps === opt.value}
-                            onClick={() => handleOptionChange('personProps', opt.value, SECTION_TITLE)}
-                            disabled={disabled}
+                            onClick={() => handleOptionChange("personProps", opt.value, SECTION_TITLE)}
                         />
                     ))}
                 </div>

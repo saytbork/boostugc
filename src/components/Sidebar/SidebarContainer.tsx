@@ -1,49 +1,50 @@
-import React, { useState, useCallback } from 'react';
-import { Layers, Camera, User, Settings, Package } from 'lucide-react';
-import SidebarSection from './SidebarSection';
-import SidebarGroupScene from './SidebarGroupScene';
-import SidebarGroupPhotography from './SidebarGroupPhotography';
-import SidebarGroupPerson from './SidebarGroupPerson';
-import SidebarGroupProduct from './SidebarGroupProduct';
-import SidebarGroupOutput from './SidebarGroupOutput';
-import { MockupOptions, OptionCategory } from '../../../types';
+import React, { useState } from "react";
 
-type SectionId = 'scene' | 'photography' | 'person' | 'product' | 'output';
-type SidebarMode = 'lifestyle' | 'product';
+import { SidebarSection } from "./SidebarSection";
+import { SidebarGroupScene } from "./SidebarGroupScene";
+import { SidebarGroupPhotography } from "./SidebarGroupPhotography";
+import { SidebarGroupPerson } from "./SidebarGroupPerson";
+import { SidebarGroupProduct } from "./SidebarGroupProduct";
+import { SidebarGroupOutput } from "./SidebarGroupOutput";
+import { MockupOptions, OptionCategory } from "../../../types";
+
+type SidebarMode = "lifestyle" | "product";
 
 interface SidebarContainerProps {
+    mode: SidebarMode;
     options: MockupOptions;
     handleOptionChange: (category: OptionCategory, value: string, accordionTitle: string) => void;
-    personControlsDisabled: boolean;
-    isProductPlacement: boolean;
-    cameraControlsDisabled: boolean;
-    mode: SidebarMode;
+    personControlsDisabled?: boolean;
+    isProductPlacement?: boolean;
+    cameraControlsDisabled?: boolean;
     disabled?: boolean;
 }
 
-const SidebarContainer: React.FC<SidebarContainerProps> = ({
+export const SidebarContainer: React.FC<SidebarContainerProps> = ({
+    mode,
     options,
     handleOptionChange,
-    personControlsDisabled,
-    isProductPlacement,
-    cameraControlsDisabled,
-    mode,
+    personControlsDisabled = false,
+    isProductPlacement = false,
+    cameraControlsDisabled = false,
     disabled = false,
 }) => {
-    const [openSection, setOpenSection] = useState<SectionId>('scene');
+    const [openSection, setOpenSection] = useState<string | null>("scene");
 
-    const handleToggle = useCallback((sectionId: SectionId) => {
-        setOpenSection(prev => (prev === sectionId ? prev : sectionId));
-    }, []);
+    const toggle = (id: string) => {
+        setOpenSection((prev) => (prev === id ? null : id));
+    };
 
     return (
-        <div className="sidebar-container">
-            {/* Scene & Environment - Always visible */}
+        <div
+            className="w-full overflow-y-auto overflow-x-hidden pr-4 pb-20"
+            style={{ scrollbarWidth: "thin" }}
+        >
+            {/* SCENE */}
             <SidebarSection
                 title="Scene & Environment"
-                icon={<Layers size={18} />}
-                isOpen={openSection === 'scene'}
-                onToggle={() => handleToggle('scene')}
+                open={openSection === "scene"}
+                onToggle={() => toggle("scene")}
             >
                 <SidebarGroupScene
                     options={options}
@@ -52,12 +53,11 @@ const SidebarContainer: React.FC<SidebarContainerProps> = ({
                 />
             </SidebarSection>
 
-            {/* Photography - Always visible */}
+            {/* PHOTOGRAPHY */}
             <SidebarSection
                 title="Photography"
-                icon={<Camera size={18} />}
-                isOpen={openSection === 'photography'}
-                onToggle={() => handleToggle('photography')}
+                open={openSection === "photo"}
+                onToggle={() => toggle("photo")}
             >
                 <SidebarGroupPhotography
                     options={options}
@@ -67,13 +67,12 @@ const SidebarContainer: React.FC<SidebarContainerProps> = ({
                 />
             </SidebarSection>
 
-            {/* Person Details - Only in Lifestyle mode */}
-            {mode === 'lifestyle' && (
+            {/* PERSON (LIFESTYLE) */}
+            {mode === "lifestyle" && (
                 <SidebarSection
                     title="Person Details"
-                    icon={<User size={18} />}
-                    isOpen={openSection === 'person'}
-                    onToggle={() => handleToggle('person')}
+                    open={openSection === "person"}
+                    onToggle={() => toggle("person")}
                 >
                     <SidebarGroupPerson
                         options={options}
@@ -85,13 +84,12 @@ const SidebarContainer: React.FC<SidebarContainerProps> = ({
                 </SidebarSection>
             )}
 
-            {/* Product Settings - Only in Product mode */}
-            {mode === 'product' && (
+            {/* PRODUCT (PRODUCT MODE) */}
+            {mode === "product" && (
                 <SidebarSection
                     title="Product Settings"
-                    icon={<Package size={18} />}
-                    isOpen={openSection === 'product'}
-                    onToggle={() => handleToggle('product')}
+                    open={openSection === "product"}
+                    onToggle={() => toggle("product")}
                 >
                     <SidebarGroupProduct
                         options={options}
@@ -101,12 +99,11 @@ const SidebarContainer: React.FC<SidebarContainerProps> = ({
                 </SidebarSection>
             )}
 
-            {/* Output Settings - Always visible */}
+            {/* OUTPUT */}
             <SidebarSection
                 title="Output Settings"
-                icon={<Settings size={18} />}
-                isOpen={openSection === 'output'}
-                onToggle={() => handleToggle('output')}
+                open={openSection === "output"}
+                onToggle={() => toggle("output")}
             >
                 <SidebarGroupOutput
                     options={options}

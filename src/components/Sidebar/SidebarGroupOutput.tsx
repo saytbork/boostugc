@@ -1,11 +1,11 @@
-import React from 'react';
-import CapsuleButton from './CapsuleButton';
-import { MockupOptions, OptionCategory } from '../../../types';
+import React from "react";
+import { CapsuleButton } from "./CapsuleButton";
+import { MockupOptions, OptionCategory } from "../../../types";
 import {
     ASPECT_RATIO_OPTIONS,
-    REALISM_OPTIONS,
+    SKIN_REALISM_OPTIONS,
     CREATION_MODE_OPTIONS,
-} from '../../../constants';
+} from "../../../constants";
 
 interface SidebarGroupOutputProps {
     options: MockupOptions;
@@ -13,58 +13,61 @@ interface SidebarGroupOutputProps {
     disabled?: boolean;
 }
 
-const SECTION_TITLE = 'Output Settings';
+const SECTION_TITLE = "Output Settings";
 
-const SidebarGroupOutput: React.FC<SidebarGroupOutputProps> = ({
+export const SidebarGroupOutput: React.FC<SidebarGroupOutputProps> = ({
     options,
     handleOptionChange,
     disabled = false,
 }) => {
     return (
-        <div className="sidebar-group">
+        <div className="flex flex-col gap-5">
             {/* Aspect Ratio */}
-            <div className="sidebar-field">
-                <label className="sidebar-field-label">Aspect Ratio</label>
-                <div className="sidebar-capsule-grid">
-                    {ASPECT_RATIO_OPTIONS.map(opt => (
+            <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
+                    Aspect Ratio
+                </label>
+                <div className="flex flex-wrap gap-2">
+                    {ASPECT_RATIO_OPTIONS.map((opt) => (
                         <CapsuleButton
                             key={opt.value}
                             label={opt.label}
                             selected={options.aspectRatio === opt.value}
-                            onClick={() => handleOptionChange('aspectRatio', opt.value, SECTION_TITLE)}
-                            disabled={disabled}
+                            onClick={() => handleOptionChange("aspectRatio", opt.value, SECTION_TITLE)}
                         />
                     ))}
                 </div>
             </div>
 
-            {/* Realism / Quality */}
-            <div className="sidebar-field">
-                <label className="sidebar-field-label">Realism Level</label>
-                <div className="sidebar-capsule-grid">
-                    {REALISM_OPTIONS.map(opt => (
+            {/* Realism Level */}
+            <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
+                    Realism Level
+                </label>
+                <div className="flex flex-wrap gap-2">
+                    {SKIN_REALISM_OPTIONS.map((opt) => (
                         <CapsuleButton
                             key={opt.value}
                             label={opt.label}
-                            selected={options.realism === opt.value}
-                            onClick={() => handleOptionChange('realism', opt.value, SECTION_TITLE)}
-                            disabled={disabled}
+                            selected={options.skinRealism === opt.value}
+                            onClick={() => handleOptionChange("skinRealism", opt.value, SECTION_TITLE)}
                         />
                     ))}
                 </div>
             </div>
 
             {/* Creation Mode */}
-            <div className="sidebar-field">
-                <label className="sidebar-field-label">Creation Mode</label>
-                <div className="sidebar-capsule-grid">
-                    {CREATION_MODE_OPTIONS.map(opt => (
+            <div className="flex flex-col gap-2">
+                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
+                    Creation Mode
+                </label>
+                <div className="flex flex-wrap gap-2">
+                    {CREATION_MODE_OPTIONS.map((opt) => (
                         <CapsuleButton
                             key={opt.value}
                             label={opt.label}
                             selected={options.creationMode === opt.value}
-                            onClick={() => handleOptionChange('creationMode' as OptionCategory, opt.value, SECTION_TITLE)}
-                            disabled={disabled}
+                            onClick={() => handleOptionChange("creationMode", opt.value, SECTION_TITLE)}
                         />
                     ))}
                 </div>
