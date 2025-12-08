@@ -4196,9 +4196,9 @@ const App: React.FC = () => {
                         disabled={!hasUploadedProduct || isTrialLocked}
                       />
 
-                      {/* Product Mode - Additional Panels */}
+                      {/* Product Mode - Advanced Panels */}
                       {activeTab === 'product' && (
-                        <Accordion title="Product Mode" icon={<Package size={20} />} defaultOpen={false}>
+                        <Accordion title="Product Advanced" icon={<Package size={20} />} defaultOpen={false}>
                           <div className="space-y-6 pt-2">
                             <ProductScenePanel
                               options={options}
@@ -4253,7 +4253,7 @@ const App: React.FC = () => {
                         </Accordion>
                       )}
 
-                      {/* Lifestyle Mode - Additional Panels */}
+                      {/* Lifestyle Mode - Advanced Panels */}
                       {activeTab === 'lifestyle' && (
                         <>
                           <Accordion title="Lifestyle Advanced" icon={<Sparkles size={20} />} defaultOpen={false}>
@@ -4312,6 +4312,7 @@ const App: React.FC = () => {
                           />
                         </>
                       )}
+
                     </div>
                     <div className="pt-2">
                       <button
