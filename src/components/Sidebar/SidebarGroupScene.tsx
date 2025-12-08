@@ -1,6 +1,7 @@
 import React from "react";
 import { CapsuleButton } from "./CapsuleButton";
 import { SubAccordion } from "./SubAccordion";
+import Tooltip from "../UI/Tooltip";
 import { MockupOptions, OptionCategory } from "../../../types";
 import {
     SETTING_OPTIONS,
@@ -20,6 +21,16 @@ interface SidebarGroupSceneProps {
 
 const SECTION_TITLE = "Scene & Environment";
 
+// Tooltip content dictionary
+const TOOLTIPS = {
+    setting: "Choose the main place where the scene happens.",
+    microLocation: "Small details that define where the product or person is inside the scene.",
+    environment: "How clean or messy the scene looks.",
+    lighting: "Choose the lighting style used in the scene.",
+    props: "Add supporting elements to the scene.",
+    composition: "Control how elements are arranged in the frame.",
+};
+
 export const SidebarGroupScene: React.FC<SidebarGroupSceneProps> = ({
     options,
     handleOptionChange,
@@ -27,8 +38,13 @@ export const SidebarGroupScene: React.FC<SidebarGroupSceneProps> = ({
 }) => {
     return (
         <div className="flex flex-col">
-            {/* Scene Presets */}
+            {/* Setting */}
             <SubAccordion title="Setting" defaultOpen={true}>
+                <Tooltip content={TOOLTIPS.setting}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Location / Setting ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {SETTING_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -43,6 +59,11 @@ export const SidebarGroupScene: React.FC<SidebarGroupSceneProps> = ({
 
             {/* Micro Location */}
             <SubAccordion title="Micro Location">
+                <Tooltip content={TOOLTIPS.microLocation}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Micro Location ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {MICRO_LOCATION_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -55,8 +76,13 @@ export const SidebarGroupScene: React.FC<SidebarGroupSceneProps> = ({
                 </div>
             </SubAccordion>
 
-            {/* Environment Tone */}
+            {/* Environment */}
             <SubAccordion title="Environment">
+                <Tooltip content={TOOLTIPS.environment}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Environment Order ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {ENVIRONMENT_ORDER_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -71,6 +97,11 @@ export const SidebarGroupScene: React.FC<SidebarGroupSceneProps> = ({
 
             {/* Lighting */}
             <SubAccordion title="Lighting">
+                <Tooltip content={TOOLTIPS.lighting}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Lighting ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {LIGHTING_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -85,6 +116,11 @@ export const SidebarGroupScene: React.FC<SidebarGroupSceneProps> = ({
 
             {/* Props */}
             <SubAccordion title="Props">
+                <Tooltip content={TOOLTIPS.props}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Scene Props ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {PERSON_PROP_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -99,6 +135,11 @@ export const SidebarGroupScene: React.FC<SidebarGroupSceneProps> = ({
 
             {/* Composition Mode */}
             <SubAccordion title="Composition">
+                <Tooltip content={TOOLTIPS.composition}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Composition Mode ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {COMPOSITION_MODE_OPTIONS?.map((opt) => (
                         <CapsuleButton

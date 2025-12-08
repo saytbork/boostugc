@@ -1,6 +1,7 @@
 import React from "react";
 import { CapsuleButton } from "./CapsuleButton";
 import { SubAccordion } from "./SubAccordion";
+import Tooltip from "../UI/Tooltip";
 import { MockupOptions, OptionCategory } from "../../../types";
 import {
     AGE_GROUP_OPTIONS,
@@ -24,6 +25,16 @@ interface SidebarGroupPersonProps {
 
 const SECTION_TITLE = "Person Details";
 
+// Tooltip content dictionary
+const TOOLTIPS = {
+    identity: "Choose the person's basic characteristics.",
+    pose: "Decide how the person is standing or moving.",
+    wardrobe: "Select the clothing style.",
+    expression: "Choose the emotional tone of the person.",
+    appearance: "Fine details like hair, style, or personal features.",
+    interaction: "How the person interacts with the product.",
+};
+
 export const SidebarGroupPerson: React.FC<SidebarGroupPersonProps> = ({
     options,
     handleOptionChange,
@@ -35,6 +46,11 @@ export const SidebarGroupPerson: React.FC<SidebarGroupPersonProps> = ({
         <div className="flex flex-col">
             {/* Identity */}
             <SubAccordion title="Identity" defaultOpen={true}>
+                <Tooltip content={TOOLTIPS.identity}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-3 block cursor-help">
+                        Identity ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-col gap-4">
                     <div>
                         <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block">Age Group</label>
@@ -80,6 +96,11 @@ export const SidebarGroupPerson: React.FC<SidebarGroupPersonProps> = ({
 
             {/* Pose */}
             <SubAccordion title="Pose">
+                <Tooltip content={TOOLTIPS.pose}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Pose ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {PERSON_POSE_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -94,6 +115,11 @@ export const SidebarGroupPerson: React.FC<SidebarGroupPersonProps> = ({
 
             {/* Wardrobe */}
             <SubAccordion title="Wardrobe">
+                <Tooltip content={TOOLTIPS.wardrobe}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Wardrobe ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {WARDROBE_STYLE_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -108,6 +134,11 @@ export const SidebarGroupPerson: React.FC<SidebarGroupPersonProps> = ({
 
             {/* Expression & Mood */}
             <SubAccordion title="Expression & Mood">
+                <Tooltip content={TOOLTIPS.expression}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-3 block cursor-help">
+                        Expression & Mood ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-col gap-4">
                     <div>
                         <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block">Mood</label>
@@ -140,6 +171,11 @@ export const SidebarGroupPerson: React.FC<SidebarGroupPersonProps> = ({
 
             {/* Appearance */}
             <SubAccordion title="Appearance Level">
+                <Tooltip content={TOOLTIPS.appearance}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Appearance ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {PERSON_APPEARANCE_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -154,6 +190,11 @@ export const SidebarGroupPerson: React.FC<SidebarGroupPersonProps> = ({
 
             {/* Interaction */}
             <SubAccordion title="Product Interaction">
+                <Tooltip content={TOOLTIPS.interaction}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Interaction ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {PRODUCT_INTERACTION_OPTIONS.map((opt) => (
                         <CapsuleButton

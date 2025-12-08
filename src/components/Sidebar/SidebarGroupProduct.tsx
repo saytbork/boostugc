@@ -1,6 +1,7 @@
 import React from "react";
 import { CapsuleButton } from "./CapsuleButton";
 import { SubAccordion } from "./SubAccordion";
+import Tooltip from "../UI/Tooltip";
 import { MockupOptions, OptionCategory } from "../../../types";
 import {
     CAMERA_ANGLE_OPTIONS,
@@ -54,6 +55,23 @@ const SUPPLEMENT_MODES = [
     { value: "floating-particles", label: "Floating Magic", emoji: "✨" },
 ];
 
+// Tooltip content dictionary
+const TOOLTIPS = {
+    placement: "Where the product sits in the frame for product shots.",
+    cameraPov: "The viewpoint from which the product is captured.",
+    material: "Describe the product's surface and material.",
+    heroScale: "Control the size and positioning of the product for hero shots.",
+    shadows: "Adjust the type and strength of the product shadow.",
+    perspective: "Set the angle and depth of the product shot.",
+    photoMode: "Choose the style for supplement product photography.",
+    addHands: "Adds a hand interacting with the product without showing a full person.",
+    multiProduct: "Show multiple units of the product side-by-side.",
+    backgroundColor: "Pick the solid background color for ecommerce-style images.",
+    accentColor: "Add supporting colors or small scene elements.",
+    flavorProps: "Add visual ingredients related to the formula.",
+    customCue: "Describe a unique element you want added to the hero shot.",
+};
+
 interface SidebarGroupProductProps {
     options: MockupOptions;
     handleOptionChange: (category: OptionCategory, value: string, accordionTitle: string) => void;
@@ -100,6 +118,11 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
         <div className="flex flex-col">
             {/* Placement Style */}
             <SubAccordion title="Product Placement" defaultOpen={true}>
+                <Tooltip content={TOOLTIPS.placement}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Product Placement ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {PLACEMENT_STYLE_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -114,6 +137,11 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
 
             {/* Camera */}
             <SubAccordion title="Camera POV">
+                <Tooltip content={TOOLTIPS.cameraPov}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-3 block cursor-help">
+                        Camera POV ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-col gap-4">
                     <div>
                         <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block">Angle</label>
@@ -146,6 +174,11 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
 
             {/* Material */}
             <SubAccordion title="Product Material">
+                <Tooltip content={TOOLTIPS.material}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Material ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {PRODUCT_MATERIAL_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -160,6 +193,11 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
 
             {/* Hero Scale & Alignment */}
             <SubAccordion title="Hero Scale & Alignment">
+                <Tooltip content={TOOLTIPS.heroScale}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-3 block cursor-help">
+                        Hero Scale & Alignment ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-col gap-4">
                     <div>
                         <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block">Scale</label>
@@ -192,6 +230,11 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
 
             {/* Shadows */}
             <SubAccordion title="Shadows & Reflections">
+                <Tooltip content={TOOLTIPS.shadows}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Shadows ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {SHADOW_STYLE_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -206,6 +249,11 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
 
             {/* Perspective */}
             <SubAccordion title="Perspective">
+                <Tooltip content={TOOLTIPS.perspective}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Perspective ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {PERSPECTIVE_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -223,7 +271,11 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
                 <div className="flex flex-col gap-5">
                     {/* Supplement Photo Modes */}
                     <div>
-                        <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-3 block">Photo Mode</label>
+                        <Tooltip content={TOOLTIPS.photoMode}>
+                            <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-3 block cursor-help">
+                                Photo Mode ⓘ
+                            </label>
+                        </Tooltip>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             {SUPPLEMENT_MODES.map((mode) => (
                                 <button
@@ -243,39 +295,45 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
                     </div>
 
                     {/* Add Hands Toggle */}
-                    <div className="flex items-center justify-between rounded-lg bg-white/5 border border-white/10 p-3">
-                        <div>
-                            <p className="text-xs font-medium text-white">Add Hands</p>
-                            <p className="text-[11px] text-gray-400">Include a hand holding or interacting with the product</p>
+                    <Tooltip content={TOOLTIPS.addHands}>
+                        <div className="flex items-center justify-between rounded-lg bg-white/5 border border-white/10 p-3 cursor-help">
+                            <div>
+                                <p className="text-xs font-medium text-white">Add Hands ⓘ</p>
+                                <p className="text-[11px] text-gray-400">Include a hand holding or interacting with the product</p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setAddHandsEnabled?.(!addHandsEnabled)}
+                                className={`relative h-6 w-11 rounded-full transition-colors ${addHandsEnabled ? "bg-indigo-500" : "bg-gray-600"}`}
+                            >
+                                <span className={`absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-transform ${addHandsEnabled ? "translate-x-5" : ""}`} />
+                            </button>
                         </div>
-                        <button
-                            type="button"
-                            onClick={() => setAddHandsEnabled?.(!addHandsEnabled)}
-                            className={`relative h-6 w-11 rounded-full transition-colors ${addHandsEnabled ? "bg-indigo-500" : "bg-gray-600"}`}
-                        >
-                            <span className={`absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-transform ${addHandsEnabled ? "translate-x-5" : ""}`} />
-                        </button>
-                    </div>
+                    </Tooltip>
 
                     {/* Multi Product Packaging Toggle */}
-                    <div className="flex items-center justify-between rounded-lg bg-white/5 border border-white/10 p-3">
-                        <div>
-                            <p className="text-xs font-medium text-white">Multi-Product Kit</p>
-                            <p className="text-[11px] text-gray-400">Show multiple units side-by-side</p>
+                    <Tooltip content={TOOLTIPS.multiProduct}>
+                        <div className="flex items-center justify-between rounded-lg bg-white/5 border border-white/10 p-3 cursor-help">
+                            <div>
+                                <p className="text-xs font-medium text-white">Multi-Product Kit ⓘ</p>
+                                <p className="text-[11px] text-gray-400">Show multiple units side-by-side</p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setIsMultiProductPackaging?.(!isMultiProductPackaging)}
+                                className={`relative h-6 w-11 rounded-full transition-colors ${isMultiProductPackaging ? "bg-indigo-500" : "bg-gray-600"}`}
+                            >
+                                <span className={`absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-transform ${isMultiProductPackaging ? "translate-x-5" : ""}`} />
+                            </button>
                         </div>
-                        <button
-                            type="button"
-                            onClick={() => setIsMultiProductPackaging?.(!isMultiProductPackaging)}
-                            className={`relative h-6 w-11 rounded-full transition-colors ${isMultiProductPackaging ? "bg-indigo-500" : "bg-gray-600"}`}
-                        >
-                            <span className={`absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-transform ${isMultiProductPackaging ? "translate-x-5" : ""}`} />
-                        </button>
-                    </div>
+                    </Tooltip>
 
                     {/* Colors */}
                     <div className="grid grid-cols-2 gap-3">
                         <div className="flex flex-col gap-1">
-                            <label className="text-xs uppercase tracking-wide text-gray-500">Background Color</label>
+                            <Tooltip content={TOOLTIPS.backgroundColor}>
+                                <label className="text-xs uppercase tracking-wide text-gray-500 cursor-help">Background Color ⓘ</label>
+                            </Tooltip>
                             <input
                                 type="text"
                                 value={supplementBackgroundColor}
@@ -285,7 +343,9 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
                             />
                         </div>
                         <div className="flex flex-col gap-1">
-                            <label className="text-xs uppercase tracking-wide text-gray-500">Accent Color / Props</label>
+                            <Tooltip content={TOOLTIPS.accentColor}>
+                                <label className="text-xs uppercase tracking-wide text-gray-500 cursor-help">Accent Color / Props ⓘ</label>
+                            </Tooltip>
                             <input
                                 type="text"
                                 value={supplementAccentColor}
@@ -298,7 +358,9 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
 
                     {/* Flavor Notes */}
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs uppercase tracking-wide text-gray-500">Flavor / Ingredient Props</label>
+                        <Tooltip content={TOOLTIPS.flavorProps}>
+                            <label className="text-xs uppercase tracking-wide text-gray-500 cursor-help">Flavor / Ingredient Props ⓘ</label>
+                        </Tooltip>
                         <textarea
                             value={supplementFlavorNotes}
                             onChange={(e) => setSupplementFlavorNotes?.(e.target.value)}
@@ -310,7 +372,9 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
 
                     {/* Custom Hero Cue */}
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs uppercase tracking-wide text-gray-500">Custom Hero Cue</label>
+                        <Tooltip content={TOOLTIPS.customCue}>
+                            <label className="text-xs uppercase tracking-wide text-gray-500 cursor-help">Custom Hero Cue ⓘ</label>
+                        </Tooltip>
                         <textarea
                             value={supplementCustomPrompt}
                             onChange={(e) => setSupplementCustomPrompt?.(e.target.value)}

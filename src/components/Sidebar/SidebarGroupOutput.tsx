@@ -1,6 +1,7 @@
 import React from "react";
 import { CapsuleButton } from "./CapsuleButton";
 import { SubAccordion } from "./SubAccordion";
+import Tooltip from "../UI/Tooltip";
 import { MockupOptions, OptionCategory } from "../../../types";
 import {
     ASPECT_RATIO_OPTIONS,
@@ -24,13 +25,13 @@ const QUALITY_OPTIONS = [
     { value: "ultra", label: "Ultra" },
 ];
 
-// Model strength options
-const MODEL_STRENGTH_OPTIONS = [
-    { value: "low", label: "Low (0.3)" },
-    { value: "medium", label: "Medium (0.5)" },
-    { value: "high", label: "High (0.7)" },
-    { value: "max", label: "Max (0.9)" },
-];
+// Tooltip content dictionary
+const TOOLTIPS = {
+    aspectRatio: "Choose the output shape of the image.",
+    realism: "How photorealistic the final image should look.",
+    creationMode: "Select the overall style of the generated image.",
+    quality: "Choose the output quality level.",
+};
 
 export const SidebarGroupOutput: React.FC<SidebarGroupOutputProps> = ({
     options,
@@ -41,6 +42,11 @@ export const SidebarGroupOutput: React.FC<SidebarGroupOutputProps> = ({
         <div className="flex flex-col">
             {/* Aspect Ratio */}
             <SubAccordion title="Aspect Ratio" defaultOpen={true}>
+                <Tooltip content={TOOLTIPS.aspectRatio}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Aspect Ratio ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {ASPECT_RATIO_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -55,6 +61,11 @@ export const SidebarGroupOutput: React.FC<SidebarGroupOutputProps> = ({
 
             {/* Realism */}
             <SubAccordion title="Realism Level">
+                <Tooltip content={TOOLTIPS.realism}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Realism Level ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {REALISM_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -69,6 +80,11 @@ export const SidebarGroupOutput: React.FC<SidebarGroupOutputProps> = ({
 
             {/* Creation Mode */}
             <SubAccordion title="Creation Mode">
+                <Tooltip content={TOOLTIPS.creationMode}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Creation Mode ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {CREATION_MODE_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -83,6 +99,11 @@ export const SidebarGroupOutput: React.FC<SidebarGroupOutputProps> = ({
 
             {/* Quality */}
             <SubAccordion title="Output Quality">
+                <Tooltip content={TOOLTIPS.quality}>
+                    <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block cursor-help">
+                        Output Quality ⓘ
+                    </label>
+                </Tooltip>
                 <div className="flex flex-wrap gap-2">
                     {QUALITY_OPTIONS.map((opt) => (
                         <CapsuleButton
