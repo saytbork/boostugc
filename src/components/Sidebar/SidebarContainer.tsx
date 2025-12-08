@@ -18,6 +18,21 @@ interface SidebarContainerProps {
     isProductPlacement?: boolean;
     cameraControlsDisabled?: boolean;
     disabled?: boolean;
+    // Advanced Product Controls
+    addHandsEnabled?: boolean;
+    setAddHandsEnabled?: (value: boolean) => void;
+    isMultiProductPackaging?: boolean;
+    setIsMultiProductPackaging?: (value: boolean) => void;
+    activeSupplementPreset?: string;
+    handleSupplementPresetClick?: (preset: string) => void;
+    supplementBackgroundColor?: string;
+    setSupplementBackgroundColor?: (value: string) => void;
+    supplementAccentColor?: string;
+    setSupplementAccentColor?: (value: string) => void;
+    supplementFlavorNotes?: string;
+    setSupplementFlavorNotes?: (value: string) => void;
+    supplementCustomPrompt?: string;
+    setSupplementCustomPrompt?: (value: string) => void;
 }
 
 export const SidebarContainer: React.FC<SidebarContainerProps> = ({
@@ -28,6 +43,21 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({
     isProductPlacement = false,
     cameraControlsDisabled = false,
     disabled = false,
+    // Advanced Product Controls
+    addHandsEnabled = false,
+    setAddHandsEnabled,
+    isMultiProductPackaging = false,
+    setIsMultiProductPackaging,
+    activeSupplementPreset = "",
+    handleSupplementPresetClick,
+    supplementBackgroundColor = "",
+    setSupplementBackgroundColor,
+    supplementAccentColor = "",
+    setSupplementAccentColor,
+    supplementFlavorNotes = "",
+    setSupplementFlavorNotes,
+    supplementCustomPrompt = "",
+    setSupplementCustomPrompt,
 }) => {
     const [openSection, setOpenSection] = useState<string | null>("scene");
 
@@ -94,6 +124,20 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({
                         options={options}
                         handleOptionChange={handleOptionChange}
                         disabled={disabled}
+                        addHandsEnabled={addHandsEnabled}
+                        setAddHandsEnabled={setAddHandsEnabled}
+                        isMultiProductPackaging={isMultiProductPackaging}
+                        setIsMultiProductPackaging={setIsMultiProductPackaging}
+                        activeSupplementPreset={activeSupplementPreset}
+                        handleSupplementPresetClick={handleSupplementPresetClick}
+                        supplementBackgroundColor={supplementBackgroundColor}
+                        setSupplementBackgroundColor={setSupplementBackgroundColor}
+                        supplementAccentColor={supplementAccentColor}
+                        setSupplementAccentColor={setSupplementAccentColor}
+                        supplementFlavorNotes={supplementFlavorNotes}
+                        setSupplementFlavorNotes={setSupplementFlavorNotes}
+                        supplementCustomPrompt={supplementCustomPrompt}
+                        setSupplementCustomPrompt={setSupplementCustomPrompt}
                     />
                 </SidebarSection>
             )}

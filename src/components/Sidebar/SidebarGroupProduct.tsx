@@ -3,7 +3,6 @@ import { CapsuleButton } from "./CapsuleButton";
 import { SubAccordion } from "./SubAccordion";
 import { MockupOptions, OptionCategory } from "../../../types";
 import {
-    CAMERA_OPTIONS,
     CAMERA_ANGLE_OPTIONS,
     CAMERA_DISTANCE_OPTIONS,
     PERSPECTIVE_OPTIONS,
@@ -49,10 +48,31 @@ const HERO_ALIGNMENT_OPTIONS = [
     { value: "right", label: "Right" },
 ];
 
+const SUPPLEMENT_MODES = [
+    { value: "hero-landing", label: "Hero Landing", emoji: "👑" },
+    { value: "ingredient-splash", label: "Splash / Ingredients", emoji: "🍋" },
+    { value: "floating-particles", label: "Floating Magic", emoji: "✨" },
+];
+
 interface SidebarGroupProductProps {
     options: MockupOptions;
     handleOptionChange: (category: OptionCategory, value: string, accordionTitle: string) => void;
     disabled?: boolean;
+    // Advanced Product Controls
+    addHandsEnabled?: boolean;
+    setAddHandsEnabled?: (value: boolean) => void;
+    isMultiProductPackaging?: boolean;
+    setIsMultiProductPackaging?: (value: boolean) => void;
+    activeSupplementPreset?: string;
+    handleSupplementPresetClick?: (preset: string) => void;
+    supplementBackgroundColor?: string;
+    setSupplementBackgroundColor?: (value: string) => void;
+    supplementAccentColor?: string;
+    setSupplementAccentColor?: (value: string) => void;
+    supplementFlavorNotes?: string;
+    setSupplementFlavorNotes?: (value: string) => void;
+    supplementCustomPrompt?: string;
+    setSupplementCustomPrompt?: (value: string) => void;
 }
 
 const SECTION_TITLE = "Product Settings";
@@ -61,6 +81,20 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
     options,
     handleOptionChange,
     disabled = false,
+    addHandsEnabled = false,
+    setAddHandsEnabled,
+    isMultiProductPackaging = false,
+    setIsMultiProductPackaging,
+    activeSupplementPreset = "",
+    handleSupplementPresetClick,
+    supplementBackgroundColor = "",
+    setSupplementBackgroundColor,
+    supplementAccentColor = "",
+    setSupplementAccentColor,
+    supplementFlavorNotes = "",
+    setSupplementFlavorNotes,
+    supplementCustomPrompt = "",
+    setSupplementCustomPrompt,
 }) => {
     return (
         <div className="flex flex-col">
@@ -134,7 +168,7 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
                                 <CapsuleButton
                                     key={opt.value}
                                     label={opt.label}
-                                    selected={options.heroProductScale === opt.value}
+                                    selected={(options as any).heroProductScale === opt.value}
                                     onClick={() => handleOptionChange("heroProductScale" as OptionCategory, opt.value, SECTION_TITLE)}
                                 />
                             ))}
@@ -147,7 +181,7 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
                                 <CapsuleButton
                                     key={opt.value}
                                     label={opt.label}
-                                    selected={options.heroProductAlignment === opt.value}
+                                    selected={(options as any).heroProductAlignment === opt.value}
                                     onClick={() => handleOptionChange("heroProductAlignment" as OptionCategory, opt.value, SECTION_TITLE)}
                                 />
                             ))}
@@ -163,7 +197,7 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
                         <CapsuleButton
                             key={opt.value}
                             label={opt.label}
-                            selected={options.heroShadowStyle === opt.value}
+                            selected={(options as any).heroShadowStyle === opt.value}
                             onClick={() => handleOptionChange("heroShadowStyle" as OptionCategory, opt.value, SECTION_TITLE)}
                         />
                     ))}
@@ -181,6 +215,111 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
                             onClick={() => handleOptionChange("perspective", opt.value, SECTION_TITLE)}
                         />
                     ))}
+                </div>
+            </SubAccordion>
+
+            {/* Brand Cues - Advanced Product Settings */}
+            <SubAccordion title="Brand Cues">
+                <div className="flex flex-col gap-5">
+                    {/* Supplement Photo Modes */}
+                    <div>
+                        <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-3 block">Photo Mode</label>
+                        <div className="flex flex-wrap gap-2">
+                            {SUPPLEMENT_MODES.map((mode) => (
+                                <button
+                                    key={mode.value}
+                                    type="button"
+                                    onClick={() => handleSupplementPresetClick?.(mode.value)}
+                                    className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-xs transition ${activeSupplementPreset === mode.value
+                                        ? "border-indigo-400 bg-indigo-500/10 text-white"
+                                        : "border-white/10 bg-white/5 text-gray-400 hover:bg-white/10"
+                                        }`}
+                                >
+                                    <span>{mode.emoji}</span>
+                                    <span className="font-medium">{mode.label}</span>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Add Hands Toggle */}
+                    <div className="flex items-center justify-between rounded-lg bg-white/5 border border-white/10 p-3">
+                        <div>
+                            <p className="text-xs font-medium text-white">Add Hands</p>
+                            <p className="text-[11px] text-gray-400">Include a hand holding or interacting with the product</p>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setAddHandsEnabled?.(!addHandsEnabled)}
+                            className={`relative h-6 w-11 rounded-full transition-colors ${addHandsEnabled ? "bg-indigo-500" : "bg-gray-600"}`}
+                        >
+                            <span className={`absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-transform ${addHandsEnabled ? "translate-x-5" : ""}`} />
+                        </button>
+                    </div>
+
+                    {/* Multi Product Packaging Toggle */}
+                    <div className="flex items-center justify-between rounded-lg bg-white/5 border border-white/10 p-3">
+                        <div>
+                            <p className="text-xs font-medium text-white">Multi-Product Kit</p>
+                            <p className="text-[11px] text-gray-400">Show multiple units side-by-side</p>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setIsMultiProductPackaging?.(!isMultiProductPackaging)}
+                            className={`relative h-6 w-11 rounded-full transition-colors ${isMultiProductPackaging ? "bg-indigo-500" : "bg-gray-600"}`}
+                        >
+                            <span className={`absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-transform ${isMultiProductPackaging ? "translate-x-5" : ""}`} />
+                        </button>
+                    </div>
+
+                    {/* Colors */}
+                    <div className="grid grid-cols-2 gap-3">
+                        <div className="flex flex-col gap-1">
+                            <label className="text-xs uppercase tracking-wide text-gray-500">Background Color</label>
+                            <input
+                                type="text"
+                                value={supplementBackgroundColor}
+                                onChange={(e) => setSupplementBackgroundColor?.(e.target.value)}
+                                placeholder="e.g., #FFB347 or pastel peach"
+                                className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-indigo-400 focus:outline-none"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <label className="text-xs uppercase tracking-wide text-gray-500">Accent Color / Props</label>
+                            <input
+                                type="text"
+                                value={supplementAccentColor}
+                                onChange={(e) => setSupplementAccentColor?.(e.target.value)}
+                                placeholder="e.g., teal acrylic cube"
+                                className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-indigo-400 focus:outline-none"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Flavor Notes */}
+                    <div className="flex flex-col gap-1">
+                        <label className="text-xs uppercase tracking-wide text-gray-500">Flavor / Ingredient Props</label>
+                        <textarea
+                            value={supplementFlavorNotes}
+                            onChange={(e) => setSupplementFlavorNotes?.(e.target.value)}
+                            placeholder="e.g., pineapple, lavender sprigs, gummy vitamins"
+                            className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-indigo-400 focus:outline-none resize-none"
+                            rows={2}
+                        />
+                    </div>
+
+                    {/* Custom Hero Cue */}
+                    <div className="flex flex-col gap-1">
+                        <label className="text-xs uppercase tracking-wide text-gray-500">Custom Hero Cue</label>
+                        <textarea
+                            value={supplementCustomPrompt}
+                            onChange={(e) => setSupplementCustomPrompt?.(e.target.value)}
+                            placeholder="e.g., have a manicured hand toss gummies mid-air beside the bottle"
+                            className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-indigo-400 focus:outline-none resize-none"
+                            rows={2}
+                        />
+                        <p className="text-[11px] text-gray-500">Add any specific staging or stylistic callouts for this product.</p>
+                    </div>
                 </div>
             </SubAccordion>
         </div>

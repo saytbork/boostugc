@@ -4194,6 +4194,21 @@ const App: React.FC = () => {
                         cameraControlsDisabled={!!cameraControlsDisabled}
                         mode={activeTab === 'product' ? 'product' : 'lifestyle'}
                         disabled={!hasUploadedProduct || isTrialLocked}
+                        // Advanced Product Controls
+                        addHandsEnabled={addHandsEnabled}
+                        setAddHandsEnabled={setIncludeSupplementHand}
+                        isMultiProductPackaging={isMultiProductPackaging}
+                        setIsMultiProductPackaging={setIsMultiProductPackaging}
+                        activeSupplementPreset={activeSupplementPreset}
+                        handleSupplementPresetClick={handleSupplementPresetClick as any}
+                        supplementBackgroundColor={supplementBackgroundColor}
+                        setSupplementBackgroundColor={setSupplementBackgroundColor}
+                        supplementAccentColor={supplementAccentColor}
+                        setSupplementAccentColor={setSupplementAccentColor}
+                        supplementFlavorNotes={supplementFlavorNotes}
+                        setSupplementFlavorNotes={setSupplementFlavorNotes}
+                        supplementCustomPrompt={supplementCustomPrompt}
+                        setSupplementCustomPrompt={setSupplementCustomPrompt}
                       />
 
                     </div>
