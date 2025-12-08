@@ -224,19 +224,19 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
                     {/* Supplement Photo Modes */}
                     <div>
                         <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-3 block">Photo Mode</label>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             {SUPPLEMENT_MODES.map((mode) => (
                                 <button
                                     key={mode.value}
                                     type="button"
                                     onClick={() => handleSupplementPresetClick?.(mode.value)}
-                                    className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-xs transition ${activeSupplementPreset === mode.value
-                                        ? "border-indigo-400 bg-indigo-500/10 text-white"
-                                        : "border-white/10 bg-white/5 text-gray-400 hover:bg-white/10"
+                                    className={`flex flex-col items-center justify-center rounded-xl p-4 border transition ${activeSupplementPreset === mode.value
+                                            ? "border-indigo-400 bg-indigo-500/10 text-white"
+                                            : "border-white/10 bg-white/5 text-gray-400 hover:bg-white/10"
                                         }`}
                                 >
-                                    <span>{mode.emoji}</span>
-                                    <span className="font-medium">{mode.label}</span>
+                                    <span className="text-2xl mb-2">{mode.emoji}</span>
+                                    <span className="text-[10px] font-bold uppercase text-center">{mode.label}</span>
                                 </button>
                             ))}
                         </div>
