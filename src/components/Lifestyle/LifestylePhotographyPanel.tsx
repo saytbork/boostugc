@@ -1,4 +1,5 @@
 import React from 'react';
+import { Camera } from 'lucide-react';
 import Accordion from '../UI/Accordion';
 import Tooltip from '../UI/Tooltip';
 import ChipSelectGroup from '../ChipSelectGroup';
@@ -29,7 +30,7 @@ const LifestylePhotographyPanel: React.FC<LifestylePhotographyPanelProps> = ({
     isSimpleMode,
 }) => {
     return (
-        <Accordion title="Photography" defaultOpen={false}>
+        <Accordion title="Photography" icon={<Camera size={18} />} defaultOpen={false}>
             <div id={getSectionId('Photography')} className={`grid grid-cols-1 sm:grid-cols-2 gap-4 ${cameraControlsDisabled ? 'opacity-70' : ''}`}>
                 <Tooltip content="Choose a lighting style that defines mood and contrast.">
                     <ChipSelectGroup
@@ -52,7 +53,7 @@ const LifestylePhotographyPanel: React.FC<LifestylePhotographyPanelProps> = ({
                     <ChipSelectGroup
                         label="Camera Shot"
                         options={CAMERA_ANGLE_OPTIONS}
-                        selectedValue={options.cameraShot}
+                        selectedValue={options.cameraShot ?? ''}
                         onChange={(value: any) => handleOptionChange('cameraShot', value, 'Photography')}
                         disabled={!!cameraControlsDisabled}
                     />
@@ -61,7 +62,7 @@ const LifestylePhotographyPanel: React.FC<LifestylePhotographyPanelProps> = ({
                     <ChipSelectGroup
                         label="Camera Angle"
                         options={CAMERA_ANGLE_OPTIONS}
-                        selectedValue={options.cameraAngle}
+                        selectedValue={options.cameraAngle ?? ''}
                         onChange={(value: any) => handleOptionChange('cameraAngle', value, 'Photography')}
                         disabled={!!cameraControlsDisabled}
                     />

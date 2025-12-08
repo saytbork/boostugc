@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image as ImageIcon, Map, Layers, Layout, Aperture } from 'lucide-react';
 import Accordion from '../UI/Accordion';
 import Tooltip from '../UI/Tooltip';
 import ChipSelectGroup from '../ChipSelectGroup';
@@ -26,9 +27,9 @@ const LifestyleScenePanel: React.FC<LifestyleScenePanelProps> = ({
     getSectionId = (s) => s,
 }) => {
     return (
-        <Accordion title="Scene & Environment" defaultOpen={false}>
+        <Accordion title="Scene & Environment" icon={<ImageIcon size={18} />} defaultOpen={false}>
             <div className="space-y-2 pt-2">
-                <Accordion title="Setting" defaultOpen={false}>
+                <Accordion title="Setting" icon={<Map size={18} />} defaultOpen={false}>
                     <Tooltip content="Choose the overall environment where the scene takes place.">
                         <ChipSelectGroup
                             label="Location / Setting"
@@ -42,7 +43,7 @@ const LifestyleScenePanel: React.FC<LifestyleScenePanelProps> = ({
                     </Tooltip>
                 </Accordion>
 
-                <Accordion title="Micro Location" defaultOpen={false}>
+                <Accordion title="Micro Location" icon={<Map size={18} />} defaultOpen={false}>
                     <Tooltip content="Add a more precise location inside the main setting.">
                         <ChipSelectGroup
                             label="Eye Contact"
@@ -53,7 +54,7 @@ const LifestyleScenePanel: React.FC<LifestyleScenePanelProps> = ({
                     </Tooltip>
                 </Accordion>
 
-                <Accordion title="Environment Order" defaultOpen={false}>
+                <Accordion title="Environment Order" icon={<Layers size={18} />} defaultOpen={false}>
                     <Tooltip content="Choose the overall environment where the scene takes place.">
                         <ChipSelectGroup
                             label="Environment Order"
@@ -67,12 +68,12 @@ const LifestyleScenePanel: React.FC<LifestyleScenePanelProps> = ({
                     </Tooltip>
                 </Accordion>
 
-                <Accordion title="Composition Mode" defaultOpen={false}>
+                <Accordion title="Composition Mode" icon={<Layout size={18} />} defaultOpen={false}>
                     <Tooltip content="Define how the subject is framed.">
                         <ChipSelectGroup
                             label="Composition Mode"
                             options={COMPOSITION_MODE_OPTIONS}
-                            selectedValue={options.compositionMode}
+                            selectedValue={options.compositionMode ?? ''}
                             onChange={(value: any) => handleOptionChange('compositionMode', value, 'Scene & Environment')}
                         />
                     </Tooltip>
@@ -81,7 +82,7 @@ const LifestyleScenePanel: React.FC<LifestyleScenePanelProps> = ({
                             <ChipSelectGroup
                                 label="Side Placement"
                                 options={SIDE_PLACEMENT_OPTIONS}
-                                selectedValue={options.sidePlacement}
+                                selectedValue={options.sidePlacement ?? ''}
                                 onChange={(value: any) => handleOptionChange('sidePlacement', value, 'Scene & Environment')}
                             />
                             <div className="flex flex-col gap-2">
@@ -99,12 +100,12 @@ const LifestyleScenePanel: React.FC<LifestyleScenePanelProps> = ({
                     )}
                 </Accordion>
 
-                <Accordion title="Creation Mode" defaultOpen={false}>
+                <Accordion title="Creation Mode" icon={<Aperture size={18} />} defaultOpen={false}>
                     <Tooltip content="Choose the artistic or realism style.">
                         <ChipSelectGroup
                             label="Creation Mode"
                             options={CREATION_MODE_OPTIONS}
-                            selectedValue={options.creationMode}
+                            selectedValue={options.creationMode ?? ''}
                             onChange={(value: any) => handleOptionChange('creationMode', value, 'Scene & Environment')}
                         />
                     </Tooltip>

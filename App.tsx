@@ -3,6 +3,20 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { GoogleGenAI, Modality } from "@google/genai";
 import { getAuth } from 'firebase/auth';
+import {
+  Camera,
+  Sparkles,
+  Package,
+  User,
+  Image as ImageIcon,
+  Sun,
+  Layers,
+  Hand,
+  Layout,
+  Aperture,
+  Settings,
+  Plus
+} from 'lucide-react';
 import { MockupOptions, OptionCategory, Option, HeroLandingAlignment, HeroLandingShadowStyle, StoryboardScene, PersonDetails, PersonIdentityPackage, UGCRealModeSettings, ModelReferenceData } from './types';
 import { CameraDistanceKey } from './src/lib/promptEngine/parameterMap.types';
 import {
@@ -789,8 +803,8 @@ const scaleImageToLongEdge = async (sourceUrl: string, targetLongEdge: number): 
 };
 
 const TABS = [
-  { id: 'product', label: 'Product Focus', icon: <span className="text-lg">📸</span> },
-  { id: 'lifestyle', label: 'Lifestyle', icon: <span className="text-lg">🌟</span> },
+  { id: 'product', label: 'Product Focus', icon: <Package size={18} /> },
+  { id: 'lifestyle', label: 'Lifestyle', icon: <Sparkles size={18} /> },
 ];
 
 const App: React.FC = () => {
@@ -4088,7 +4102,7 @@ const App: React.FC = () => {
                 </div>
               </div>
             )}
-            <div className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-8 h-full">
+            <div className="grid grid-cols-1 lg:grid-cols-[40%_1fr] gap-8 h-full">
               <div className="flex flex-col gap-8 overflow-y-auto h-full pr-4 custom-scrollbar">
 
 
@@ -4105,7 +4119,7 @@ const App: React.FC = () => {
                     <div className="space-y-6">
                       <Tabs tabs={TABS} activeTab={activeTab} onChange={(id) => handleTabChange(id as any)} />
                       {activeTab === 'product' && (
-                        <Accordion title="Product Mode" defaultOpen={true}>
+                        <Accordion title="Product Mode" icon={<Package size={20} />} defaultOpen={true}>
                           <div className="space-y-6 pt-2">
                             <ProductScenePanel
                               options={options}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Camera, Sun } from 'lucide-react';
 import Accordion from '../UI/Accordion';
 import Tooltip from '../UI/Tooltip';
 import ChipSelectGroup from '../ChipSelectGroup';
@@ -24,7 +25,7 @@ const ProductPhotographyPanel: React.FC<ProductPhotographyPanelProps> = ({
     return (
         <div id={getSectionId('Photography')}>
             <div className="space-y-6 pt-2">
-                <Accordion title="Photography" defaultOpen={false}>
+                <Accordion title="Photography" icon={<Camera size={18} />} defaultOpen={false}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Tooltip content="Select the lens type used for the shot.">
                             <ChipSelectGroup
@@ -61,7 +62,7 @@ const ProductPhotographyPanel: React.FC<ProductPhotographyPanelProps> = ({
                     </div>
                 </Accordion>
 
-                <Accordion title="Lighting" defaultOpen={false}>
+                <Accordion title="Lighting" icon={<Sun size={18} />} defaultOpen={false}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Tooltip content="Choose a lighting style that defines mood and contrast.">
                             <ChipSelectGroup

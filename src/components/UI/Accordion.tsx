@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 
 type AccordionProps = {
   title: string;
+  icon?: React.ReactNode;
   children: React.ReactNode;
   defaultOpen?: boolean;
 };
 
-const Accordion: React.FC<AccordionProps> = ({ title, children, defaultOpen = false }) => {
+const Accordion: React.FC<AccordionProps> = ({ title, icon, children, defaultOpen = false }) => {
   const [open, setOpen] = useState(defaultOpen);
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [height, setHeight] = useState(0);
@@ -26,7 +27,10 @@ const Accordion: React.FC<AccordionProps> = ({ title, children, defaultOpen = fa
         onClick={() => setOpen(prev => !prev)}
         className="w-full flex items-center justify-between px-5 py-4 text-left text-base font-semibold text-gray-100 hover:text-white transition-colors"
       >
-        <span>{title}</span>
+        <div className="flex items-center gap-3">
+          {icon && <span className="text-gray-300">{icon}</span>}
+          <span>{title}</span>
+        </div>
         <svg
           className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${open ? 'rotate-90 text-indigo-300' : ''}`}
           fill="none"

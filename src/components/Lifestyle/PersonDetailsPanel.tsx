@@ -1,4 +1,5 @@
 import React from 'react';
+import { User, Sparkles, Layers, Hand, Shirt, Aperture } from 'lucide-react';
 import Accordion from '../UI/Accordion';
 import Tooltip from '../UI/Tooltip';
 import ChipSelectGroup from '../ChipSelectGroup';
@@ -80,7 +81,7 @@ const PersonDetailsPanel: React.FC<PersonDetailsPanelProps> = ({
         <>
             {isProductPlacement ? null : (
                 <div id={getSectionId('Person Details')}>
-                    <Accordion title="Person Details">
+                    <Accordion title="Person Details" icon={<User size={18} />}>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <Tooltip content="Select the approximate age appearance.">
                                 <ChipSelectGroup label="Age Group" options={AGE_GROUP_OPTIONS} selectedValue={options.ageGroup} onChange={(value: any) => handleOptionChange('ageGroup', value, 'Person Details')} disabled={personControlsDisabled} />
@@ -166,7 +167,7 @@ const PersonDetailsPanel: React.FC<PersonDetailsPanelProps> = ({
             )}
             {!isProductPlacement && (
                 <div id={getSectionId('Appearance Level')}>
-                    <Accordion title="Appearance Level" defaultOpen={false}>
+                    <Accordion title="Appearance Level" icon={<User size={18} />} defaultOpen={false}>
                         <div className="space-y-4">
                             <Tooltip content="Overall grooming and appearance level.">
                                 <ChipSelectGroup label="Appearance Level" options={PERSON_APPEARANCE_OPTIONS} selectedValue={options.personAppearance} onChange={(value: any) => handleOptionChange('personAppearance', value, 'Appearance Level')} disabled={personControlsDisabled} />
@@ -177,7 +178,7 @@ const PersonDetailsPanel: React.FC<PersonDetailsPanelProps> = ({
             )}
             {!isProductPlacement && (
                 <div id={getSectionId('Mood')}>
-                    <Accordion title="Mood" defaultOpen={false}>
+                    <Accordion title="Mood" icon={<Sparkles size={18} />} defaultOpen={false}>
                         <div className="space-y-4">
                             <Tooltip content="Define the emotional atmosphere of the scene.">
                                 <ChipSelectGroup label="Mood" options={PERSON_MOOD_OPTIONS} selectedValue={options.personMood} onChange={(value: any) => handleOptionChange('personMood', value, 'Mood')} disabled={personControlsDisabled} />
@@ -188,7 +189,7 @@ const PersonDetailsPanel: React.FC<PersonDetailsPanelProps> = ({
             )}
             {!isProductPlacement && (
                 <div id={getSectionId('Pose')}>
-                    <Accordion title="Pose" defaultOpen={false}>
+                    <Accordion title="Pose" icon={<Layers size={18} />} defaultOpen={false}>
                         <div className="space-y-4">
                             <Tooltip content="Choose the body posture or gesture.">
                                 <ChipSelectGroup label="Pose" options={PERSON_POSE_OPTIONS} selectedValue={options.personPose} onChange={(value: any) => handleOptionChange('personPose', value, 'Pose')} disabled={personControlsDisabled} />
@@ -199,7 +200,7 @@ const PersonDetailsPanel: React.FC<PersonDetailsPanelProps> = ({
             )}
             {!isProductPlacement && (
                 <div id={getSectionId('Interaction')}>
-                    <Accordion title="Interaction" defaultOpen={false}>
+                    <Accordion title="Interaction" icon={<Hand size={18} />} defaultOpen={false}>
                         <div className="space-y-4">
                             <Tooltip content="Define how the subject engages with the product.">
                                 <ChipSelectGroup label="Interaction" options={PRODUCT_INTERACTION_OPTIONS} selectedValue={options.productInteraction} onChange={(value: any) => handleOptionChange('productInteraction', value, 'Interaction')} disabled={personControlsDisabled} />
@@ -210,7 +211,7 @@ const PersonDetailsPanel: React.FC<PersonDetailsPanelProps> = ({
             )}
             {!isProductPlacement && (
                 <div id={getSectionId('Wardrobe')}>
-                    <Accordion title="Wardrobe" defaultOpen={false}>
+                    <Accordion title="Wardrobe" icon={<Shirt size={18} />} defaultOpen={false}>
                         <div className="space-y-4">
                             <Tooltip content="Select a clothing style for the subject.">
                                 <ChipSelectGroup label="Wardrobe" options={WARDROBE_STYLE_OPTIONS} selectedValue={options.wardrobeStyle} onChange={(value: any) => handleOptionChange('wardrobeStyle', value, 'Wardrobe')} disabled={personControlsDisabled} />
@@ -221,7 +222,7 @@ const PersonDetailsPanel: React.FC<PersonDetailsPanelProps> = ({
             )}
             {!isProductPlacement && (
                 <div id={getSectionId('UGC Real Mode')}>
-                    <Accordion title="UGC Real Mode" defaultOpen={false}>
+                    <Accordion title="UGC Real Mode" icon={<Aperture size={18} />} defaultOpen={false}>
                         <UGCRealModePanel
                             disabled={personControlsDisabled}
                             enabled={ugcRealSettings.isEnabled}

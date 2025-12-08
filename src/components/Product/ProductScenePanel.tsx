@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image as ImageIcon, Map } from 'lucide-react';
 import Accordion from '../UI/Accordion';
 import Tooltip from '../UI/Tooltip';
 import ChipSelectGroup from '../ChipSelectGroup';
@@ -23,7 +24,7 @@ const ProductScenePanel: React.FC<ProductScenePanelProps> = ({
     return (
         <div id={getSectionId('Product Basics')}>
             <div className="space-y-6 pt-2">
-                <Accordion title="Product Basics">
+                <Accordion title="Product Basics" icon={<ImageIcon size={18} />}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Tooltip content="Choose the overall styling and presentation approach for your product.">
                             <ChipSelectGroup
@@ -50,7 +51,7 @@ const ProductScenePanel: React.FC<ProductScenePanelProps> = ({
                     </div>
                 </Accordion>
 
-                <Accordion title="Environment" defaultOpen={false}>
+                <Accordion title="Environment" icon={<Map size={18} />} defaultOpen={false}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Tooltip content="Choose where the scene takes place.">
                             <ChipSelectGroup

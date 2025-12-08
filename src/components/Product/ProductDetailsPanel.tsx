@@ -1,4 +1,5 @@
 import React from 'react';
+import { Layout, Hand, Sparkles } from 'lucide-react';
 import Accordion from '../UI/Accordion';
 import Badge from '../UI/Badge';
 import Tooltip, { TooltipTrigger, TooltipContent } from '../UI/Tooltip';
@@ -197,7 +198,7 @@ const ProductDetailsPanel: React.FC<ProductDetailsPanelProps> = (props) => {
 
     return (
         <div id={getSectionId('Product Details')}>
-            <Accordion title="Product Surface" defaultOpen={false}>
+            <Accordion title="Product Surface" icon={<Layout size={18} />} defaultOpen={false}>
                 <div className="space-y-6 pt-2">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Tooltip content="Define the surface the product sits on.">
@@ -212,7 +213,7 @@ const ProductDetailsPanel: React.FC<ProductDetailsPanelProps> = (props) => {
                 </div>
             </Accordion>
 
-            <Accordion title="Interaction Notes" defaultOpen={false}>
+            <Accordion title="Interaction Notes" icon={<Hand size={18} />} defaultOpen={false}>
                 <div className="space-y-6 pt-2">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {/* Conditional Rendering: Show Interaction only if NO hands are active, to avoid conflict */}
@@ -234,7 +235,7 @@ const ProductDetailsPanel: React.FC<ProductDetailsPanelProps> = (props) => {
                     </div>
                 </div>
             </Accordion>
-            <Accordion title="Product Features" defaultOpen={true}>
+            <Accordion title="Product Features" icon={<Sparkles size={18} />} defaultOpen={true}>
                 <div className="space-y-6 pt-2">
 
                     <div className="rounded-2xl glass-card p-4">
