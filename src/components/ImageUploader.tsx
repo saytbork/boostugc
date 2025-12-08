@@ -3,8 +3,6 @@ import React, { useCallback, useEffect, useImperativeHandle, useState } from 're
 interface ImageUploaderProps {
   onUpload: (file: File, previewUrl: string) => void;
   uploadedImagePreview?: string | null;
-  disabled?: boolean;
-  lockedMessage?: string;
 }
 
 export interface ImageUploaderHandle {
@@ -14,8 +12,6 @@ export interface ImageUploaderHandle {
 const ImageUploader = React.forwardRef<ImageUploaderHandle, ImageUploaderProps>(({
   onUpload,
   uploadedImagePreview = null,
-  disabled = false,
-  lockedMessage,
 }, ref) => {
   const [isDragging, setIsDragging] = useState(false);
   const [localPreview, setLocalPreview] = useState<string | null>(uploadedImagePreview);
@@ -27,10 +23,9 @@ const ImageUploader = React.forwardRef<ImageUploaderHandle, ImageUploaderProps>(
 
   useImperativeHandle(ref, () => ({
     openFileDialog: () => {
-      if (disabled) return;
       inputRef.current?.click();
     },
-  }), [disabled]);
+  }), []);
 
   const emitUpload = useCallback((file: File) => {
     const previewUrl = URL.createObjectURL(file);
@@ -40,7 +35,6 @@ const ImageUploader = React.forwardRef<ImageUploaderHandle, ImageUploaderProps>(
   }, [onUpload]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (disabled) return;
     const file = e.target.files?.[0];
     if (file) {
       emitUpload(file);
@@ -51,12 +45,11 @@ const ImageUploader = React.forwardRef<ImageUploaderHandle, ImageUploaderProps>(
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
-    if (disabled) return;
     const file = e.dataTransfer.files?.[0];
     if (file) {
       emitUpload(file);
     }
-  }, [disabled, emitUpload]);
+  }, [emitUpload]);
 
   const handleDragOver = useCallback((e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
@@ -76,14 +69,13 @@ const ImageUploader = React.forwardRef<ImageUploaderHandle, ImageUploaderProps>(
   }, []);
 
   const handleAddAnotherClick = () => {
-    if (disabled) return;
     inputRef.current?.click();
   };
 
   const previewToShow = localPreview || uploadedImagePreview;
 
   return (
-    <div className={`relative flex flex-col items-center justify-center w-full p-4 bg-gray-800 rounded-lg border-2 border-dashed border-gray-600 ${disabled ? 'opacity-60' : ''}`}>
+    <div className="relative flex flex-col items-center justify-center w-full p-4 bg-gray-800 rounded-lg border-2 border-dashed border-gray-600">
       <h3 className="text-lg font-semibold text-gray-300 mb-4">Upload Product Image</h3>
       <div
         className={`relative w-full h-40 flex items-center justify-center rounded-md transition-all duration-300 ${isDragging ? 'bg-gray-700' : ''}`}
@@ -104,8 +96,7 @@ const ImageUploader = React.forwardRef<ImageUploaderHandle, ImageUploaderProps>(
         )}
         <input
           type="file"
-          className={`absolute inset-0 w-full h-full opacity-0 ${disabled ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer'}`}
-          disabled={disabled}
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           multiple
           onChange={handleFileChange}
           ref={inputRef}
@@ -121,15 +112,9 @@ const ImageUploader = React.forwardRef<ImageUploaderHandle, ImageUploaderProps>(
         type="button"
         onClick={handleAddAnotherClick}
         className="mt-2 inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-xs text-gray-200 hover:border-indigo-400 hover:text-white transition"
-        disabled={disabled}
       >
         + Add another photo
       </button>
-      {disabled && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-900/70 rounded-lg text-sm text-gray-300">
-          {lockedMessage || 'Complete the previous step to continue'}
-        </div>
-      )}
     </div>
   );
 });

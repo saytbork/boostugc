@@ -4287,15 +4287,13 @@ const App: React.FC = () => {
                   <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Step 2</p>
                   <h2 className="text-xl font-bold text-gray-200">Product Photos</h2>
                   <div
-                    className={`border border-dashed border-[var(--border-subtle)] rounded-xl bg-[var(--bg-card)] p-6 flex flex-col items-center justify-center cursor-pointer hover:border-indigo-400 transition ${!hasSelectedIntent ? 'opacity-60 pointer-events-none' : ''}`}
+                    className="border border-dashed border-[var(--border-subtle)] rounded-xl bg-[var(--bg-card)] p-6 flex flex-col items-center justify-center cursor-pointer hover:border-indigo-400 transition"
                     onClick={() => {
-                      if (!hasSelectedIntent) return;
                       handleLibraryAddClick();
                     }}
                     onDragOver={event => event.preventDefault()}
                     onDrop={event => {
                       event.preventDefault();
-                      if (!hasSelectedIntent) return;
                       const file = event.dataTransfer.files?.[0];
                       if (file) {
                         handleImageUpload(file);
@@ -4307,7 +4305,6 @@ const App: React.FC = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                       </svg>
                       <p className="text-sm text-gray-300">Drop your product photo here</p>
-                      {!hasSelectedIntent && <p className="text-xs text-amber-200">Select Step 1 first to unlock uploads.</p>}
                     </div>
                   </div>
                   <p className="text-xs text-gray-400">
@@ -4318,8 +4315,6 @@ const App: React.FC = () => {
                       ref={uploaderRef}
                       onUpload={handleImageUpload}
                       uploadedImagePreview={uploadedImagePreview}
-                      disabled={!hasSelectedIntent}
-                      lockedMessage="Select Step 1 first to unlock uploads."
                     />
                   </div>
                 </div>

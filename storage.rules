@@ -1,0 +1,30 @@
+rules_version = '2';
+
+// Firebase Storage Security Rules
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Allow read access to all files (for generated images to be publicly viewable)
+    match /{allPaths=**} {
+      allow read: if true;
+    }
+    
+    // Product assets - allow uploads from both authenticated and guest users
+    match /product-assets/{userId}/{fileName} {
+      allow write: if true; // Allow all users to upload product assets
+      allow delete: if request.auth != null && request.auth.token.email == userId;
+    }
+    
+    // Generic assets (clothing, mood references, etc.)
+    match /generic-assets/{userId}/{fileName} {
+      allow write: if true; // Allow all users to upload generic assets
+      allow delete: if request.auth != null && request.auth.token.email == userId;
+    }
+    
+    // Generated images from AI
+    match /generated/{fileName} {
+      allow write: if true; // Allow all users to upload generated images
+      allow delete: if request.auth != null;
+    }
+  }
+}
