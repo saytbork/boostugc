@@ -1855,6 +1855,19 @@ const App: React.FC = () => {
       return next;
     });
   }, [applyOptionsUpdate, setSelectedCategories, isTalentLinkedAcrossScenes, activeSceneId, storyboardScenes]);
+  const handleSupplementPresetClick = useCallback((preset: string) => {
+    setActiveSupplementPreset(preset);
+    const presetMeta = SUPPLEMENT_PHOTO_PRESETS.find(p => p.value === preset);
+    if (presetMeta) {
+      setSupplementPresetCue(presetMeta.promptCue);
+    }
+    setStoryboardScenes(prev => prev.map(s => s.id === activeSceneId ? {
+      ...s,
+      supplementPreset: preset,
+      supplementPromptCue: presetMeta?.promptCue ?? null,
+    } : s));
+  }, [activeSceneId]);
+
 
   const handlePresetSelect = useCallback((value: string) => {
     setActiveTalentPreset(value);
@@ -4091,6 +4104,62 @@ const App: React.FC = () => {
 
                     <div className="space-y-6">
                       <Tabs tabs={TABS} activeTab={activeTab} onChange={(id) => handleTabChange(id as any)} />
+                      {activeTab === 'product' && (
+                        <Accordion title="Product Mode" defaultOpen={true}>
+                          <div className="space-y-6 pt-2">
+                            <ProductScenePanel
+                              options={options}
+                              handleOptionChange={handleOptionChange}
+                              getSectionId={getSectionId}
+                            />
+                            <ProductPhotographyPanel
+                              options={options}
+                              handleOptionChange={handleOptionChange}
+                              getSectionId={getSectionId}
+                            />
+                            <ProductDetailsPanel
+                              options={options}
+                              handleOptionChange={handleOptionChange}
+                              getSectionId={getSectionId}
+                              addHandsEnabled={addHandsEnabled}
+                              setAddHandsEnabled={setIncludeSupplementHand}
+                              isMultiProductPackaging={isMultiProductPackaging}
+                              setIsMultiProductPackaging={setIsMultiProductPackaging}
+                              activeSupplementPreset={activeSupplementPreset}
+                              handleSupplementPresetClick={handleSupplementPresetClick as any}
+                              supplementBackgroundColor={supplementBackgroundColor}
+                              setSupplementBackgroundColor={setSupplementBackgroundColor}
+                              supplementAccentColor={supplementAccentColor}
+                              setSupplementAccentColor={setSupplementAccentColor}
+                              isHeroLandingMode={isHeroLandingMode}
+                              heroProductAlignment={heroProductAlignment}
+                              setHeroProductAlignment={setHeroProductAlignment}
+                              heroProductScale={heroProductScale}
+                              setHeroProductScale={setHeroProductScale}
+                              heroShadowStyle={heroShadowStyle}
+                              setHeroShadowStyle={setHeroShadowStyle}
+                              formulationExpertEnabled={formulationExpertEnabled}
+                              setFormulationExpertEnabled={setFormulationExpertEnabled}
+                              formulationExpertPreset={formulationExpertPreset}
+                              handleFormulationPresetSelect={setFormulationExpertPreset}
+                              formulationExpertName={formulationExpertName}
+                              setFormulationExpertName={setFormulationExpertName}
+                              formulationExpertRole={formulationExpertRole}
+                              setFormulationExpertRole={setFormulationExpertRole}
+                              formulationLabStyle={formulationLabStyle}
+                              setFormulationLabStyle={setFormulationLabStyle}
+                              formulationExpertProfession={formulationExpertProfession}
+                              handleFormulationProfessionSelect={setFormulationExpertProfession}
+                              supplementFlavorNotes={supplementFlavorNotes}
+                              setSupplementFlavorNotes={setSupplementFlavorNotes}
+                              supplementCustomPrompt={supplementCustomPrompt}
+                              setSupplementCustomPrompt={setSupplementCustomPrompt}
+                            />
+                            <FramingPresetsPanel onApplyPreset={(preset) => applyOptionsUpdate(prev => ({ ...prev, ...preset } as any))} />
+                          </div>
+                        </Accordion>
+                      )}
+
 
                       {activeTab === 'lifestyle' && (
                         <>
