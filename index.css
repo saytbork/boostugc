@@ -148,3 +148,177 @@ body {
   box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
   outline: none;
 }
+
+/* ==========================================
+   SIDEBAR COMPONENTS
+   ========================================== */
+
+/* Sidebar Container */
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Sidebar Section (Collapsible) */
+.sidebar-section {
+  border: 1px solid var(--border-subtle);
+  background: linear-gradient(180deg, rgba(30, 41, 59, 0.3) 0%, rgba(15, 23, 42, 0.5) 100%);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.sidebar-section-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 600;
+  color: #e2e8f0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+}
+
+.sidebar-section-header:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.sidebar-section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar-section-icon {
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-section-chevron {
+  width: 16px;
+  height: 16px;
+  color: #64748b;
+  transition: transform 0.2s ease, color 0.2s;
+}
+
+.sidebar-section-chevron-open {
+  transform: rotate(90deg);
+  color: var(--primary);
+}
+
+.sidebar-section-content {
+  transition: max-height 0.25s ease-out, opacity 0.2s ease-out;
+  overflow: hidden;
+}
+
+.sidebar-section-inner {
+  padding: 0 20px 20px 20px;
+}
+
+/* Sidebar Group */
+.sidebar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Sidebar Field */
+.sidebar-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar-field-label {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+}
+
+/* Capsule Grid */
+.sidebar-capsule-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Capsule Button */
+.capsule-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #141820;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.capsule-btn:hover:not(:disabled) {
+  background: #1e2430;
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+}
+
+.capsule-btn-selected {
+  background: #4E5CFF !important;
+  border-color: #4E5CFF !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 12px rgba(78, 92, 255, 0.3);
+}
+
+.capsule-btn-disabled,
+.capsule-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ==========================================
+   RESPONSIVE SIDEBAR
+   ========================================== */
+
+/* Mobile: sidebar full-width above preview */
+@media (max-width: 767px) {
+  .sidebar-container {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .sidebar-capsule-grid {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 4px;
+  }
+}
+
+/* Tablet: 50-50 layout */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .sidebar-container {
+    max-height: calc(100vh - 200px);
+  }
+}
+
+/* Desktop: 40-60 layout */
+@media (min-width: 1024px) {
+  .sidebar-container {
+    max-height: calc(100vh - 180px);
+  }
+}

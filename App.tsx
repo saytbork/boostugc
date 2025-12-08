@@ -90,6 +90,7 @@ import Accordion from './src/components/UI/Accordion';
 import Badge from './src/components/UI/Badge';
 import Tooltip from './src/components/UI/Tooltip';
 import Tabs from './src/components/UI/Tabs';
+import { SidebarContainer } from './src/components/Sidebar';
 
 // Contexts
 import { useAuth } from './src/contexts/AuthContext';
@@ -4155,8 +4156,8 @@ const App: React.FC = () => {
                 </div>
               </div>
             )}
-            <div className="grid grid-cols-1 lg:grid-cols-[40%_1fr] gap-8 h-full">
-              <div className="flex flex-col gap-8 overflow-y-auto h-full pr-4 custom-scrollbar">
+            <div className="grid grid-cols-1 lg:grid-cols-[40%_1fr] gap-8 items-start">
+              <div className="flex flex-col gap-8 overflow-y-auto lg:max-h-[calc(100vh-200px)] pr-4 custom-scrollbar">
 
 
                 <fieldset disabled={!hasUploadedProduct || isTrialLocked} className="contents">
@@ -4171,8 +4172,21 @@ const App: React.FC = () => {
 
                     <div className="space-y-6">
                       <Tabs tabs={TABS} activeTab={activeTab} onChange={(id) => handleTabChange(id as any)} />
+
+                      {/* New Collapsible Sidebar */}
+                      <SidebarContainer
+                        options={options}
+                        handleOptionChange={handleOptionChange}
+                        personControlsDisabled={personControlsDisabled}
+                        isProductPlacement={isProductPlacement}
+                        cameraControlsDisabled={!!cameraControlsDisabled}
+                        mode={activeTab === 'product' ? 'product' : 'lifestyle'}
+                        disabled={!hasUploadedProduct || isTrialLocked}
+                      />
+
+                      {/* Product Mode - Additional Panels */}
                       {activeTab === 'product' && (
-                        <Accordion title="Product Mode" icon={<Package size={20} />} defaultOpen={true}>
+                        <Accordion title="Product Mode" icon={<Package size={20} />} defaultOpen={false}>
                           <div className="space-y-6 pt-2">
                             <ProductScenePanel
                               options={options}
@@ -4227,45 +4241,49 @@ const App: React.FC = () => {
                         </Accordion>
                       )}
 
-
+                      {/* Lifestyle Mode - Additional Panels */}
                       {activeTab === 'lifestyle' && (
                         <>
-                          <LifestyleScenePanel
-                            options={options}
-                            handleOptionChange={handleOptionChange}
-                            applyOptionsUpdate={applyOptionsUpdate}
-                            getSectionId={getSectionId}
-                          />
-                          <LifestylePhotographyPanel
-                            options={options}
-                            handleOptionChange={handleOptionChange}
-                            getSectionId={getSectionId}
-                            cameraControlsDisabled={!!cameraControlsDisabled}
-                            isSimpleMode={!!isSimpleMode}
-                          />
-                          <PersonDetailsPanel
-                            options={options}
-                            handleOptionChange={handleOptionChange}
-                            personControlsDisabled={personControlsDisabled}
-                            isProductPlacement={isProductPlacement}
-                            getSectionId={getSectionId}
-                            activeTalentPreset={activeTalentPreset}
-                            activePresetMeta={activePresetMeta}
-                            handlePresetSelect={handlePresetSelect}
-                            normalizedCreatorPresetOptions={normalizedCreatorPresetOptions}
-                            handleSaveTalentProfile={handleSaveTalentProfile}
-                            handleApplySavedTalent={handleApplySavedTalent}
-                            hasSavedTalent={hasSavedTalent}
-                            talentToast={talentToast}
-                            isTalentLinkedAcrossScenes={isTalentLinkedAcrossScenes}
-                            handleTalentLinkToggle={handleTalentLinkToggle}
-                            isActiveScenePrimary={isActiveScenePrimary}
-                            storyboardScenes={storyboardScenes}
-                            ugcRealSettings={ugcRealSettings}
-                            handleUGCRealModeToggle={handleUGCRealModeToggle}
-                            handleClothingPresetToggle={handleClothingPresetToggle}
-                            handleFramingSelect={handleFramingSelect}
-                          />
+                          <Accordion title="Lifestyle Advanced" icon={<Sparkles size={20} />} defaultOpen={false}>
+                            <div className="space-y-6 pt-2">
+                              <LifestyleScenePanel
+                                options={options}
+                                handleOptionChange={handleOptionChange}
+                                applyOptionsUpdate={applyOptionsUpdate}
+                                getSectionId={getSectionId}
+                              />
+                              <LifestylePhotographyPanel
+                                options={options}
+                                handleOptionChange={handleOptionChange}
+                                getSectionId={getSectionId}
+                                cameraControlsDisabled={!!cameraControlsDisabled}
+                                isSimpleMode={!!isSimpleMode}
+                              />
+                              <PersonDetailsPanel
+                                options={options}
+                                handleOptionChange={handleOptionChange}
+                                personControlsDisabled={personControlsDisabled}
+                                isProductPlacement={isProductPlacement}
+                                getSectionId={getSectionId}
+                                activeTalentPreset={activeTalentPreset}
+                                activePresetMeta={activePresetMeta}
+                                handlePresetSelect={handlePresetSelect}
+                                normalizedCreatorPresetOptions={normalizedCreatorPresetOptions}
+                                handleSaveTalentProfile={handleSaveTalentProfile}
+                                handleApplySavedTalent={handleApplySavedTalent}
+                                hasSavedTalent={hasSavedTalent}
+                                talentToast={talentToast}
+                                isTalentLinkedAcrossScenes={isTalentLinkedAcrossScenes}
+                                handleTalentLinkToggle={handleTalentLinkToggle}
+                                isActiveScenePrimary={isActiveScenePrimary}
+                                storyboardScenes={storyboardScenes}
+                                ugcRealSettings={ugcRealSettings}
+                                handleUGCRealModeToggle={handleUGCRealModeToggle}
+                                handleClothingPresetToggle={handleClothingPresetToggle}
+                                handleFramingSelect={handleFramingSelect}
+                              />
+                            </div>
+                          </Accordion>
                           <BundlesPanel
                             activeBundleTab={activeBundleTab}
                             setActiveBundleTab={setActiveBundleTab}
@@ -4296,7 +4314,7 @@ const App: React.FC = () => {
                 </fieldset>
               </div>
 
-              <div className="flex flex-col gap-8 pr-4 h-full overflow-y-auto custom-scrollbar">
+              <div className="flex flex-col gap-8 pr-4 lg:sticky lg:top-5 lg:self-start lg:max-h-[calc(100vh-120px)] overflow-y-auto custom-scrollbar">
                 <div ref={uploadRef} className="rounded-2xl border border-white/10 bg-gray-900/40 p-4 space-y-3">
                   <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Step 2</p>
                   <h2 className="text-xl font-bold text-gray-200">Product Photos</h2>
