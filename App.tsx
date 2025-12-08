@@ -1050,20 +1050,28 @@ const App: React.FC = () => {
       try {
         const res = await fetch('/api/user/me');
         const contentType = res.headers.get('content-type');
+
+        // Safety check: ensure response is JSON before parsing
+        if (!contentType || !contentType.includes('application/json')) {
+          console.error('❌ Profile API returned non-JSON response:', {
+            contentType,
+            status: res.status,
+            url: res.url
+          });
+          return; // Safe exit - UI continues with defaults
+        }
+
         if (!res.ok) {
           console.warn('Profile fetch failed:', res.status);
           return;
         }
-        if (!contentType || !contentType.includes('application/json')) {
-          console.warn('Profile fetch returned non-JSON:', contentType);
-          return;
-        }
+
         const data = await res.json();
         if (active) {
           setInviteUsed(Boolean(data.inviteUsed));
         }
       } catch (error) {
-        console.error('Unable to fetch user profile for gallery (safe exit)', error);
+        console.error('❌ Profile fetch error (UI continues safely):', error);
       }
     };
     fetchProfile();
@@ -3331,23 +3339,46 @@ const App: React.FC = () => {
         const { width, height } = await getImageDimensions(storageUrl.startsWith('data:') ? url : storageUrl);
 
         // Step 3: Save gallery entry to Firestore via API
-        await fetch('/api/galleryHandler?action=add', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            imageUrl: storageUrl, // Use Storage URL instead of base64
-            userId,
-            plan,
-            meta: {
-              width,
-              height,
-              modelReferenceUsed: Boolean(modelReferenceFile),
-              productsUsed: Math.max(1, productAssets.length),
-            },
-          }),
-        });
+        try {
+          const galleryRes = await fetch('/api/galleryHandler?action=add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              imageUrl: storageUrl, // Use Storage URL instead of base64
+              userId,
+              plan,
+              meta: {
+                width,
+                height,
+                modelReferenceUsed: Boolean(modelReferenceFile),
+                productsUsed: Math.max(1, productAssets.length),
+              },
+            }),
+          });
 
-        console.log('✅ Gallery entry saved successfully');
+          // Safety check: ensure response is JSON before parsing
+          const contentType = galleryRes.headers.get('content-type');
+          if (!contentType || !contentType.includes('application/json')) {
+            console.error('❌ Gallery API returned non-JSON response:', {
+              contentType,
+              status: galleryRes.status,
+              url: galleryRes.url
+            });
+            // Don't throw - UI should continue even if gallery save fails
+            return;
+          }
+
+          if (!galleryRes.ok) {
+            const errorData = await galleryRes.json().catch(() => ({}));
+            console.error('❌ Gallery save failed:', galleryRes.status, errorData);
+            return;
+          }
+
+          console.log('✅ Gallery entry saved successfully');
+        } catch (galleryError) {
+          console.error('❌ Gallery upload error (image generation succeeded, gallery save failed):', galleryError);
+          // Don't re-throw - UI continues without blocking
+        }
       } catch (error) {
         console.warn('Failed to report gallery entry', error);
       }

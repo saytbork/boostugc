@@ -45,6 +45,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const { searchParams } = new URL(req.url || '', `${protocol}://${host}`);
     const action = searchParams.get('action')?.toLowerCase() || '';
 
+    // Safety guard: if no action provided, return empty gallery
+    if (!action) {
+      return res.status(200).json({ images: [] });
+    }
+
     switch (action) {
       case "add": {
         if (req.method !== "POST") {
