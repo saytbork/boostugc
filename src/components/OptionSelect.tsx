@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { normalizeOptions } from '../src/system/normalizeOptions';
-import { Option } from '../types';
+import { normalizeOptions } from '../system/normalizeOptions';
+import { Option } from '../../types';
 
 interface OptionSelectProps {
   label: string;

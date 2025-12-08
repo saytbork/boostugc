@@ -1,6 +1,6 @@
 import React from 'react';
-import { normalizeOptions } from '../src/system/normalizeOptions';
-import type { UGCCameraFramingOption } from '../src/data/ugcPresets';
+import { normalizeOptions } from '../system/normalizeOptions';
+import type { UGCCameraFramingOption } from '../data/ugcPresets';
 
 interface ImperfectLightingControlsProps {
   lowResolution: boolean;

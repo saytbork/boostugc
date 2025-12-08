@@ -1,5 +1,5 @@
 import React from 'react';
-import { normalizeOptions } from '../src/system/normalizeOptions';
+import { normalizeOptions } from '../system/normalizeOptions';
 
 function sanitizeNotes(text = "") {
   return text

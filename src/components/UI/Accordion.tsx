@@ -19,7 +19,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children, defaultOpen = fa
 
   return (
     <div
-      className="rounded-xl border border-white/3 bg-[#0F111B] shadow-lg shadow-black/20"
+      className="rounded-xl glass-card"
     >
       <button
         type="button"

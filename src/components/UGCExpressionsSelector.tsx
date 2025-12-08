@@ -1,6 +1,6 @@
 import React from 'react';
-import { normalizeOptions } from '../src/system/normalizeOptions';
-import type { UGCExpressionPreset } from '../src/data/ugcPresets';
+import { normalizeOptions } from '../system/normalizeOptions';
+import type { UGCExpressionPreset } from '../data/ugcPresets';
 
 interface UGCExpressionsSelectorProps {
   presets: UGCExpressionPreset[];

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
   Sparkles, Wand2, Camera, ShieldCheck, PlaySquare, Users, CheckCircle2, CreditCard, Zap, Layers, Image as ImageIcon, Gauge, ShoppingBag, Package, Users2, Building2, Instagram, Twitter, Youtube, Linkedin, ArrowRight
 } from 'lucide-react';
-import PlanCheckoutModal from './components/PlanCheckoutModal';
+import PlanCheckoutModal from './src/components/PlanCheckoutModal';
 
 type PlanMetadata = {
   plan: 'creator' | 'studio';
@@ -92,7 +92,7 @@ const readCachedGalleryImages = (): GalleryImage[] => {
           createdAt: entry.createdAt,
         };
       })
-      .filter((entry): entry is GalleryImage => Boolean(entry));
+      .filter((entry): entry is GalleryImage => entry !== null);
   } catch (error) {
     console.warn('Failed to load cached gallery images', error);
     return [];
@@ -188,7 +188,7 @@ const paymentMethods = ['Visa', 'Mastercard', 'American Express', 'Apple Pay', '
 const TRIAL_BYPASS_KEY = 'ugc-product-mockup-trial-bypass';
 const ADMIN_EMAILS = (import.meta.env.VITE_ADMIN_EMAILS || '')
   .split(',')
-  .map(email => email.trim().toLowerCase())
+  .map((email: string) => email.trim().toLowerCase())
   .filter(Boolean);
 const INVITE_CODE = import.meta.env.VITE_INVITE_CODE || '713371';
 const PLAN_STORAGE_KEY = 'ugc-plan-tier';
@@ -857,8 +857,8 @@ const LandingPage: React.FC = () => {
                         <a
                           href={targetUrl || '#'}
                           className={`mt-auto w-full rounded-full px-4 py-3 text-sm font-semibold transition text-center ${plan.featured
-                              ? 'bg-white text-[#120A24] hover:bg-gray-100'
-                              : 'bg-indigo-500 text-white hover:bg-indigo-400'
+                            ? 'bg-white text-[#120A24] hover:bg-gray-100'
+                            : 'bg-indigo-500 text-white hover:bg-indigo-400'
                             }`}
                         >
                           {plan.cta}

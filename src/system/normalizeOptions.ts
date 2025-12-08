@@ -29,6 +29,19 @@ export function normalizeOption<OptionType extends { label: string; value: strin
   };
 }
 
-export function normalizeOptions<OptionType extends { label: string; value: string; tooltip?: string }>(options: OptionType[]): OptionType[] {
-  return options.map(o => normalizeOption(o));
-}
+export const normalizeOptions = (options: any[]): { value: string; label: string; description: string; tooltip?: string }[] => {
+  if (!Array.isArray(options)) return [];
+  return options.map((opt) => {
+    // Handle string options
+    if (typeof opt === 'string') {
+      return { value: opt, label: opt, description: '' };
+    }
+    // Handle object options
+    return {
+      value: opt.value || opt.id || '',
+      label: opt.label || opt.name || '',
+      description: opt.description || '',
+      tooltip: opt.tooltip,
+    };
+  });
+};

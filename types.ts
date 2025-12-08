@@ -63,6 +63,83 @@ export interface Option {
   tooltip?: string;
 }
 
+export type HeroLandingAlignment = 'left' | 'center' | 'right';
+export type HeroLandingShadowStyle = 'softDrop' | 'hardDrop' | 'floating';
+
+export type UGCRealModeSettings = {
+  isEnabled: boolean;
+  selectedRealityPresetId: string;
+  selectedHeroPersonaIds: string[];
+  selectedClothingPresetIds: string[];
+  clothingUpload: File | null;
+  clothingPreview: string | null;
+  selectedExpressionId: string | null;
+  blurAmount: number;
+  grainAmount: number;
+  lowResolution: boolean;
+  imperfectLighting: boolean;
+  offFocus: boolean;
+  tiltedPhone: boolean;
+  offCenterId: string;
+  framingId: string;
+};
+
+export type PersonDetails = {
+  ageGroup?: string;
+  gender?: string;
+  ethnicity?: string;
+  skinTone?: string;
+  hairType?: string;
+  hairLength?: string;
+  hairColor?: string;
+  facialHair?: string;
+  bodyType?: string;
+  wardrobe?: string;
+  pose?: string;
+  eyeDirection?: MockupOptions['eyeDirection'];
+};
+
+export type PersonIdentityPackage = {
+  modelReferenceBase64?: string;
+  modelReferenceMime?: string;
+  identityLock: boolean;
+  personDetails?: PersonDetails;
+};
+
+export type ModelReferenceData = {
+  base64: string;
+  mimeType: string;
+  previewUrl?: string; // App.tsx also used preview? verify. No, App only showed base64/mime.
+};
+
+export type StoryboardScene = {
+  id: string;
+  label: string;
+  options: MockupOptions;
+  proMode: boolean;
+  supplementPreset: string;
+  supplementPromptCue: string | null;
+  supplementBackgroundColor: string;
+  supplementAccentColor: string;
+  supplementFlavorNotes: string;
+  includeSupplementHand: boolean;
+  heroPosePreset: string;
+  heroPosePromptCue: string | null;
+  supplementCustomPrompt: string;
+  heroProductAlignment: HeroLandingAlignment;
+  heroProductScale: number;
+  heroShadowStyle: HeroLandingShadowStyle;
+  ugcRealSettings: UGCRealModeSettings;
+  formulationExpertEnabled: boolean;
+  formulationExpertPreset: string;
+  formulationExpertName: string;
+  formulationExpertRole: string;
+  formulationLabStyle: string;
+  formulationExpertProfession: string;
+  personIdentityPackage: PersonIdentityPackage;
+  modelReferenceNotes: string;
+};
+
 export interface GroundingChunk {
   web?: {
     uri: string;

@@ -1,6 +1,6 @@
 import React from 'react';
-import { normalizeOptions } from '../src/system/normalizeOptions';
-import type { UGCCustomClothingPreset } from '../src/data/ugcPresets';
+import { normalizeOptions } from '../system/normalizeOptions';
+import type { UGCCustomClothingPreset } from '../data/ugcPresets';
 
 interface CustomClothesSelectorProps {
   presets: UGCCustomClothingPreset[];

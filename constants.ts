@@ -1,5 +1,5 @@
 
-import { Option, MockupOptions } from './types';
+import { Option, MockupOptions, HeroLandingAlignment, HeroLandingShadowStyle } from './types';
 
 const getOptionValue = (options: Option[], label: string, fallbackIndex = 0) =>
   options.find(option => option.label === label)?.value ?? options[fallbackIndex].value;
@@ -104,11 +104,11 @@ export const SETTING_OPTIONS: Option[] = [
 
 // Reduced 5-option version covering only visually distinct materials.
 export const PRODUCT_MATERIAL_OPTIONS: Option[] = [
-    { label: 'Matte Plastic', value: 'matte plastic' },
-    { label: 'Glossy Plastic', value: 'glossy plastic' },
-    { label: 'Glass & Liquid', value: 'transparent glass, may contain liquid' },
-    { label: 'Metal', value: 'reflective metal' },
-    { label: 'Paper & Cardboard', value: 'textured paper or cardboard' },
+  { label: 'Matte Plastic', value: 'matte plastic' },
+  { label: 'Glossy Plastic', value: 'glossy plastic' },
+  { label: 'Glass & Liquid', value: 'transparent glass, may contain liquid' },
+  { label: 'Metal', value: 'reflective metal' },
+  { label: 'Paper & Cardboard', value: 'textured paper or cardboard' },
 ];
 
 // Simplified 3-option version (Clean, Natural, Casual).
@@ -330,8 +330,7 @@ export const PERSPECTIVE_OPTIONS: Option[] = [
   { label: 'Close-Up', value: 'a detailed close-up on the product' },
 ];
 
-export type HeroLandingAlignment = 'left' | 'center' | 'right';
-export type HeroLandingShadowStyle = 'softDrop' | 'hardDrop' | 'floating';
+
 
 export type HeroLandingConfigDefaults = {
   backgroundColor: string;
@@ -582,6 +581,7 @@ export type ProLookPreset = {
   label: string;
   value: string;
   description: string;
+  tooltip?: string;
   settings: Partial<MockupOptions> & {
     proLens?: string;
     proLightingRig?: string;
@@ -927,16 +927,16 @@ export const HERO_PERSON_PRESETS: HeroPosePreset[] = [
       setting: getOptionValueByLabel(SETTING_OPTIONS, 'Garden Party', 12),
       environmentOrder: getOptionValueByLabel(ENVIRONMENT_ORDER_OPTIONS, 'Casual', 2),
     },
-   promptCue:
+    promptCue:
       ' Place the model reclining on a mat or rug with knees bent, scattering multiple supplement bottles and gummy props around them while they hold one bottle near their face and look up at camera.',
   },
 ];
 
 // 5-option version representing common human-view compositions.
 export const ASPECT_RATIO_OPTIONS: Option[] = [
-    { label: '16:9 (Widescreen)', value: '16:9' },
-    { label: '9:16 (Vertical)', value: '9:16' },
-    { label: '1:1 (Square)', value: '1:1' },
+  { label: '16:9 (Widescreen)', value: '16:9' },
+  { label: '9:16 (Vertical)', value: '9:16' },
+  { label: '1:1 (Square)', value: '1:1' },
 ];
 
 export const SELFIE_TYPE_OPTIONS: Option[] = [
@@ -986,4 +986,119 @@ export const COMPOSITION_MODE_OPTIONS: Option[] = [
 export const SIDE_PLACEMENT_OPTIONS: Option[] = [
   { label: 'Left Side', value: 'left' },
   { label: 'Right Side', value: 'right' },
+];
+
+// --- Moved from App.tsx ---
+
+export const HERO_LANDING_PRESET_VALUE = 'hero-landing';
+
+export const FORMULATION_EXPERT_PRESETS = [
+  {
+    value: 'respiratory-doctor',
+    label: 'Respiratory Doctor',
+    role: 'pulmonologist and lead formulator',
+    suggestedName: 'Dr. Sofia Reyes',
+    prompt:
+      'Dress the doctor in a crisp lab coat with a name badge, reviewing charts beside the product with compassionate authority.',
+  },
+  {
+    value: 'clinical-researcher',
+    label: 'Clinical Researcher',
+    role: 'clinical researcher overseeing trials',
+    suggestedName: 'Dr. Malik Herrera',
+    prompt:
+      'Show the researcher surrounded by clipboards, microscopes, and annotated results to emphasize rigorous testing.',
+  },
+  {
+    value: 'herbal-formulator',
+    label: 'Herbal Formulator',
+    role: 'master herbalist behind the blend',
+    suggestedName: 'Dr. Aria Park',
+    prompt:
+      'Portray them with botanical samples, mortar and pestle, and a calm confidence that sells holistic science.',
+  },
+];
+
+export const FORMULATION_LAB_OPTIONS: Option[] = [
+  { label: 'Modern Clinical Lab', value: 'a modern clinical lab bench with glassware and stainless surfaces' },
+  { label: 'R&D Studio', value: 'a warm R&D studio with sketches, ingredient jars, and soft daylight' },
+  { label: 'Apothecary Lab', value: 'an apothecary-inspired lab with botanicals, droppers, and amber bottles' },
+];
+
+export const FORMULATION_PROFESSIONS = [
+  { value: 'pulmonologist', label: 'Pulmonologist' },
+  { value: 'nutritionist', label: 'Nutritionist' },
+  { value: 'dermatologist', label: 'Dermatologist' },
+  { value: 'pharmacist', label: 'Pharmacist' },
+  { value: 'clinical-researcher', label: 'Clinical Researcher' },
+  { value: 'herbalist', label: 'Herbalist' },
+  { value: 'custom', label: 'Custom' },
+];
+
+export const FORMULATION_PRESET_LOOKUP = FORMULATION_EXPERT_PRESETS.reduce(
+  (acc, preset) => ({ ...acc, [preset.value]: preset }),
+  {} as Record<string, (typeof FORMULATION_EXPERT_PRESETS)[number]>
+);
+
+export const FORMULATION_PROFESSION_LOOKUP = FORMULATION_PROFESSIONS.reduce(
+  (acc, profession) => ({ ...acc, [profession.value]: profession }),
+  {} as Record<string, (typeof FORMULATION_PROFESSIONS)[number]>
+);
+
+export const HERO_LANDING_META = SUPPLEMENT_PHOTO_PRESETS.find(option => option.value === HERO_LANDING_PRESET_VALUE);
+
+export const HERO_ALIGNMENT_OPTIONS: { label: string; value: HeroLandingAlignment }[] = [
+  { label: 'Left', value: 'left' },
+  { label: 'Center', value: 'center' },
+  { label: 'Right', value: 'right' },
+];
+
+export const HERO_ALIGNMENT_TEXT: Record<HeroLandingAlignment, string> = {
+  left: 'Anchor the hero product on the left edge with whitespace on the right for typography and CTAs.',
+  center: 'Keep the hero perfectly centered with symmetrical negative space.',
+  right: 'Push the product toward the right edge so the left side stays clean for messaging.',
+};
+
+export const HERO_SHADOW_OPTIONS: { label: string; value: HeroLandingShadowStyle }[] = [
+  { label: 'Soft drop shadow', value: 'softDrop' },
+  { label: 'Hard drop shadow', value: 'hardDrop' },
+  { label: 'Floating shadow', value: 'floating' },
+];
+
+export const HERO_SHADOW_TEXT: Record<HeroLandingShadowStyle, string> = {
+  softDrop: 'Use a soft drop shadow that gently feathers to keep it premium.',
+  hardDrop: 'Use a crisp, graphic drop shadow for bold contrast.',
+  floating: 'Make it feel like the product floats with a faint contact glow instead of a traditional shadow.',
+};
+
+export const EYE_DIRECTION_OPTIONS: Option[] = [
+  { label: 'Look at Camera', value: 'Look at Camera' },
+  { label: 'Look Slightly Away', value: 'Look Slightly Away' },
+  { label: 'Look Down', value: 'Look Down' },
+  { label: 'Look Up', value: 'Look Up' },
+  { label: 'Eyes Closed', value: 'Eyes Closed' },
+];
+
+export const BUNDLE_TABS = [
+  { id: 'premade', label: 'Pre-made Bundles' },
+  { id: 'custom', label: 'Custom Bundle Builder' },
+  { id: 'recommended', label: 'Recommended Bundles' },
+] as const;
+
+export const DEFAULT_PERSON_DETAILS = {
+  hairType: '',
+  hairLength: '',
+  facialHair: '',
+  bodyType: '',
+};
+
+export const CONFLICTING_IDENTITY_PHRASES = [
+  'new person',
+  'random model',
+  'different talent',
+  'sample diversity',
+  'younger looking',
+  'someone else',
+  'another person',
+  'new creator',
 ];
