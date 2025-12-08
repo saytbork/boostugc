@@ -4156,125 +4156,90 @@ const App: React.FC = () => {
                 </div>
               </div>
             )}
-            <div className="grid grid-cols-1 lg:grid-cols-[40%_1fr] gap-8 items-start">
-              <div className="flex flex-col gap-6">
+            {/* ═══════════════════════════════════════════════════════════════════
+                 STEP GRID: Step 1 | Step 2 | Optional Model Upload (3 columns)
+                 ═══════════════════════════════════════════════════════════════════ */}
+            <div className="grid gap-6 lg:grid-cols-3">
 
-                {/* Step 1: Mode Selection - Always Enabled */}
-                <div
-                  ref={customizeRef}
-                  className="bg-gray-800/50 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col gap-6"
-                >
-                  <div className="border-b border-gray-600 pb-3">
-                    <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Step 1</p>
-                    <h2 className="text-xl font-bold text-gray-200">Choose Your Mode</h2>
-
-                  </div>
-
-                  {/* Tabs are ALWAYS clickable - not inside fieldset */}
+              {/* ─────────────────────────────────────────────
+                   STEP 1: Choose Content Intent
+                   ───────────────────────────────────────────── */}
+              <div
+                ref={customizeRef}
+                className="bg-gray-800/50 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col gap-4 h-full"
+              >
+                <div className="border-b border-gray-600 pb-3">
+                  <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Step 1</p>
+                  <h2 className="text-xl font-bold text-gray-200">Choose Content Intent</h2>
+                </div>
+                <p className="text-sm text-gray-400">
+                  UGC Lifestyle enables authentic creator vibes, including people interacting with the product.
+                </p>
+                <div>
+                  <p className="text-xs uppercase tracking-wider text-gray-500 mb-2">Content Style</p>
                   <Tabs tabs={TABS} activeTab={activeTab} onChange={(id) => handleTabChange(id as any)} />
                 </div>
-
-                {/* Step 3: Customize - Enabled only after image upload */}
-                <fieldset disabled={!hasUploadedProduct || isTrialLocked} className="contents">
-                  <div
-                    className={`bg-gray-800/50 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col gap-6 ${!hasUploadedProduct ? 'opacity-60' : ''}`}
-                  >
-                    <div className="border-b border-gray-600 pb-3">
-                      <h2 className="text-2xl font-bold text-gray-200">
-                        Step 3: {hasUploadedProduct ? 'Customize Your Mockup' : 'Upload a product image first'}
-                      </h2>
-                    </div>
-
-                    <div className="space-y-6">
-
-                      {/* New Collapsible Sidebar */}
-                      <SidebarContainer
-                        options={options}
-                        handleOptionChange={handleOptionChange}
-                        personControlsDisabled={personControlsDisabled}
-                        isProductPlacement={isProductPlacement}
-                        cameraControlsDisabled={!!cameraControlsDisabled}
-                        mode={activeTab === 'product' ? 'product' : 'lifestyle'}
-                        disabled={!hasUploadedProduct || isTrialLocked}
-                        // Advanced Product Controls
-                        addHandsEnabled={addHandsEnabled}
-                        setAddHandsEnabled={setIncludeSupplementHand}
-                        isMultiProductPackaging={isMultiProductPackaging}
-                        setIsMultiProductPackaging={setIsMultiProductPackaging}
-                        activeSupplementPreset={activeSupplementPreset}
-                        handleSupplementPresetClick={handleSupplementPresetClick as any}
-                        supplementBackgroundColor={supplementBackgroundColor}
-                        setSupplementBackgroundColor={setSupplementBackgroundColor}
-                        supplementAccentColor={supplementAccentColor}
-                        setSupplementAccentColor={setSupplementAccentColor}
-                        supplementFlavorNotes={supplementFlavorNotes}
-                        setSupplementFlavorNotes={setSupplementFlavorNotes}
-                        supplementCustomPrompt={supplementCustomPrompt}
-                        setSupplementCustomPrompt={setSupplementCustomPrompt}
-                      />
-
-                    </div>
-                    <div className="pt-2">
-                      <button
-                        onClick={() => handleGenerateClick()}
-                        disabled={isImageLoading || !uploadedImageFile}
-                        className="w-full bg-[var(--primary)] hover:bg-[var(--primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-xl shadow-[0_0_20px_rgba(99,102,241,0.4)] transition duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(99,102,241,0.6)]"
-                      >
-                        {isImageLoading ? 'Generating...' : 'Generate Mockup'}
-                      </button>
-                    </div>
-                  </div>
-                </fieldset>
               </div>
 
-              <div className="flex flex-col gap-6">
-                <div ref={uploadRef} className="bg-gray-800/50 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col gap-4">
-                  <div className="border-b border-gray-600 pb-3">
-                    <h2 className="text-2xl font-bold text-gray-200">Step 2: Product Photos</h2>
-                  </div>
-                  <div
-                    className="border border-dashed border-[var(--border-subtle)] rounded-xl bg-[var(--bg-card)] p-6 flex flex-col items-center justify-center cursor-pointer hover:border-indigo-400 transition"
-                    onClick={() => {
-                      handleLibraryAddClick();
-                    }}
-                    onDragOver={event => event.preventDefault()}
-                    onDrop={event => {
-                      event.preventDefault();
-                      const file = event.dataTransfer.files?.[0];
-                      if (file) {
-                        handleImageUpload(file);
-                      }
-                    }}
-                  >
-                    <div className="text-center text-gray-300 space-y-2">
+              {/* ─────────────────────────────────────────────
+                   STEP 2: Product Photo Upload + Library
+                   ───────────────────────────────────────────── */}
+              <div
+                ref={uploadRef}
+                className="bg-gray-800/50 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col gap-4 h-full"
+              >
+                <div className="border-b border-gray-600 pb-3">
+                  <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Step 2</p>
+                  <h2 className="text-xl font-bold text-gray-200">Add Your Product Photo</h2>
+                </div>
+                <p className="text-sm text-gray-400">
+                  Upload a transparent PNG, JPG, or WebP of your product to anchor every scene.
+                </p>
+
+                {/* Upload Zone */}
+                <div
+                  className="border-2 border-dashed border-white/20 rounded-xl bg-black/20 p-6 flex flex-col items-center justify-center cursor-pointer hover:border-indigo-400 transition min-h-[160px]"
+                  onClick={() => handleLibraryAddClick()}
+                  onDragOver={event => event.preventDefault()}
+                  onDrop={event => {
+                    event.preventDefault();
+                    const files = event.dataTransfer.files;
+                    if (files.length > 0) {
+                      Array.from(files).forEach(file => handleImageUpload(file));
+                    }
+                  }}
+                >
+                  {uploadedImagePreview ? (
+                    <img src={uploadedImagePreview} alt="Product" className="max-h-32 object-contain" />
+                  ) : (
+                    <div className="text-center text-gray-400 space-y-2">
                       <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-10 w-10 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                       </svg>
-                      <p className="text-sm text-gray-300">Drop your product photo here</p>
+                      <p className="text-sm font-medium">Upload Product Image</p>
+                      <p className="text-xs text-gray-500">Select Step 1 first to unlock uploads.</p>
                     </div>
-                  </div>
-                  <p className="text-xs text-gray-400">
-                    Tip: upload multiple images to swap products easily.
-                  </p>
-                  <div className="sr-only">
-                    <ImageUploader
-                      ref={uploaderRef}
-                      onUpload={handleImageUpload}
-                      uploadedImagePreview={uploadedImagePreview}
-                    />
-                  </div>
+                  )}
                 </div>
 
-                <div className="bg-gray-800/50 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col gap-4">
-                  <div className="border-b border-gray-600 pb-3">
-                    <h2 className="text-2xl font-bold text-gray-200">Product Library</h2>
-                  </div>
-                  {productAssets.length === 0 ? (
-                    <p className="text-sm text-gray-400">Upload product photos to build your library.</p>
-                  ) : (
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <p className="text-xs text-gray-500">
+                  Tip: Drop multiple files at once. The first becomes the hero; others stay in your library.
+                </p>
+
+                <button
+                  type="button"
+                  onClick={() => handleLibraryAddClick()}
+                  className="text-sm text-indigo-300 hover:text-indigo-200 transition"
+                >
+                  + Add another photo
+                </button>
+
+                {/* Product Library Grid */}
+                {productAssets.length > 0 && (
+                  <div className="mt-4 space-y-2">
+                    <p className="text-xs uppercase tracking-wider text-gray-500">Product Library</p>
+                    <div className="grid grid-cols-3 gap-2">
                       {productAssets.map(asset => {
-                        // Prefer Firebase URL if available and valid, otherwise use local preview
                         const imageSrc = (asset.imageUrl && asset.imageUrl.length > 0) ? asset.imageUrl : asset.previewUrl;
                         const isActive = activeProducts.some(product => product.id === asset.id);
                         return (
@@ -4282,80 +4247,153 @@ const App: React.FC = () => {
                             key={asset.id}
                             type="button"
                             onClick={() => handleProductAssetSelect(asset.id)}
-                            className="text-center text-xs text-gray-300 focus:outline-none"
+                            className="focus:outline-none"
                           >
-                            <div className={`relative h-32 w-full overflow-hidden rounded-xl border ${isActive ? 'border-indigo-400' : 'border-white/10'} bg-black/20`}>
+                            <div className={`relative aspect-square overflow-hidden rounded-lg border-2 ${isActive ? 'border-indigo-400' : 'border-white/10'} bg-black/20`}>
                               {imageSrc && imageSrc.length > 5 ? (
-                                <img
-                                  src={imageSrc}
-                                  className="h-full w-full object-cover"
-                                />
+                                <img src={imageSrc} className="h-full w-full object-cover" />
                               ) : (
-                                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-amber-200">
-                                  Upload to fill
+                                <div className="absolute inset-0 flex items-center justify-center text-[10px] text-gray-500">
+                                  Empty
                                 </div>
                               )}
                             </div>
-                            <p className="mt-1 text-[11px]">{asset.label || 'Product'}</p>
+                            <p className="mt-1 text-[10px] text-gray-400 truncate">{asset.label || 'Product'}</p>
                           </button>
                         );
                       })}
                     </div>
-                  )}
+                  </div>
+                )}
+
+                <div className="sr-only">
+                  <ImageUploader
+                    ref={uploaderRef}
+                    onUpload={handleImageUpload}
+                    uploadedImagePreview={uploadedImagePreview}
+                  />
+                </div>
+              </div>
+
+              {/* ─────────────────────────────────────────────
+                   STEP 2B: Optional Talent Reference
+                   ───────────────────────────────────────────── */}
+              <div className="flex flex-col gap-3">
+                <ModelReferencePanel
+                  onFileSelect={handleModelReferenceUpload}
+                  previewUrl={modelReferencePreview}
+                  notes={modelReferenceNotes}
+                  onNotesChange={setModelReferenceNotes}
+                  onClear={handleClearModelReference}
+                  disabled={!hasUploadedProduct || isProductPlacement}
+                  lockedMessage={
+                    !hasUploadedProduct
+                      ? "Upload your product image first to attach a model."
+                      : 'Model references are only available in UGC Lifestyle scenes with a person enabled.'
+                  }
+                />
+                {hasModelReference && (
+                  <div className="rounded-lg border border-white/10 bg-black/30 p-4 space-y-2 text-sm">
+                    <p className="text-xs uppercase tracking-wider text-indigo-200">Composition Mode</p>
+                    <select
+                      value={compositionMode}
+                      onChange={event => setCompositionMode(event.target.value as CompositionMode)}
+                      className="w-full rounded-lg border border-white/10 bg-gray-900 px-3 py-2 text-sm text-white focus:border-indigo-400 focus:outline-none"
+                    >
+                      <option value="balanced">Balanced</option>
+                      <option value="product-first">Product First</option>
+                      <option value="model-first">Model First</option>
+                      <option value="fifty-fifty">Fifty / Fifty</option>
+                    </select>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* ═══════════════════════════════════════════════════════════════════
+                 STEP 3 + GENERATOR: Sidebar + Preview (2 columns)
+                 ═══════════════════════════════════════════════════════════════════ */}
+            <fieldset disabled={!hasUploadedProduct || isTrialLocked} className="contents">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+
+                {/* ─────────────────────────────────────────────
+                     SIDEBAR: Step 3 - Customize Your Mockup
+                     ───────────────────────────────────────────── */}
+                <div className={`lg:col-span-1 bg-gray-800/50 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col max-h-[calc(100vh-12rem)] ${!hasUploadedProduct ? 'opacity-60' : ''}`}>
+
+                  {/* Title (fixed) */}
+                  <div className="mb-4 border-b border-gray-600 pb-3 flex-shrink-0">
+                    <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Step 3</p>
+                    <h2 className="text-xl font-bold text-gray-200">Customize Your Mockup</h2>
+                  </div>
+
+                  {/* Sidebar Content (scrollable) */}
+                  <div className="flex-grow overflow-y-auto custom-scrollbar -mr-4 pr-4">
+                    <SidebarContainer
+                      options={options}
+                      handleOptionChange={handleOptionChange}
+                      personControlsDisabled={personControlsDisabled}
+                      isProductPlacement={isProductPlacement}
+                      cameraControlsDisabled={!!cameraControlsDisabled}
+                      mode={activeTab === 'product' ? 'product' : 'lifestyle'}
+                      disabled={!hasUploadedProduct || isTrialLocked}
+                      // Advanced Product Controls
+                      addHandsEnabled={addHandsEnabled}
+                      setAddHandsEnabled={setIncludeSupplementHand}
+                      isMultiProductPackaging={isMultiProductPackaging}
+                      setIsMultiProductPackaging={setIsMultiProductPackaging}
+                      activeSupplementPreset={activeSupplementPreset}
+                      handleSupplementPresetClick={handleSupplementPresetClick as any}
+                      supplementBackgroundColor={supplementBackgroundColor}
+                      setSupplementBackgroundColor={setSupplementBackgroundColor}
+                      supplementAccentColor={supplementAccentColor}
+                      setSupplementAccentColor={setSupplementAccentColor}
+                      supplementFlavorNotes={supplementFlavorNotes}
+                      setSupplementFlavorNotes={setSupplementFlavorNotes}
+                      supplementCustomPrompt={supplementCustomPrompt}
+                      setSupplementCustomPrompt={setSupplementCustomPrompt}
+                    />
+                  </div>
+
+                  {/* Generate Button (fixed at bottom) */}
+                  <div className="pt-4 flex-shrink-0 border-t border-gray-600 mt-4">
+                    <button
+                      onClick={() => handleGenerateClick()}
+                      disabled={isImageLoading || !uploadedImageFile}
+                      className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-[1.02] shadow-lg"
+                    >
+                      {isImageLoading ? 'Generating...' : 'Generate Mockup'}
+                    </button>
+                  </div>
                 </div>
 
-                <div className="flex flex-col gap-3">
-                  <ModelReferencePanel
-                    onFileSelect={handleModelReferenceUpload}
-                    previewUrl={modelReferencePreview}
-                    notes={modelReferenceNotes}
-                    onNotesChange={setModelReferenceNotes}
-                    onClear={handleClearModelReference}
-                    disabled={!hasUploadedProduct || isProductPlacement}
-                    lockedMessage={
-                      !hasUploadedProduct
-                        ? "Upload your product image first to attach a model."
-                        : 'Model references are only available in UGC Lifestyle scenes with a person enabled. Switch out of Product Placement and pick an age group to unlock this.'
-                    }
-                  />
-                  {hasModelReference && (
-                    <div className="rounded-2xl border border-white/10 bg-black/30 p-4 space-y-2 text-sm">
-                      <p className="text-xs uppercase tracking-[0.3em] text-indigo-200">Composition Mode</p>
-                      <select
-                        value={compositionMode}
-                        onChange={event => setCompositionMode(event.target.value as CompositionMode)}
-                        className="w-full rounded-lg border border-white/10 bg-gray-900 px-3 py-2 text-sm text-white focus:border-indigo-400 focus:outline-none"
-                      >
-                        <option value="balanced">Balanced</option>
-                        <option value="product-first">Product First</option>
-                        <option value="model-first">Model First</option>
-                        <option value="fifty-fifty">Fifty / Fifty</option>
-                      </select>
-                      <p className="text-[11px] text-gray-400">
-                        Control which subject leads the frame while keeping both elements physically integrated.
-                      </p>
+                {/* ─────────────────────────────────────────────
+                     MOCKUP PREVIEW (Right Side - 2 columns)
+                     ───────────────────────────────────────────── */}
+                <div className="lg:col-span-2 flex flex-col gap-6">
+
+                  {/* Generated Mockup Container */}
+                  <div className="relative rounded-lg border-2 border-dashed border-gray-600 bg-gray-800/50 p-4 flex flex-col min-h-[40rem]">
+                    <h3 className="text-lg font-semibold text-gray-300 mb-4 text-center">3. Generated Mockup</h3>
+
+                    <div className="flex-grow flex items-center justify-center rounded-md bg-gray-900/50">
+                      <GeneratedImage
+                        imageUrl={generatedImageUrl}
+                        fourKVariant={fourKVariant}
+                        twoKVariant={twoKVariant}
+                        isHiResProcessing={isPreparingHiRes}
+                        hiResError={hiResError}
+                        isImageLoading={isImageLoading}
+                        imageError={imageError}
+                        onReset={handleReset}
+                        isFreeUser={isFreeUser}
+                        downloadCreditConfig={DOWNLOAD_CREDIT_CONFIG}
+                        onChargeDownloadCredits={handleDownloadCreditCharge}
+                      />
                     </div>
-                  )}
-                  {hasUploadedProduct && !personInScene && !isProductPlacement && !hasModelReference && (
-                    <p className="text-xs text-amber-300">
-                      Model references only apply when this scene uses UGC Lifestyle with a person selected. Switch off Product Placement and choose an age so the same talent can carry across your morning/afternoon/night shots.
-                    </p>
-                  )}
-                </div>
-                <div className="relative rounded-2xl border border-white/10 bg-gray-900/70 p-4 flex flex-col gap-6 min-h-[460px]">
-                  <GeneratedImage
-                    imageUrl={generatedImageUrl}
-                    fourKVariant={fourKVariant}
-                    twoKVariant={twoKVariant}
-                    isHiResProcessing={isPreparingHiRes}
-                    hiResError={hiResError}
-                    isImageLoading={isImageLoading}
-                    imageError={imageError}
-                    onReset={handleReset}
-                    isFreeUser={isFreeUser}
-                    downloadCreditConfig={DOWNLOAD_CREDIT_CONFIG}
-                    onChargeDownloadCredits={handleDownloadCreditCharge}
-                  />
+                  </div>
+
+                  {/* Image Editor (if image exists) */}
                   {generatedImageUrl && (
                     <ImageEditor
                       editPrompt={editPrompt}
@@ -4364,6 +4402,8 @@ const App: React.FC = () => {
                       isEditing={isImageLoading}
                     />
                   )}
+
+                  {/* Video Generator (if image exists) */}
                   {generatedImageUrl && (
                     <VideoGenerator
                       videoPrompt={videoPrompt}
@@ -4385,8 +4425,9 @@ const App: React.FC = () => {
                     />
                   )}
                 </div>
+
               </div>
-            </div>
+            </fieldset>
           </main >
         </div >
       </div >
