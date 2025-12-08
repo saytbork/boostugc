@@ -157,15 +157,13 @@ body {
 .sidebar-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  overflow-y: auto;
-  padding-right: 8px;
+  gap: 16px;
 }
 
 /* Sidebar Section (Collapsible) */
 .sidebar-section {
   border: 1px solid var(--border-subtle);
-  background: linear-gradient(180deg, rgba(30, 41, 59, 0.3) 0%, rgba(15, 23, 42, 0.5) 100%);
+  background: linear-gradient(180deg, rgba(40, 52, 70, 0.5) 0%, rgba(25, 35, 55, 0.6) 100%);
   border-radius: 16px;
   overflow: hidden;
 }
@@ -221,7 +219,7 @@ body {
 }
 
 .sidebar-section-inner {
-  padding: 0 20px 20px 20px;
+  padding: 8px 20px 24px 20px;
 }
 
 /* Sidebar Group */
@@ -308,7 +306,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0;
+  padding: 14px 0;
   text-align: left;
   font-size: 13px;
   font-weight: 500;
@@ -330,7 +328,7 @@ body {
 
 .sub-accordion-content {
   overflow: hidden;
-  transition: max-height 0.2s ease-out, opacity 0.2s ease-out;
+  transition: max-height 0.25s ease-out, opacity 0.2s ease-out;
 }
 
 .sub-accordion-open {
@@ -344,7 +342,7 @@ body {
 }
 
 .sub-accordion-inner {
-  padding-bottom: 16px;
+  padding-bottom: 20px;
 }
 
 /* ==========================================

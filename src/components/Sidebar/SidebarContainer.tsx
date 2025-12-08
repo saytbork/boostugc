@@ -37,8 +37,7 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({
 
     return (
         <div
-            className="w-full overflow-y-auto overflow-x-hidden pr-4 pb-20"
-            style={{ scrollbarWidth: "thin" }}
+            className="w-full space-y-4"
         >
             {/* SCENE */}
             <SidebarSection

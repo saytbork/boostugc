@@ -4157,7 +4157,7 @@ const App: React.FC = () => {
               </div>
             )}
             <div className="grid grid-cols-1 lg:grid-cols-[40%_1fr] gap-8 items-start">
-              <div className="flex flex-col gap-8 overflow-y-auto lg:max-h-[calc(100vh-200px)] pr-4 custom-scrollbar">
+              <div className="flex flex-col gap-6">
 
                 {/* Step 1: Mode Selection - Always Enabled */}
                 <div
