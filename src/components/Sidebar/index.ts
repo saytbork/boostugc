@@ -7,3 +7,5 @@ export { SidebarGroupPhotography } from "./SidebarGroupPhotography";
 export { SidebarGroupPerson } from "./SidebarGroupPerson";
 export { SidebarGroupProduct } from "./SidebarGroupProduct";
 export { SidebarGroupOutput } from "./SidebarGroupOutput";
+export { SidebarProductLibrary } from "./SidebarProductLibrary";
+export type { ProductLibraryItem } from "./SidebarProductLibrary";

@@ -1,6 +1,7 @@
 import React from "react";
 import { CapsuleButton } from "./CapsuleButton";
 import { SubAccordion } from "./SubAccordion";
+import { SidebarProductLibrary, ProductLibraryItem } from "./SidebarProductLibrary";
 import Tooltip from "../UI/Tooltip";
 import { MockupOptions, OptionCategory } from "../../../types";
 import {
@@ -91,6 +92,13 @@ interface SidebarGroupProductProps {
     setSupplementFlavorNotes?: (value: string) => void;
     supplementCustomPrompt?: string;
     setSupplementCustomPrompt?: (value: string) => void;
+    // Product Library
+    productLibraryItems?: ProductLibraryItem[];
+    onProductUpload?: (files: FileList) => void;
+    onProductRemove?: (id: string) => void;
+    onProductUpdate?: (id: string, updates: Partial<ProductLibraryItem>) => void;
+    onProductSetHero?: (id: string) => void;
+    onProductToggleActive?: (id: string) => void;
 }
 
 const SECTION_TITLE = "Product Settings";
@@ -113,6 +121,13 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
     setSupplementFlavorNotes,
     supplementCustomPrompt = "",
     setSupplementCustomPrompt,
+    // Product Library
+    productLibraryItems = [],
+    onProductUpload,
+    onProductRemove,
+    onProductUpdate,
+    onProductSetHero,
+    onProductToggleActive,
 }) => {
     return (
         <div className="flex flex-col">
@@ -283,8 +298,8 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
                                     type="button"
                                     onClick={() => handleSupplementPresetClick?.(mode.value)}
                                     className={`flex flex-col items-center justify-center rounded-xl p-4 border transition ${activeSupplementPreset === mode.value
-                                            ? "border-indigo-400 bg-indigo-500/10 text-white"
-                                            : "border-white/10 bg-white/5 text-gray-400 hover:bg-white/10"
+                                        ? "border-indigo-400 bg-indigo-500/10 text-white"
+                                        : "border-white/10 bg-white/5 text-gray-400 hover:bg-white/10"
                                         }`}
                                 >
                                     <span className="text-2xl mb-2">{mode.emoji}</span>
@@ -386,6 +401,18 @@ export const SidebarGroupProduct: React.FC<SidebarGroupProductProps> = ({
                     </div>
                 </div>
             </SubAccordion>
+
+            {/* Product Library */}
+            {onProductUpload && onProductRemove && onProductUpdate && onProductSetHero && onProductToggleActive && (
+                <SidebarProductLibrary
+                    items={productLibraryItems}
+                    onUpload={onProductUpload}
+                    onRemove={onProductRemove}
+                    onUpdateItem={onProductUpdate}
+                    onSetHero={onProductSetHero}
+                    onToggleActive={onProductToggleActive}
+                />
+            )}
         </div>
     );
 };

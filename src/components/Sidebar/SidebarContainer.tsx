@@ -6,6 +6,7 @@ import { SidebarGroupPhotography } from "./SidebarGroupPhotography";
 import { SidebarGroupPerson } from "./SidebarGroupPerson";
 import { SidebarGroupProduct } from "./SidebarGroupProduct";
 import { SidebarGroupOutput } from "./SidebarGroupOutput";
+import { ProductLibraryItem } from "./SidebarProductLibrary";
 import { MockupOptions, OptionCategory } from "../../../types";
 
 type SidebarMode = "lifestyle" | "product";
@@ -33,6 +34,13 @@ interface SidebarContainerProps {
     setSupplementFlavorNotes?: (value: string) => void;
     supplementCustomPrompt?: string;
     setSupplementCustomPrompt?: (value: string) => void;
+    // Product Library
+    productLibraryItems?: ProductLibraryItem[];
+    onProductUpload?: (files: FileList) => void;
+    onProductRemove?: (id: string) => void;
+    onProductUpdate?: (id: string, updates: Partial<ProductLibraryItem>) => void;
+    onProductSetHero?: (id: string) => void;
+    onProductToggleActive?: (id: string) => void;
 }
 
 export const SidebarContainer: React.FC<SidebarContainerProps> = ({
@@ -58,6 +66,13 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({
     setSupplementFlavorNotes,
     supplementCustomPrompt = "",
     setSupplementCustomPrompt,
+    // Product Library
+    productLibraryItems = [],
+    onProductUpload,
+    onProductRemove,
+    onProductUpdate,
+    onProductSetHero,
+    onProductToggleActive,
 }) => {
     const [openSection, setOpenSection] = useState<string | null>("scene");
 
@@ -138,6 +153,13 @@ export const SidebarContainer: React.FC<SidebarContainerProps> = ({
                         setSupplementFlavorNotes={setSupplementFlavorNotes}
                         supplementCustomPrompt={supplementCustomPrompt}
                         setSupplementCustomPrompt={setSupplementCustomPrompt}
+                        // Product Library
+                        productLibraryItems={productLibraryItems}
+                        onProductUpload={onProductUpload}
+                        onProductRemove={onProductRemove}
+                        onProductUpdate={onProductUpdate}
+                        onProductSetHero={onProductSetHero}
+                        onProductToggleActive={onProductToggleActive}
                     />
                 </SidebarSection>
             )}
