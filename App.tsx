@@ -1049,13 +1049,21 @@ const App: React.FC = () => {
     const fetchProfile = async () => {
       try {
         const res = await fetch('/api/user/me');
-        if (!res.ok) return;
+        const contentType = res.headers.get('content-type');
+        if (!res.ok) {
+          console.warn('Profile fetch failed:', res.status);
+          return;
+        }
+        if (!contentType || !contentType.includes('application/json')) {
+          console.warn('Profile fetch returned non-JSON:', contentType);
+          return;
+        }
         const data = await res.json();
         if (active) {
           setInviteUsed(Boolean(data.inviteUsed));
         }
       } catch (error) {
-        console.error('Unable to fetch user profile for gallery', error);
+        console.error('Unable to fetch user profile for gallery (safe exit)', error);
       }
     };
     fetchProfile();

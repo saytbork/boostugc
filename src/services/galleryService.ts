@@ -64,12 +64,14 @@ export async function addToGallery(
         console.log('✅ Image added to gallery:', response.data.id);
         return response.data;
     } catch (error) {
-        console.error('❌ Failed to add image to gallery:', error);
-        if (axios.isAxiosError(error)) {
-            throw new Error(
-                `Gallery API error: ${error.response?.data?.error || error.message}`
-            );
-        }
+        console.error('❌ Failed to add image to gallery (safe exit):', error);
+        // Do not throw, return a dummy object or handle upstream.
+        // For 'addToGallery', the UI expects a response.id.
+        // We will return a mock ID to prevent crash, but UI should handle failure via toast separately.
+        // Actually, for ADDING, it is better to throw so UI knows it failed.
+        // The urgent request says "Do NOT block the UI".
+        // Let's rely on the try/catch in App.tsx for the ADD operation, 
+        // but for LISTING operation (which happens on load), we must be safe.
         throw error;
     }
 }
@@ -92,13 +94,8 @@ export async function listPublicGallery(): Promise<GalleryImage[]> {
         console.log(`✅ Loaded ${response.data.images.length} gallery images`);
         return response.data.images;
     } catch (error) {
-        console.error('❌ Failed to load public gallery:', error);
-        if (axios.isAxiosError(error)) {
-            throw new Error(
-                `Gallery API error: ${error.response?.data?.error || error.message}`
-            );
-        }
-        throw error;
+        console.error('❌ Failed to load public gallery (returning empty safe list):', error);
+        return []; // Return empty array so UI does not crash
     }
 }
 
@@ -119,8 +116,8 @@ export async function listUserGallery(userId: string): Promise<GalleryImage[]> {
         console.log(`✅ Loaded ${userImages.length} gallery images for user ${userId}`);
         return userImages;
     } catch (error) {
-        console.error('❌ Failed to load user gallery:', error);
-        throw error;
+        console.error('❌ Failed to load user gallery (returning empty safe list):', error);
+        return [];
     }
 }
 
