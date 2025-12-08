@@ -1048,7 +1048,7 @@ const App: React.FC = () => {
     }
     const fetchProfile = async () => {
       try {
-        const res = await fetch('/api/user/me');
+        const res = await fetch('/api/user?action=me');
         const contentType = res.headers.get('content-type');
 
         // Safety check: ensure response is JSON before parsing
