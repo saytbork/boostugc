@@ -292,6 +292,62 @@ body {
 }
 
 /* ==========================================
+   SUB-ACCORDION (for use inside MacroAccordions)
+   ========================================== */
+
+.sub-accordion {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sub-accordion:first-child {
+  border-top: none;
+}
+
+.sub-accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 500;
+  color: #94a3b8;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.sub-accordion-header:hover {
+  color: #e2e8f0;
+}
+
+.sub-accordion-title {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sub-accordion-content {
+  overflow: hidden;
+  transition: max-height 0.2s ease-out, opacity 0.2s ease-out;
+}
+
+.sub-accordion-open {
+  max-height: 2000px;
+  opacity: 1;
+}
+
+.sub-accordion-closed {
+  max-height: 0;
+  opacity: 0;
+}
+
+.sub-accordion-inner {
+  padding-bottom: 16px;
+}
+
+/* ==========================================
    RESPONSIVE SIDEBAR
    ========================================== */
 

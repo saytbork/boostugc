@@ -1,5 +1,6 @@
 import React from "react";
 import { CapsuleButton } from "./CapsuleButton";
+import { SubAccordion } from "./SubAccordion";
 import { MockupOptions, OptionCategory } from "../../../types";
 import {
     CAMERA_OPTIONS,
@@ -25,12 +26,9 @@ export const SidebarGroupPhotography: React.FC<SidebarGroupPhotographyProps> = (
     disabled = false,
 }) => {
     return (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col">
             {/* Camera Type */}
-            <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
-                    Camera Type
-                </label>
+            <SubAccordion title="Camera Type" defaultOpen={true}>
                 <div className="flex flex-wrap gap-2">
                     {CAMERA_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -41,13 +39,10 @@ export const SidebarGroupPhotography: React.FC<SidebarGroupPhotographyProps> = (
                         />
                     ))}
                 </div>
-            </div>
+            </SubAccordion>
 
             {/* Camera Shot */}
-            <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
-                    Camera Shot
-                </label>
+            <SubAccordion title="Camera Shot">
                 <div className="flex flex-wrap gap-2">
                     {CAMERA_ANGLE_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -58,13 +53,10 @@ export const SidebarGroupPhotography: React.FC<SidebarGroupPhotographyProps> = (
                         />
                     ))}
                 </div>
-            </div>
+            </SubAccordion>
 
             {/* Camera Distance */}
-            <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
-                    Camera Distance
-                </label>
+            <SubAccordion title="Camera Distance">
                 <div className="flex flex-wrap gap-2">
                     {CAMERA_DISTANCE_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -75,13 +67,10 @@ export const SidebarGroupPhotography: React.FC<SidebarGroupPhotographyProps> = (
                         />
                     ))}
                 </div>
-            </div>
+            </SubAccordion>
 
             {/* Perspective */}
-            <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
-                    Perspective
-                </label>
+            <SubAccordion title="Perspective">
                 <div className="flex flex-wrap gap-2">
                     {PERSPECTIVE_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -92,13 +81,10 @@ export const SidebarGroupPhotography: React.FC<SidebarGroupPhotographyProps> = (
                         />
                     ))}
                 </div>
-            </div>
+            </SubAccordion>
 
             {/* Aspect Ratio */}
-            <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
-                    Aspect Ratio
-                </label>
+            <SubAccordion title="Aspect Ratio">
                 <div className="flex flex-wrap gap-2">
                     {ASPECT_RATIO_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -109,7 +95,7 @@ export const SidebarGroupPhotography: React.FC<SidebarGroupPhotographyProps> = (
                         />
                     ))}
                 </div>
-            </div>
+            </SubAccordion>
         </div>
     );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { CapsuleButton } from "./CapsuleButton";
+import { SubAccordion } from "./SubAccordion";
 import { MockupOptions, OptionCategory } from "../../../types";
 import {
     AGE_GROUP_OPTIONS,
@@ -31,80 +32,54 @@ export const SidebarGroupPerson: React.FC<SidebarGroupPersonProps> = ({
     disabled = false,
 }) => {
     return (
-        <div className="flex flex-col gap-5">
-            {/* Age Group */}
-            <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
-                    Age Group
-                </label>
-                <div className="flex flex-wrap gap-2">
-                    {AGE_GROUP_OPTIONS.map((opt) => (
-                        <CapsuleButton
-                            key={opt.value}
-                            label={opt.label}
-                            selected={options.ageGroup === opt.value}
-                            onClick={() => handleOptionChange("ageGroup", opt.value, SECTION_TITLE)}
-                        />
-                    ))}
+        <div className="flex flex-col">
+            {/* Identity */}
+            <SubAccordion title="Identity" defaultOpen={true}>
+                <div className="flex flex-col gap-4">
+                    <div>
+                        <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block">Age Group</label>
+                        <div className="flex flex-wrap gap-2">
+                            {AGE_GROUP_OPTIONS.map((opt) => (
+                                <CapsuleButton
+                                    key={opt.value}
+                                    label={opt.label}
+                                    selected={options.ageGroup === opt.value}
+                                    onClick={() => handleOptionChange("ageGroup", opt.value, SECTION_TITLE)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block">Gender</label>
+                        <div className="flex flex-wrap gap-2">
+                            {GENDER_OPTIONS.map((opt) => (
+                                <CapsuleButton
+                                    key={opt.value}
+                                    label={opt.label}
+                                    selected={options.gender === opt.value}
+                                    onClick={() => handleOptionChange("gender", opt.value, SECTION_TITLE)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block">Ethnicity</label>
+                        <div className="flex flex-wrap gap-2">
+                            {ETHNICITY_OPTIONS.map((opt) => (
+                                <CapsuleButton
+                                    key={opt.value}
+                                    label={opt.label}
+                                    selected={options.ethnicity === opt.value}
+                                    onClick={() => handleOptionChange("ethnicity", opt.value, SECTION_TITLE)}
+                                />
+                            ))}
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            {/* Appearance Level */}
-            <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
-                    Appearance Level
-                </label>
-                <div className="flex flex-wrap gap-2">
-                    {PERSON_APPEARANCE_OPTIONS.map((opt) => (
-                        <CapsuleButton
-                            key={opt.value}
-                            label={opt.label}
-                            selected={options.personAppearance === opt.value}
-                            onClick={() => handleOptionChange("personAppearance", opt.value, SECTION_TITLE)}
-                        />
-                    ))}
-                </div>
-            </div>
-
-            {/* Mood */}
-            <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
-                    Mood
-                </label>
-                <div className="flex flex-wrap gap-2">
-                    {PERSON_MOOD_OPTIONS.map((opt) => (
-                        <CapsuleButton
-                            key={opt.value}
-                            label={opt.label}
-                            selected={options.personMood === opt.value}
-                            onClick={() => handleOptionChange("personMood", opt.value, SECTION_TITLE)}
-                        />
-                    ))}
-                </div>
-            </div>
-
-            {/* Expression */}
-            <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
-                    Expression
-                </label>
-                <div className="flex flex-wrap gap-2">
-                    {PERSON_EXPRESSION_OPTIONS.map((opt) => (
-                        <CapsuleButton
-                            key={opt.value}
-                            label={opt.label}
-                            selected={options.personExpression === opt.value}
-                            onClick={() => handleOptionChange("personExpression", opt.value, SECTION_TITLE)}
-                        />
-                    ))}
-                </div>
-            </div>
+            </SubAccordion>
 
             {/* Pose */}
-            <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
-                    Pose
-                </label>
+            <SubAccordion title="Pose">
                 <div className="flex flex-wrap gap-2">
                     {PERSON_POSE_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -115,13 +90,10 @@ export const SidebarGroupPerson: React.FC<SidebarGroupPersonProps> = ({
                         />
                     ))}
                 </div>
-            </div>
+            </SubAccordion>
 
             {/* Wardrobe */}
-            <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
-                    Wardrobe
-                </label>
+            <SubAccordion title="Wardrobe">
                 <div className="flex flex-wrap gap-2">
                     {WARDROBE_STYLE_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -132,47 +104,56 @@ export const SidebarGroupPerson: React.FC<SidebarGroupPersonProps> = ({
                         />
                     ))}
                 </div>
-            </div>
+            </SubAccordion>
 
-            {/* Gender */}
-            <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
-                    Gender
-                </label>
+            {/* Expression & Mood */}
+            <SubAccordion title="Expression & Mood">
+                <div className="flex flex-col gap-4">
+                    <div>
+                        <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block">Mood</label>
+                        <div className="flex flex-wrap gap-2">
+                            {PERSON_MOOD_OPTIONS.map((opt) => (
+                                <CapsuleButton
+                                    key={opt.value}
+                                    label={opt.label}
+                                    selected={options.personMood === opt.value}
+                                    onClick={() => handleOptionChange("personMood", opt.value, SECTION_TITLE)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                    <div>
+                        <label className="text-xs font-medium uppercase tracking-wider text-white/50 mb-2 block">Expression</label>
+                        <div className="flex flex-wrap gap-2">
+                            {PERSON_EXPRESSION_OPTIONS.map((opt) => (
+                                <CapsuleButton
+                                    key={opt.value}
+                                    label={opt.label}
+                                    selected={options.personExpression === opt.value}
+                                    onClick={() => handleOptionChange("personExpression", opt.value, SECTION_TITLE)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </SubAccordion>
+
+            {/* Appearance */}
+            <SubAccordion title="Appearance Level">
                 <div className="flex flex-wrap gap-2">
-                    {GENDER_OPTIONS.map((opt) => (
+                    {PERSON_APPEARANCE_OPTIONS.map((opt) => (
                         <CapsuleButton
                             key={opt.value}
                             label={opt.label}
-                            selected={options.gender === opt.value}
-                            onClick={() => handleOptionChange("gender", opt.value, SECTION_TITLE)}
+                            selected={options.personAppearance === opt.value}
+                            onClick={() => handleOptionChange("personAppearance", opt.value, SECTION_TITLE)}
                         />
                     ))}
                 </div>
-            </div>
+            </SubAccordion>
 
-            {/* Ethnicity */}
-            <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
-                    Ethnicity
-                </label>
-                <div className="flex flex-wrap gap-2">
-                    {ETHNICITY_OPTIONS.map((opt) => (
-                        <CapsuleButton
-                            key={opt.value}
-                            label={opt.label}
-                            selected={options.ethnicity === opt.value}
-                            onClick={() => handleOptionChange("ethnicity", opt.value, SECTION_TITLE)}
-                        />
-                    ))}
-                </div>
-            </div>
-
-            {/* Product Interaction */}
-            <div className="flex flex-col gap-2">
-                <label className="text-xs font-medium uppercase tracking-wider text-white/50">
-                    Product Interaction
-                </label>
+            {/* Interaction */}
+            <SubAccordion title="Product Interaction">
                 <div className="flex flex-wrap gap-2">
                     {PRODUCT_INTERACTION_OPTIONS.map((opt) => (
                         <CapsuleButton
@@ -183,7 +164,7 @@ export const SidebarGroupPerson: React.FC<SidebarGroupPersonProps> = ({
                         />
                     ))}
                 </div>
-            </div>
+            </SubAccordion>
         </div>
     );
 };
