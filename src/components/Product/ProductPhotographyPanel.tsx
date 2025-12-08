@@ -23,22 +23,14 @@ const ProductPhotographyPanel: React.FC<ProductPhotographyPanelProps> = ({
 }) => {
     return (
         <div id={getSectionId('Photography')}>
-            <Accordion title="Photography" defaultOpen={false}>
-                <div className="space-y-6 pt-2">
+            <div className="space-y-6 pt-2">
+                <Accordion title="Photography" defaultOpen={false}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <Tooltip content="Choose a lighting style that defines mood and contrast.">
-                            <ChipSelectGroup
-                                label="Lighting"
-                                options={LIGHTING_OPTIONS}
-                                selectedValue={options.lighting}
-                                onChange={(value) => handleOptionChange('lighting', value, 'Lighting')}
-                            />
-                        </Tooltip>
                         <Tooltip content="Select the lens type used for the shot.">
                             <ChipSelectGroup
                                 label="Camera Type"
                                 options={CAMERA_OPTIONS}
-                                selectedValue={options.camera}
+                                selectedValue={options.camera ?? ''}
                                 onChange={(value) => handleOptionChange('camera', value, 'Photography')}
                             />
                         </Tooltip>
@@ -46,7 +38,7 @@ const ProductPhotographyPanel: React.FC<ProductPhotographyPanelProps> = ({
                             <ChipSelectGroup
                                 label="Camera Shot"
                                 options={CAMERA_ANGLE_OPTIONS}
-                                selectedValue={options.cameraShot}
+                                selectedValue={options.cameraShot ?? ''}
                                 onChange={(value) => handleOptionChange('cameraShot', value, 'Photography')}
                             />
                         </Tooltip>
@@ -54,7 +46,7 @@ const ProductPhotographyPanel: React.FC<ProductPhotographyPanelProps> = ({
                             <ChipSelectGroup
                                 label="Camera Angle"
                                 options={CAMERA_ANGLE_OPTIONS}
-                                selectedValue={options.cameraAngle}
+                                selectedValue={options.cameraAngle ?? ''}
                                 onChange={(value) => handleOptionChange('cameraAngle', value, 'Photography')}
                             />
                         </Tooltip>
@@ -67,8 +59,21 @@ const ProductPhotographyPanel: React.FC<ProductPhotographyPanelProps> = ({
                             />
                         </Tooltip>
                     </div>
-                </div>
-            </Accordion>
+                </Accordion>
+
+                <Accordion title="Lighting" defaultOpen={false}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <Tooltip content="Choose a lighting style that defines mood and contrast.">
+                            <ChipSelectGroup
+                                label="Lighting"
+                                options={LIGHTING_OPTIONS}
+                                selectedValue={options.lighting}
+                                onChange={(value) => handleOptionChange('lighting', value, 'Lighting')}
+                            />
+                        </Tooltip>
+                    </div>
+                </Accordion>
+            </div>
         </div>
     );
 };
