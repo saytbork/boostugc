@@ -73,6 +73,7 @@ import {
   UGC_SPONTANEOUS_FRAMING_OPTIONS,
   UGC_REAL_MODE_BASE_PROMPT,
 } from './src/data/ugcPresets';
+
 import { normalizeOptions } from './src/system/normalizeOptions';
 import { app } from './src/firebase/firebase';
 import * as storageService from './src/services/storageService';
@@ -3473,12 +3474,18 @@ const App: React.FC = () => {
         const response = await ai.models.generateContent({
           model: GEMINI_IMAGE_MODEL,
           contents: { parts: requestParts },
-          config: {
-            responseMimeType: 'image/png',
+
+          // correcto para Gemini 2.0
+          responseModalities: ["IMAGE"],
+
+          generationConfig: {
             temperature: 0.25,
             topP: 0.9,
+            maxOutputTokens: 8192,
           },
         });
+
+
 
         const responseParts = response?.candidates?.[0]?.content?.parts ?? [];
         const inlineImage = responseParts.find(part => (part as any)?.inlineData?.data) as { inlineData?: { data?: string } } | undefined;
@@ -3608,23 +3615,28 @@ const App: React.FC = () => {
 
       const aspectRatio = options?.aspectRatio || '1:1';
       const response = await ai.models.generateContent({
-        model: GEMINI_IMAGE_MODEL, // maintain this but enforce insert behavior through the prompt and config above
+        model: GEMINI_IMAGE_MODEL,
         contents: {
           parts: [
-            { inlineData: { data: base64Image, mimeType: 'image/png' } },
-            { text: prompt.trim() },
+            { inlineData: { data: base64Image, mimeType: "image/png" } },
+            { text: prompt },
           ],
         },
-        config: {
-          responseModalities: [Modality.IMAGE],
+
+        // correcto para Gemini 2.0+
+        responseModalities: ["IMAGE"],
+
+        generationConfig: {
           safetySettings: [],
           temperature: 1,
           topP: 0.95,
           topK: 40,
           maxOutputTokens: 8192,
-          responseMimeType: 'text/plain',
         },
       });
+
+
+
 
       const responseParts = response?.candidates?.[0]?.content?.parts ?? [];
       for (const part of responseParts) {
@@ -3720,12 +3732,14 @@ const App: React.FC = () => {
           imageBytes: base64Image,
           mimeType: 'image/png',
         },
-        config: {
+
+        generationConfig: {
           numberOfVideos: 1,
-          resolution: '720p',
+          resolution: "720p",
           aspectRatio: getVideoAspectRatio(),
         }
       });
+
 
       while (!operation.done) {
         await new Promise(resolve => setTimeout(resolve, 10000));
