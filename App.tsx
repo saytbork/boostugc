@@ -4159,19 +4159,31 @@ const App: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-[40%_1fr] gap-8 items-start">
               <div className="flex flex-col gap-8 overflow-y-auto lg:max-h-[calc(100vh-200px)] pr-4 custom-scrollbar">
 
+                {/* Step 1: Mode Selection - Always Enabled */}
+                <div
+                  ref={customizeRef}
+                  className="bg-gray-800/50 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col gap-6"
+                >
+                  <div className="border-b border-gray-600 pb-3">
+                    <h2 className="text-2xl font-bold text-gray-200">Step 1: Choose Your Mode</h2>
+                  </div>
 
+                  {/* Tabs are ALWAYS clickable - not inside fieldset */}
+                  <Tabs tabs={TABS} activeTab={activeTab} onChange={(id) => handleTabChange(id as any)} />
+                </div>
+
+                {/* Step 3: Customize - Enabled only after image upload */}
                 <fieldset disabled={!hasUploadedProduct || isTrialLocked} className="contents">
                   <div
-                    ref={customizeRef}
-                    className={`bg-gray-800/50 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col gap-6 ${!hasUploadedProduct ? 'opacity-60 pointer-events-none' : ''}`}
+                    className={`bg-gray-800/50 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col gap-6 ${!hasUploadedProduct ? 'opacity-60' : ''}`}
                   >
                     <div className="border-b border-gray-600 pb-3">
-
-                      <h2 className="text-2xl font-bold text-gray-200">Customize Your Mockup</h2>
+                      <h2 className="text-2xl font-bold text-gray-200">
+                        {hasUploadedProduct ? 'Customize Your Mockup' : 'Upload a product image to customize'}
+                      </h2>
                     </div>
 
                     <div className="space-y-6">
-                      <Tabs tabs={TABS} activeTab={activeTab} onChange={(id) => handleTabChange(id as any)} />
 
                       {/* New Collapsible Sidebar */}
                       <SidebarContainer
