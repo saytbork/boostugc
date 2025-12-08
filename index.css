@@ -293,12 +293,8 @@ body {
    SUB-ACCORDION (for use inside MacroAccordions)
    ========================================== */
 
-.sub-accordion {
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.sub-accordion:first-child {
-  border-top: none;
+.sub-accordion-wrapper {
+  width: 100%;
 }
 
 .sub-accordion-header {
@@ -327,23 +323,11 @@ body {
 }
 
 .sub-accordion-content {
-  transition: max-height 0.25s ease-out, opacity 0.2s ease-out;
-}
-
-.sub-accordion-open {
-  max-height: none;
-  overflow: visible;
-  opacity: 1;
-}
-
-.sub-accordion-closed {
-  max-height: 0;
   overflow: hidden;
-  opacity: 0;
 }
 
 .sub-accordion-inner {
-  padding-bottom: 20px;
+  padding-bottom: 0.5rem;
 }
 
 /* ==========================================
