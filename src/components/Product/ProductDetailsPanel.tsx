@@ -197,9 +197,8 @@ const ProductDetailsPanel: React.FC<ProductDetailsPanelProps> = (props) => {
 
     return (
         <div id={getSectionId('Product Details')}>
-            <Accordion title="Product Details" defaultOpen={false}>
+            <Accordion title="Product Surface" defaultOpen={false}>
                 <div className="space-y-6 pt-2">
-                    {/* Surface & Interaction */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Tooltip content="Define the surface the product sits on.">
                             <ChipSelectGroup
@@ -209,6 +208,13 @@ const ProductDetailsPanel: React.FC<ProductDetailsPanelProps> = (props) => {
                                 onChange={(value: string) => handleOptionChange('productPlane', value, 'Product Details')}
                             />
                         </Tooltip>
+                    </div>
+                </div>
+            </Accordion>
+
+            <Accordion title="Interaction Notes" defaultOpen={false}>
+                <div className="space-y-6 pt-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {/* Conditional Rendering: Show Interaction only if NO hands are active, to avoid conflict */}
                         {!addHandsEnabled && (
                             <Tooltip content="Add subtle contact elements like water drops or shadows.">
@@ -220,7 +226,16 @@ const ProductDetailsPanel: React.FC<ProductDetailsPanelProps> = (props) => {
                                 />
                             </Tooltip>
                         )}
+                        {addHandsEnabled && (
+                            <div className="text-xs text-gray-500 italic p-2 border border-dashed border-gray-700 rounded-lg">
+                                Interaction notes disabled when Hands are active.
+                            </div>
+                        )}
                     </div>
+                </div>
+            </Accordion>
+            <Accordion title="Product Features" defaultOpen={true}>
+                <div className="space-y-6 pt-2">
 
                     <div className="rounded-2xl glass-card p-4">
                         <div className="flex items-center justify-between">
@@ -396,8 +411,8 @@ const ProductDetailsPanel: React.FC<ProductDetailsPanelProps> = (props) => {
                         </div>
                     </div>
                 </div>
-            </Accordion>
-        </div>
+            </Accordion >
+        </div >
     );
 };
 
